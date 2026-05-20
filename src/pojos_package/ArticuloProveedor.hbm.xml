@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-abr-2026 14:27:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos_package.ArticuloProveedor" table="articulo_proveedor" catalog="stockpilot" optimistic-lock="version">
+        <composite-id name="id" class="pojos_package.ArticuloProveedorId">
+            <key-property name="idArticulo" type="int">
+                <column name="id_articulo" />
+            </key-property>
+            <key-property name="idProveedor" type="int">
+                <column name="id_proveedor" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="articulo" class="pojos_package.Articulo" update="false" insert="false" fetch="select">
+            <column name="id_articulo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="proveedor" class="pojos_package.Proveedor" update="false" insert="false" fetch="select">
+            <column name="id_proveedor" not-null="true" />
+        </many-to-one>
+        <property name="precioCompra" type="big_decimal">
+            <column name="precio_compra" precision="10" />
+        </property>
+        <property name="referenciaProveedor" type="string">
+            <column name="referencia_proveedor" length="100" />
+        </property>
+        <property name="diasEntrega" type="java.lang.Integer">
+            <column name="dias_entrega" />
+        </property>
+        <property name="activo" type="java.lang.Boolean">
+            <column name="activo" />
+        </property>
+    </class>
+</hibernate-mapping>

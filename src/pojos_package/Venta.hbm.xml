@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-abr-2026 14:27:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos_package.Venta" table="venta" catalog="stockpilot" optimistic-lock="version">
+        <id name="idVenta" type="java.lang.Integer">
+            <column name="id_venta" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="pojos_package.Cliente" fetch="select">
+            <column name="id_cliente" not-null="true" />
+        </many-to-one>
+        <property name="fechaVenta" type="date">
+            <column name="fecha_venta" length="10" not-null="true" />
+        </property>
+        <property name="total" type="big_decimal">
+            <column name="total" precision="10" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="10" />
+        </property>
+        <property name="metodoPago" type="string">
+            <column name="metodo_pago" length="50" />
+        </property>
+        <set name="lineaventas" table="lineaventa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_venta" not-null="true" />
+            </key>
+            <one-to-many class="pojos_package.Lineaventa" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-abr-2026 14:27:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos_package.Ubicacion" table="ubicacion" catalog="stockpilot" optimistic-lock="version">
+        <id name="idUbicacion" type="java.lang.Integer">
+            <column name="id_ubicacion" />
+            <generator class="identity" />
+        </id>
+        <property name="pasillo" type="int">
+            <column name="pasillo" not-null="true" />
+        </property>
+        <property name="estante" type="int">
+            <column name="estante" not-null="true" />
+        </property>
+        <set name="inventarios" table="inventario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_ubicacion" not-null="true" />
+            </key>
+            <one-to-many class="pojos_package.Inventario" />
+        </set>
+    </class>
+</hibernate-mapping>

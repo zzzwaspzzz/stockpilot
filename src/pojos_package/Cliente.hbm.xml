@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-abr-2026 14:27:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos_package.Cliente" table="cliente" catalog="stockpilot" optimistic-lock="version">
+        <id name="idCliente" type="java.lang.Integer">
+            <column name="id_cliente" />
+            <generator class="identity" />
+        </id>
+        <property name="dniCliente" type="string">
+            <column name="dni_cliente" length="50" not-null="true" unique="true" />
+        </property>
+        <property name="nombreCl" type="string">
+            <column name="nombre_cl" not-null="true" />
+        </property>
+        <property name="apellidoCl" type="string">
+            <column name="apellido_cl" length="150" />
+        </property>
+        <property name="emailCl" type="string">
+            <column name="email_cl" length="150" unique="true" />
+        </property>
+        <property name="telefonoCl" type="string">
+            <column name="telefono_cl" length="20" />
+        </property>
+        <property name="direccionCl" type="string">
+            <column name="direccion_cl" />
+        </property>
+        <property name="ciudad" type="string">
+            <column name="ciudad" length="100" />
+        </property>
+        <property name="provincia" type="string">
+            <column name="provincia" length="100" />
+        </property>
+        <property name="codigoPostal" type="string">
+            <column name="codigo_postal" length="10" />
+        </property>
+        <property name="fechaAlta" type="timestamp">
+            <column name="fecha_alta" length="19" not-null="true" />
+        </property>
+        <property name="tipoCliente" type="string">
+            <column name="tipo_cliente" length="50" />
+        </property>
+        <property name="notas" type="string">
+            <column name="notas" length="50" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="9" />
+        </property>
+        <property name="createdAt" type="timestamp">
+            <column name="created_at" length="19" not-null="true" />
+        </property>
+        <property name="updatedAt" type="timestamp">
+            <column name="updated_at" length="19" />
+        </property>
+        <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cliente" not-null="true" />
+            </key>
+            <one-to-many class="pojos_package.Venta" />
+        </set>
+    </class>
+</hibernate-mapping>

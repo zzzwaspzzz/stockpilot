@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-abr-2026 14:27:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos_package.Articulo" table="articulo" catalog="stockpilot" optimistic-lock="version">
+        <id name="idArticulo" type="java.lang.Integer">
+            <column name="id_articulo" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreArt" type="string">
+            <column name="nombre_art" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" />
+        </property>
+        <property name="precioVentaBase" type="big_decimal">
+            <column name="precio_venta_base" precision="10" />
+        </property>
+        <property name="stockMinimo" type="java.lang.Integer">
+            <column name="stock_minimo" />
+        </property>
+        <property name="activo" type="java.lang.Boolean">
+            <column name="activo" />
+        </property>
+        <set name="articuloProveedors" table="articulo_proveedor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_articulo" not-null="true" />
+            </key>
+            <one-to-many class="pojos_package.ArticuloProveedor" />
+        </set>
+        <set name="inventarios" table="inventario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_articulo" not-null="true" />
+            </key>
+            <one-to-many class="pojos_package.Inventario" />
+        </set>
+    </class>
+</hibernate-mapping>

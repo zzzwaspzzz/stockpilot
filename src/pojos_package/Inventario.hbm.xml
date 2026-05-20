@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-abr-2026 14:27:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos_package.Inventario" table="inventario" catalog="stockpilot" optimistic-lock="version">
+        <id name="numeroSerie" type="string">
+            <column name="numero_serie" length="50" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="articulo" class="pojos_package.Articulo" fetch="select">
+            <column name="id_articulo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="ubicacion" class="pojos_package.Ubicacion" fetch="select">
+            <column name="id_ubicacion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="proveedor" class="pojos_package.Proveedor" fetch="select">
+            <column name="id_proveedor"/>
+        </many-to-one>
+        <property name="estado">
+            <column name="estado"/>
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">pojos_package.Estado_inventario</param>
+                    <param name="useNamed">true</param>
+                </type>
+        </property>
+        <property name="fechaEntrada" type="timestamp">
+            <column name="fecha_entrada" length="19" not-null="true" />
+        </property>
+        <set name="garantias" table="garantia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="numero_serie" length="50" not-null="true" />
+            </key>
+            <one-to-many class="pojos_package.Garantia" />
+        </set>
+        <set name="lineaventas" table="lineaventa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="numero_serie" length="50" not-null="true" />
+            </key>
+            <one-to-many class="pojos_package.Lineaventa" />
+        </set>
+    </class>
+</hibernate-mapping>
