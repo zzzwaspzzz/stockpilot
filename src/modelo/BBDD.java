@@ -303,6 +303,22 @@ public class BBDD {
         return lista;
     }
 
+    public List<String> obtener_numeros_serie_disponibles() {
+        List<String> lista_numeros = null;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "SELECT i.numeroSerie FROM Inventario i WHERE i.estado = 'disponible'";
+            query = sesion.createQuery(hql);
+            lista_numeros = query.list();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        }finally{
+            sesion.close();
+        }
+        return lista_numeros;        
+    }
+
     
     
 }

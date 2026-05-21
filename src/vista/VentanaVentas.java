@@ -5,6 +5,10 @@
  */
 package vista;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import modelo.BBDD;
+
 /**
  *
  * @author Usuario
@@ -17,6 +21,7 @@ public class VentanaVentas extends javax.swing.JPanel {
     public VentanaVentas() {
         initComponents();
         org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.decorate(cmbEscanerSerie);
+        cargarNumerosSerie();
     }
 
     /**
@@ -38,6 +43,8 @@ public class VentanaVentas extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         cmbEscanerSerie = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
@@ -134,15 +141,34 @@ public class VentanaVentas extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 102, 0));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 772, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 189, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         add(jPanel3);
@@ -156,9 +182,32 @@ public class VentanaVentas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.TextField textField1;
     private java.awt.TextField textField2;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarNumerosSerie() {
+        cmbEscanerSerie.removeAllItems();
+        cmbEscanerSerie.addItem("");
+        
+        try{
+            
+        
+            BBDD bd = new BBDD();
+            List<String> lista_numeros_serie = bd.obtener_numeros_serie_disponibles();
+
+            for (String numero_serie : lista_numeros_serie)
+            {
+                cmbEscanerSerie.addItem(numero_serie);
+            }
+        }catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
+        }
+        
+        
+    }
 }
