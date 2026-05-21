@@ -19,11 +19,11 @@ public class Venta  implements java.io.Serializable {
      private BigDecimal total;
      private String estado;
      private String metodoPago;
+     private String pedidoExterno;
      private Set lineaventas = new HashSet(0);
 
     public Venta() {
     }
-
 	
     public Venta(Cliente cliente, Date fechaVenta) {
         this.cliente = cliente;
@@ -36,6 +36,15 @@ public class Venta  implements java.io.Serializable {
        this.estado = estado;
        this.metodoPago = metodoPago;
        this.lineaventas = lineaventas;
+    }
+    
+    public Venta(Cliente cliente, Date fechaVenta, BigDecimal total, String estado, String metodoPago, String pedidoExterno) {
+        this.cliente = cliente;
+        this.fechaVenta = fechaVenta;
+        this.total = total;
+        this.estado = estado;
+        this.metodoPago = metodoPago;
+        this.pedidoExterno = pedidoExterno;
     }
    
     public Integer getIdVenta() {
@@ -87,8 +96,14 @@ public class Venta  implements java.io.Serializable {
     public void setLineaventas(Set lineaventas) {
         this.lineaventas = lineaventas;
     }
+    
+    public String getPedidoExterno() {
+        return this.pedidoExterno;
+    }
 
-
+    public void setPedidoExterno(String pedidoExterno) {
+        this.pedidoExterno = pedidoExterno;
+    }
 
 
 }
