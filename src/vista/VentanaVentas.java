@@ -5,8 +5,10 @@
  */
 package vista;
 
+import data_transfer_object.VentaAlbaranDTO;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.BBDD;
 
 /**
@@ -20,7 +22,8 @@ public class VentanaVentas extends javax.swing.JPanel {
      */
     public VentanaVentas() {
         initComponents();
-        org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.decorate(cmbEscanerSerie);
+        configurarTabla();
+        configurarBuscador();        
         cargarNumerosSerie();
     }
 
@@ -44,7 +47,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         cmbEscanerSerie = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaAlbaran = new javax.swing.JTable();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
@@ -118,6 +121,16 @@ public class VentanaVentas extends javax.swing.JPanel {
         cmbEscanerSerie.setBackground(new java.awt.Color(0, 0, 0));
         cmbEscanerSerie.setEditable(true);
         cmbEscanerSerie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEscanerSerie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEscanerSerieActionPerformed(evt);
+            }
+        });
+        cmbEscanerSerie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbEscanerSerieKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -141,7 +154,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 102, 0));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAlbaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -152,7 +165,7 @@ public class VentanaVentas extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaAlbaran);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -174,6 +187,47 @@ public class VentanaVentas extends javax.swing.JPanel {
         add(jPanel3);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbEscanerSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEscanerSerieActionPerformed
+        
+    }//GEN-LAST:event_cmbEscanerSerieActionPerformed
+
+    private void cmbEscanerSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbEscanerSerieKeyPressed
+       // Solo actuamos si el usuario (o el escáner) presiona la tecla ENTER
+    if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+        
+        if (cmbEscanerSerie.getSelectedItem() == null) return;
+        
+        String numserie = cmbEscanerSerie.getSelectedItem().toString().trim();
+        if (numserie.isEmpty()) return;
+        
+        BBDD bd = new BBDD();
+        VentaAlbaranDTO ventaDTO = bd.buscar_articulo_por_numserie(numserie);
+        
+        if (ventaDTO != null) {
+            DefaultTableModel modelo = (DefaultTableModel) tablaAlbaran.getModel();
+            
+            modelo.addRow(new Object[]{
+                ventaDTO.getNumeroSerie(),
+                ventaDTO.getNombreArticulo(),
+                ventaDTO.getPasillo(),
+                ventaDTO.getEstante()
+            });
+            
+            // Limpieza inmediata y segura
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                cmbEscanerSerie.setSelectedItem("");
+            });
+            
+        } else {
+            // Ahora el JOptionPane SOLO saldrá si pulsas Enter y el código está mal de verdad
+            JOptionPane.showMessageDialog(this, 
+                "El número de serie '" + numserie + "' no existe o no está disponible.", 
+                "Error de escaneo", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_cmbEscanerSerieKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
@@ -183,9 +237,9 @@ public class VentanaVentas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private java.awt.Label label1;
     private java.awt.Label label2;
+    private javax.swing.JTable tablaAlbaran;
     private java.awt.TextField textField1;
     private java.awt.TextField textField2;
     // End of variables declaration//GEN-END:variables
@@ -209,5 +263,15 @@ public class VentanaVentas extends javax.swing.JPanel {
         }
         
         
+    }
+
+    private void configurarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaAlbaran.getModel();
+        modelo.setRowCount(0); 
+        modelo.setColumnIdentifiers(new Object[]{"Nº Serie", "Artículo", "Pasillo", "Estante"});
+    }
+
+    private void configurarBuscador() {
+        org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.decorate(cmbEscanerSerie);
     }
 }
