@@ -10,13 +10,17 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.BBDD;
+import pojos_package.Cliente;
 
 /**
  *
  * @author Usuario
  */
-public class VentanaVentas extends javax.swing.JPanel {
 
+public class VentanaVentas extends javax.swing.JPanel {
+    
+    private List<Cliente> listaClientesMemo;
+    private Cliente clienteSeleccionado = null;
     /**
      * Creates new form VentanaVentas
      */
@@ -36,10 +40,15 @@ public class VentanaVentas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogBuscarCliente = new javax.swing.JDialog();
+        btnAceptarClientesDialog = new java.awt.Button();
+        label3 = new java.awt.Label();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaClientes = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         textField1 = new java.awt.TextField();
         label1 = new java.awt.Label();
-        button1 = new java.awt.Button();
+        btnBuscarCliente = new java.awt.Button();
         label2 = new java.awt.Label();
         textField2 = new java.awt.TextField();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -48,6 +57,62 @@ public class VentanaVentas extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAlbaran = new javax.swing.JTable();
+
+        dialogBuscarCliente.setBackground(new java.awt.Color(255, 102, 0));
+        dialogBuscarCliente.setModal(true);
+
+        btnAceptarClientesDialog.setBackground(new java.awt.Color(0, 0, 0));
+        btnAceptarClientesDialog.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptarClientesDialog.setLabel("Aceptar");
+        btnAceptarClientesDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarClientesDialogActionPerformed(evt);
+            }
+        });
+
+        label3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        label3.setText("Seleccione el cliente de la lista...");
+
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaClientes);
+
+        javax.swing.GroupLayout dialogBuscarClienteLayout = new javax.swing.GroupLayout(dialogBuscarCliente.getContentPane());
+        dialogBuscarCliente.getContentPane().setLayout(dialogBuscarClienteLayout);
+        dialogBuscarClienteLayout.setHorizontalGroup(
+            dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogBuscarClienteLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogBuscarClienteLayout.createSequentialGroup()
+                        .addComponent(btnAceptarClientesDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogBuscarClienteLayout.createSequentialGroup()
+                        .addGroup(dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                            .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26))))
+        );
+        dialogBuscarClienteLayout.setVerticalGroup(
+            dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogBuscarClienteLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(btnAceptarClientesDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
+        );
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
@@ -61,9 +126,14 @@ public class VentanaVentas extends javax.swing.JPanel {
         label1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         label1.setText("Pedido / Factura:");
 
-        button1.setBackground(new java.awt.Color(0, 0, 0));
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setLabel("Buscar cliente");
+        btnBuscarCliente.setBackground(new java.awt.Color(0, 0, 0));
+        btnBuscarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarCliente.setLabel("Buscar cliente");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
 
         label2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         label2.setText("DNI / CIF: ");
@@ -90,7 +160,7 @@ public class VentanaVentas extends javax.swing.JPanel {
                     .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(169, Short.MAX_VALUE))
         );
@@ -100,7 +170,7 @@ public class VentanaVentas extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -238,22 +308,57 @@ public class VentanaVentas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmbEscanerSerieKeyPressed
 
+    private void btnAceptarClientesDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarClientesDialogActionPerformed
+        int filaSeleccionada = tablaClientes.getSelectedRow();
+        if(filaSeleccionada >= 0){
+            clienteSeleccionado = listaClientesMemo.get(filaSeleccionada);
+            dialogBuscarCliente.dispose();
+        }else{
+            JOptionPane.showMessageDialog(dialogBuscarCliente, 
+            "Por favor, seleccione un cliente de la lista antes de continuar.", 
+            "Aviso", 
+            JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAceptarClientesDialogActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        cargarClientesEnDialogo();
+        dialogBuscarCliente.setSize(550, 450);
+        dialogBuscarCliente.setLocationRelativeTo(this);
+        dialogBuscarCliente.setVisible(true);
+        if(clienteSeleccionado != null){
+            textField1.setText(clienteSeleccionado.getDniCliente());
+            String nombre = clienteSeleccionado.getNombreCl();
+            if(clienteSeleccionado.getApellidoCl() != null){
+                nombre += " "+clienteSeleccionado.getApellidoCl();
+            }
+            textField2.setText(nombre);
+        }
+        
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button button1;
+    private java.awt.Button btnAceptarClientesDialog;
+    private java.awt.Button btnBuscarCliente;
     private javax.swing.JComboBox<String> cmbEscanerSerie;
+    private javax.swing.JDialog dialogBuscarCliente;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private java.awt.Label label1;
     private java.awt.Label label2;
+    private java.awt.Label label3;
     private javax.swing.JTable tablaAlbaran;
+    private javax.swing.JTable tablaClientes;
     private java.awt.TextField textField1;
     private java.awt.TextField textField2;
     // End of variables declaration//GEN-END:variables
-
+    
+    
     private void cargarNumerosSerie() {
         cmbEscanerSerie.removeAllItems();
         cmbEscanerSerie.addItem("");
@@ -279,6 +384,10 @@ public class VentanaVentas extends javax.swing.JPanel {
         DefaultTableModel modelo = (DefaultTableModel) tablaAlbaran.getModel();
         modelo.setRowCount(0); 
         modelo.setColumnIdentifiers(new Object[]{"Nº Serie", "Artículo", "Pasillo", "Estante"});
+        
+        DefaultTableModel modeloClientes = (DefaultTableModel) tablaClientes.getModel();
+        modeloClientes.setRowCount(0);
+        modeloClientes.setColumnIdentifiers(new Object[]{"ID", "DNI / CIF", "Nombre", "Apellidos"});
     }
 
     private void configurarBuscador() {
@@ -291,5 +400,22 @@ public class VentanaVentas extends javax.swing.JPanel {
                 cmbEscanerSerieKeyPressed(evt);
             }
         });
+    }
+    
+    private void cargarClientesEnDialogo() {
+    BBDD bd = new BBDD();
+    listaClientesMemo = bd.obtener_clientes_activos(); 
+    
+    DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
+    modelo.setRowCount(0); 
+    
+    for (Cliente cl : listaClientesMemo) {
+        modelo.addRow(new Object[]{
+            cl.getIdCliente(),
+            cl.getDniCliente(),
+            cl.getNombreCl(),
+            cl.getApellidoCl() != null ? cl.getApellidoCl() : ""
+            });
+    }
     }
 }

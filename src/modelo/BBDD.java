@@ -341,4 +341,21 @@ public class BBDD {
         return ventaDTO;
     }
     
+    public List<Cliente> obtener_clientes_activos(){
+        List<Cliente> lista_clientes_activos = null;
+        Query query;
+        
+        try{
+            iniciaOperacion();
+            String hql = "FROM Cliente c WHERE c.estado = 'activo'";
+            query = sesion.createQuery(hql);
+            lista_clientes_activos = query.list();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        }finally{
+            sesion.close();
+        }
+        return lista_clientes_activos;
+    }
+    
 }
