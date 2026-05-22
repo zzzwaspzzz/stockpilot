@@ -192,40 +192,50 @@ public class VentanaVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbEscanerSerieActionPerformed
 
     private void cmbEscanerSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbEscanerSerieKeyPressed
-       // Solo actuamos si el usuario (o el escáner) presiona la tecla ENTER
-    if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-        
-        if (cmbEscanerSerie.getSelectedItem() == null) return;
-        
-        String numserie = cmbEscanerSerie.getSelectedItem().toString().trim();
-        if (numserie.isEmpty()) return;
-        
-        BBDD bd = new BBDD();
-        VentaAlbaranDTO ventaDTO = bd.buscar_articulo_por_numserie(numserie);
-        
-        if (ventaDTO != null) {
-            DefaultTableModel modelo = (DefaultTableModel) tablaAlbaran.getModel();
+        DefaultTableModel modelo;
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {        
+
+            String numserie = cmbEscanerSerie.getEditor().getItem().toString().trim();
+            if (numserie.isEmpty()) return;
             
-            modelo.addRow(new Object[]{
-                ventaDTO.getNumeroSerie(),
-                ventaDTO.getNombreArticulo(),
-                ventaDTO.getPasillo(),
-                ventaDTO.getEstante()
-            });
+            modelo = (DefaultTableModel) tablaAlbaran.getModel();
+            int numeroFilas = modelo.getRowCount();
             
-            // Limpieza inmediata y segura
-            javax.swing.SwingUtilities.invokeLater(() -> {
-                cmbEscanerSerie.setSelectedItem("");
-            });
-            
-        } else {
-            // Ahora el JOptionPane SOLO saldrá si pulsas Enter y el código está mal de verdad
-            JOptionPane.showMessageDialog(this, 
-                "El número de serie '" + numserie + "' no existe o no está disponible.", 
-                "Error de escaneo", 
-                JOptionPane.ERROR_MESSAGE);
+            for (int i = 0; i < numeroFilas; i++) {            
+            String serieEnTabla = modelo.getValueAt(i, 0).toString();            
+            if (serieEnTabla.equalsIgnoreCase(numserie)) {
+                JOptionPane.showMessageDialog(this, 
+                    "El número de serie '" + numserie + "' ya ha sido añadido al albarán actual.", 
+                    "Producto duplicado", 
+                    JOptionPane.WARNING_MESSAGE);
+                    cmbEscanerSerie.getEditor().setItem("");
+            return;
+            }
         }
-    }
+
+            BBDD bd = new BBDD();
+            VentaAlbaranDTO ventaDTO = bd.buscar_articulo_por_numserie(numserie);
+
+            if (ventaDTO != null) {
+                modelo = (DefaultTableModel) tablaAlbaran.getModel();
+
+                modelo.addRow(new Object[]{
+                    ventaDTO.getNumeroSerie(),
+                    ventaDTO.getNombreArticulo(),
+                    ventaDTO.getPasillo(),
+                    ventaDTO.getEstante()
+                });           
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    cmbEscanerSerie.removeItem(numserie);
+                    cmbEscanerSerie.getEditor().setItem("");
+                });
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "El número de serie '" + numserie + "' no existe o no está disponible.", 
+                    "Error de escaneo", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_cmbEscanerSerieKeyPressed
 
 
@@ -273,5 +283,13 @@ public class VentanaVentas extends javax.swing.JPanel {
 
     private void configurarBuscador() {
         org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.decorate(cmbEscanerSerie);
+        
+        java.awt.Component editor = cmbEscanerSerie.getEditor().getEditorComponent();
+        editor.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbEscanerSerieKeyPressed(evt);
+            }
+        });
     }
 }

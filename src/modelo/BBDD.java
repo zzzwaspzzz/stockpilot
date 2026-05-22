@@ -325,11 +325,14 @@ public class BBDD {
         Query query;
         try{
             iniciaOperacion();
-            String hql = "SELECT new data_transfer_object.VentaAlbaranDTO(i.numeroSerie, a.nombre, u.pasillo, u.estante) " +
+            String hql = "SELECT new data_transfer_object.VentaAlbaranDTO(i.numeroSerie, a.nombreArt, u.pasillo, u.estante) " +
                      "FROM Inventario i " +
                      "JOIN i.articulo a " +
                      "JOIN i.ubicacion u " +
                      "WHERE i.numeroSerie = :serie AND i.estado = 'disponible'";
+            query = sesion.createQuery(hql);
+            query.setParameter("serie", numserie);
+            ventaDTO = (VentaAlbaranDTO) query.uniqueResult();
         }catch(HibernateException he){
             manejaExcepcion(he);
         }finally{
