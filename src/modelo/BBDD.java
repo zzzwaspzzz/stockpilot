@@ -8,18 +8,24 @@ package modelo;
 import controlador.HibernateUtil;
 import data_transfer_object.InventarioDTO;
 import data_transfer_object.VentaAlbaranDTO;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pojos_package.Articulo;
-import pojos_package.ArticuloProveedor;
 import pojos_package.Cliente;
+import pojos_package.Estado_inventario;
 import pojos_package.Inventario;
+import pojos_package.Lineaventa;
 import pojos_package.Proveedor;
 import pojos_package.Ubicacion;
+import pojos_package.Venta;
 
 /**
  *
@@ -163,14 +169,15 @@ public class BBDD {
     List<Inventario> lista_inventario = null;
     Session sesion = null;
     try {       
-        sesion = HibernateUtil.getSessionFactory().openSession();        
+        sesion = HibernateUtil.getSessionFactory().openSession();
         String hql =
         "FROM Inventario inv " +
         "JOIN FETCH inv.articulo art " +
         "JOIN FETCH art.articuloProveedors ap " +
         "JOIN FETCH ap.proveedor " +
-        "JOIN FETCH inv.ubicacion";        
-        Query query = sesion.createQuery(hql);
+        "JOIN FETCH inv.ubicacion" +
+        " WHERE inv.estado = :disponible";        
+        Query query = sesion.createQuery(hql).setParameter("disponible", Estado_inventario.disponible);
         lista_inventario = query.list();        
     } catch (HibernateException he) {
         manejaExcepcion(he);
@@ -356,6 +363,81 @@ public class BBDD {
             sesion.close();
         }
         return lista_clientes_activos;
+    }
+
+    public boolean registrar_transaccion(int idCliente, double totalVenta, ArrayList<String> lista_series) {
+        boolean exito = false;
+        try{
+            iniciaOperacion();
+            Cliente cl = obtenerYValidarCliente(idCliente);            
+            
+            Venta nuevaVenta = crearYGuardarVenta(cl, totalVenta);
+            
+            procesarArticulosVenta(nuevaVenta, lista_series);
+            tx.commit();
+            exito = true;
+            
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        } catch (Exception ex)
+        {
+            Logger.getLogger(BBDD.class.getName()).log(Level.SEVERE, null, ex);
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            System.err.println("Error crítico en la transacción: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }finally{
+            sesion.close();
+        }
+        return exito;       
+    }
+    
+    private Cliente obtenerYValidarCliente(int idCliente) throws Exception {
+        Cliente cl = (Cliente) sesion.get(Cliente.class, idCliente);
+        if (cl == null) {
+            throw new Exception("El cliente no existe en la base de datos.");
+        }
+        return cl;
+    }
+
+    private Venta crearYGuardarVenta(Cliente cl, double totalVenta) {
+        Venta nuevaVenta = new Venta();
+        nuevaVenta.setCliente(cl);
+        nuevaVenta.setFechaVenta(new Date());
+        nuevaVenta.setTotal(BigDecimal.valueOf(totalVenta));
+        nuevaVenta.setEstado("pagada");
+        nuevaVenta.setMetodoPago("Efectivo");
+        
+        sesion.save(nuevaVenta);
+        return nuevaVenta;
+    }
+
+    private void procesarArticulosVenta(Venta nuevaVenta, ArrayList<String> lista_series) {
+        for (String numero_serie : lista_series) {
+           
+            String hql = "FROM Inventario i WHERE i.numeroSerie = :serie";
+            Inventario inv = (Inventario) sesion.createQuery(hql).setParameter("serie", numero_serie).uniqueResult();
+            
+            if (inv == null) {
+                try
+                {
+                    throw new Exception("El número de serie '" + numero_serie + "' no existe en el inventario.");
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(BBDD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            // Actualizamos el stock (Dirty Checking)
+            inv.setEstado(Estado_inventario.vendido);
+            sesion.update(inv);
+            
+            // Creamos y guardamos la línea de venta asociada
+            Lineaventa linea = new Lineaventa(inv, nuevaVenta);
+            sesion.save(linea);
+        }
     }
     
 }
