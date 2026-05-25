@@ -5,17 +5,33 @@
  */
 package vista;
 
+import data_transfer_object.VentaAlbaranDTO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelo.BBDD;
+import pojos_package.Cliente;
+
 /**
  *
  * @author Usuario
  */
-public class VentanaVentas extends javax.swing.JPanel {
 
+public class VentanaVentas extends javax.swing.JPanel {
+    
+    private List<Cliente> listaClientesDialog;
+    private Cliente clienteSeleccionado = null;
     /**
      * Creates new form VentanaVentas
      */
     public VentanaVentas() {
         initComponents();
+        configurarTabla();
+        configurarBuscador();        
+        cargarNumerosSerie();
+        limpiarCampos();
     }
 
     /**
@@ -27,19 +43,507 @@ public class VentanaVentas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        dialogBuscarCliente = new javax.swing.JDialog();
+        btnAceptarClientesDialog = new java.awt.Button();
+        label3 = new java.awt.Label();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaClientes = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        txtDNICliente = new java.awt.TextField();
+        label1 = new java.awt.Label();
+        btnBuscarCliente = new java.awt.Button();
+        label2 = new java.awt.Label();
+        txtPedido = new java.awt.TextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        cmbEscanerSerie = new javax.swing.JComboBox<>();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaAlbaran = new javax.swing.JTable();
+        btnCrearAlbaran = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
+
+        dialogBuscarCliente.setBackground(new java.awt.Color(255, 102, 0));
+        dialogBuscarCliente.setModal(true);
+
+        btnAceptarClientesDialog.setBackground(new java.awt.Color(0, 0, 0));
+        btnAceptarClientesDialog.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptarClientesDialog.setLabel("Aceptar");
+        btnAceptarClientesDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarClientesDialogActionPerformed(evt);
+            }
+        });
+
+        label3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        label3.setText("Seleccione el cliente de la lista...");
+
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaClientes);
+
+        javax.swing.GroupLayout dialogBuscarClienteLayout = new javax.swing.GroupLayout(dialogBuscarCliente.getContentPane());
+        dialogBuscarCliente.getContentPane().setLayout(dialogBuscarClienteLayout);
+        dialogBuscarClienteLayout.setHorizontalGroup(
+            dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogBuscarClienteLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogBuscarClienteLayout.createSequentialGroup()
+                        .addComponent(btnAceptarClientesDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogBuscarClienteLayout.createSequentialGroup()
+                        .addGroup(dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                            .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26))))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        dialogBuscarClienteLayout.setVerticalGroup(
+            dialogBuscarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogBuscarClienteLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(btnAceptarClientesDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
+
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel1.setBackground(new java.awt.Color(255, 102, 0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
+        txtDNICliente.setBackground(new java.awt.Color(0, 0, 0));
+        txtDNICliente.setForeground(new java.awt.Color(255, 255, 255));
+        txtDNICliente.setText("textField1");
+
+        label1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label1.setText("Pedido / Factura:");
+
+        btnBuscarCliente.setBackground(new java.awt.Color(0, 0, 0));
+        btnBuscarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarCliente.setLabel("Buscar cliente");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
+
+        label2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label2.setText("DNI / CIF: ");
+
+        txtPedido.setBackground(new java.awt.Color(0, 0, 0));
+        txtPedido.setForeground(new java.awt.Color(255, 255, 255));
+        txtPedido.setText("textField1");
+
+        jComboBox1.setBackground(new java.awt.Color(0, 0, 0));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDNICliente, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(68, 68, 68)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(169, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtDNICliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
+        add(jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(255, 102, 0));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
+        cmbEscanerSerie.setBackground(new java.awt.Color(0, 0, 0));
+        cmbEscanerSerie.setEditable(true);
+        cmbEscanerSerie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEscanerSerie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbEscanerSerieKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(cmbEscanerSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(146, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(cmbEscanerSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
+
+        add(jPanel2);
+
+        jPanel3.setBackground(new java.awt.Color(255, 102, 0));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
+        tablaAlbaran.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaAlbaran);
+
+        btnCrearAlbaran.setBackground(new java.awt.Color(0, 0, 0));
+        btnCrearAlbaran.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnCrearAlbaran.setText("Crear Albarán");
+        btnCrearAlbaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearAlbaranActionPerformed(evt);
+            }
+        });
+
+        btnRemove.setBackground(new java.awt.Color(0, 0, 0));
+        btnRemove.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnRemove.setText("Remove");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(109, 109, 109)
+                        .addComponent(btnCrearAlbaran, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrearAlbaran)
+                    .addComponent(btnRemove))
+                .addContainerGap())
+        );
+
+        add(jPanel3);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbEscanerSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbEscanerSerieKeyPressed
+        DefaultTableModel modelo;
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {        
+
+            String numserie = cmbEscanerSerie.getEditor().getItem().toString().trim();
+            if (numserie.isEmpty()) return;
+            
+            modelo = (DefaultTableModel) tablaAlbaran.getModel();
+            int numeroFilas = modelo.getRowCount();
+            
+            for (int i = 0; i < numeroFilas; i++) {            
+            String serieEnTabla = modelo.getValueAt(i, 0).toString();            
+            if (serieEnTabla.equalsIgnoreCase(numserie)) {
+                JOptionPane.showMessageDialog(this, 
+                    "El número de serie '" + numserie + "' ya ha sido añadido al albarán actual.", 
+                    "Producto duplicado", 
+                    JOptionPane.WARNING_MESSAGE);
+                    cmbEscanerSerie.getEditor().setItem("");
+            return;
+            }
+        }
+
+            BBDD bd = new BBDD();
+            VentaAlbaranDTO ventaDTO = bd.buscar_articulo_por_numserie(numserie);
+
+            if (ventaDTO != null) {
+                modelo = (DefaultTableModel) tablaAlbaran.getModel();
+
+                modelo.addRow(new Object[]{
+                    ventaDTO.getNumeroSerie(),
+                    ventaDTO.getNombreArticulo(),
+                    ventaDTO.getPasillo(),
+                    ventaDTO.getEstante()
+                });           
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    cmbEscanerSerie.removeItem(numserie);
+                    cmbEscanerSerie.getEditor().setItem("");
+                });
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "El número de serie '" + numserie + "' no existe o no está disponible.", 
+                    "Error de escaneo", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_cmbEscanerSerieKeyPressed
+
+    private void btnAceptarClientesDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarClientesDialogActionPerformed
+        int filaSeleccionada = tablaClientes.getSelectedRow();
+        if(filaSeleccionada >= 0){
+            clienteSeleccionado = listaClientesDialog.get(filaSeleccionada);
+            dialogBuscarCliente.dispose();
+        }else{
+            JOptionPane.showMessageDialog(dialogBuscarCliente, 
+            "Por favor, seleccione un cliente de la lista antes de continuar.", 
+            "Aviso", 
+            JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAceptarClientesDialogActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        cargarClientesEnDialogo();
+        dialogBuscarCliente.setSize(550, 450);
+        dialogBuscarCliente.setLocationRelativeTo(this);
+        dialogBuscarCliente.setVisible(true);
+        if(clienteSeleccionado != null){
+            txtDNICliente.setText(clienteSeleccionado.getDniCliente());
+            String nombre = clienteSeleccionado.getNombreCl();
+            if(clienteSeleccionado.getApellidoCl() != null){
+                nombre += " "+clienteSeleccionado.getApellidoCl();
+            }
+            txtPedido.setText(nombre);
+        }
+        
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnCrearAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAlbaranActionPerformed
+        if(clienteSeleccionado == null){
+            JOptionPane.showMessageDialog(this, "Debe buscar y seleccionar un cliente válido antes de crear el albarán.", 
+            "Cliente no seleccionado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        DefaultTableModel albaran = (DefaultTableModel) tablaAlbaran.getModel();
+        int filas_seleccionadas = albaran.getRowCount();
+        if(filas_seleccionadas == 0){
+            JOptionPane.showMessageDialog(this, "La tabla de albarán está vacía. Escanee o seleccione algún número de serie.", 
+            "Albarán vacío", 
+            JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        int opcion = confirmacion();
+        if(opcion != JOptionPane.YES_OPTION){
+            return;
+        }
+        
+        ArrayList<String> lista_series = listaNumsSerie();
+        int idCliente = obtenerIDCliente();
+        double totalVenta = 0.0;
+        
+        BBDD bd = new BBDD();
+        boolean guardado = bd.registrar_transaccion(idCliente, totalVenta, lista_series);
+        
+        if(!guardado){
+            JOptionPane.showMessageDialog(this, 
+            "Error crítico: No se pudo registrar la venta.\nLa base de datos ha hecho un rollback preventivo.", 
+            "Error en Servidor", 
+            JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, 
+            "¡Albarán guardado correctamente!\nEl inventario se ha actualizado de forma segura.", 
+            "Operación Exitosa", 
+            JOptionPane.INFORMATION_MESSAGE);
+            limpiarAlbaranCompleto();
+        }
+        
+        
+//        String dni = txtDNICliente.getText().trim();
+//        String pedido = txtPedido.getText().trim();
+        
+    }//GEN-LAST:event_btnCrearAlbaranActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+       int fila_remove = tablaAlbaran.getSelectedRow();
+       if(fila_remove == -1){
+           JOptionPane.showMessageDialog(this, 
+            "Por favor, selecciona una línea del albarán para eliminarla.", 
+            "Aviso", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+           return;
+       }       
+       DefaultTableModel modelo_tabla = (DefaultTableModel) tablaAlbaran.getModel();
+       String serial = modelo_tabla.getValueAt(fila_remove, 0).toString();
+       if(tablaAlbaran.getSelectedRow() != -1){
+           modelo_tabla.removeRow(fila_remove);
+       }
+       cmbEscanerSerie.addItem(serial);        
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button btnAceptarClientesDialog;
+    private java.awt.Button btnBuscarCliente;
+    private javax.swing.JButton btnCrearAlbaran;
+    private javax.swing.JButton btnRemove;
+    private javax.swing.JComboBox<String> cmbEscanerSerie;
+    private javax.swing.JDialog dialogBuscarCliente;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private java.awt.Label label1;
+    private java.awt.Label label2;
+    private java.awt.Label label3;
+    private javax.swing.JTable tablaAlbaran;
+    private javax.swing.JTable tablaClientes;
+    private java.awt.TextField txtDNICliente;
+    private java.awt.TextField txtPedido;
     // End of variables declaration//GEN-END:variables
+    
+    
+    private void cargarNumerosSerie() {
+        cmbEscanerSerie.removeAllItems();
+        cmbEscanerSerie.addItem("");
+        
+        try{        
+            BBDD bd = new BBDD();
+            List<String> lista_numeros_serie = bd.obtener_numeros_serie_disponibles();
+
+            for (String numero_serie : lista_numeros_serie)
+            {
+                cmbEscanerSerie.addItem(numero_serie);
+            }
+        }catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
+        }        
+    }
+
+    private void configurarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaAlbaran.getModel();
+        modelo.setRowCount(0); 
+        modelo.setColumnIdentifiers(new Object[]{"Nº Serie", "Artículo", "Pasillo", "Estante"});
+        
+        DefaultTableModel modeloClientes = (DefaultTableModel) tablaClientes.getModel();
+        modeloClientes.setRowCount(0);
+        modeloClientes.setColumnIdentifiers(new Object[]{"DNI / CIF", "Nombre", "Apellidos"});
+    }
+
+    private void configurarBuscador() {
+        org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.decorate(cmbEscanerSerie);
+        
+        java.awt.Component editor = cmbEscanerSerie.getEditor().getEditorComponent();
+        editor.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbEscanerSerieKeyPressed(evt);
+            }
+        });
+    }
+    
+    private void cargarClientesEnDialogo() {
+        BBDD bd = new BBDD();
+        listaClientesDialog = bd.obtener_clientes_activos(); 
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
+        modelo.setRowCount(0); 
+
+        for (Cliente cl : listaClientesDialog) {
+            modelo.addRow(new Object[]{            
+                cl.getDniCliente(),
+                cl.getNombreCl(),
+                cl.getApellidoCl() != null ? cl.getApellidoCl() : ""
+            });
+        }
+    }
+    
+    
+    private int confirmacion(){
+        int opcion = JOptionPane.showConfirmDialog(this, 
+        "¿Desea finalizar la venta y generar el albarán de forma permanente?", 
+        "Confirmar Transacción", 
+        JOptionPane.YES_NO_OPTION, 
+        JOptionPane.QUESTION_MESSAGE);
+        return opcion;
+    }
+    
+    private void limpiarCampos(){
+       txtDNICliente.setText("");
+        txtPedido.setText(""); 
+    }
+    
+    private ArrayList<String> listaNumsSerie(){
+        ArrayList<String> listaSeries = new java.util.ArrayList<>();
+        DefaultTableModel modeloAlbaran = (DefaultTableModel) tablaAlbaran.getModel();
+        for (int i = 0; i < modeloAlbaran.getRowCount(); i++)
+        {
+            String numserie = modeloAlbaran.getValueAt(i, 0).toString();
+            listaSeries.add(numserie);
+        }
+        return listaSeries;
+    }
+    
+    private int obtenerIDCliente(){
+        return clienteSeleccionado.getIdCliente();
+    }
+
+    private void limpiarAlbaranCompleto() {
+        clienteSeleccionado = null; 
+        limpiarCampos(); 
+       
+        DefaultTableModel modeloAlbaran = (DefaultTableModel) tablaAlbaran.getModel();
+        modeloAlbaran.setRowCount(0);
+        
+        javax.swing.SwingUtilities.invokeLater(() -> {
+        cargarNumerosSerie();
+        cmbEscanerSerie.getEditor().setItem("");
+        });
+    }
 }

@@ -23,6 +23,9 @@
         <property name="metodoPago" type="string">
             <column name="metodo_pago" length="50" />
         </property>
+        <property name="pedidoExterno" type="string">
+            <column name="pedido_externo" length="100" />
+        </property>
         <set name="lineaventas" table="lineaventa" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_venta" not-null="true" />

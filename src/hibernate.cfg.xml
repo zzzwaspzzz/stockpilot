@@ -55,5 +55,6 @@ Contributor(s):
     <mapping resource="pojos_package/Proveedor.hbm.xml"/>
     <mapping resource="pojos_package/Comprapedido.hbm.xml"/>
     <mapping resource="pojos_package/Venta.hbm.xml"/>
+    <mapping resource="pojos_package/Provincia.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

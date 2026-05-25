@@ -18,6 +18,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     VentanaConsulta consulta = new VentanaConsulta();
     VentanaListaClientes lista_clientes = new VentanaListaClientes();
     VentanaClientes cliente;
+    VentanaVentas ventas = new VentanaVentas();
 
 
     
@@ -34,6 +35,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pnl_invisible.add(consulta, "consulta");
         pnl_invisible.add(cliente, "cliente");
         pnl_invisible.add(lista_clientes, "listaClientes");
+        pnl_invisible.add(ventas, "ventas");
 
         pnl_invisible.setPreferredSize(new java.awt.Dimension(800, 600));
         this.pack();
@@ -125,6 +127,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jToggleButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jToggleButton4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jToggleButton4.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton4ActionPerformed(evt);
+            }
+        });
 
         jToggleButton5.setBackground(new java.awt.Color(255, 255, 255));
         jToggleButton5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -235,6 +242,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lista_clientes.revalidate();
         lista_clientes.repaint();
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+        tarjeta.show(pnl_invisible, "ventas");
+        lista_clientes.revalidate();
+        lista_clientes.repaint();
+    }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     /**
      * @param args the command line arguments

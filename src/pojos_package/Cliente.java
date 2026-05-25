@@ -33,6 +33,24 @@ public class Cliente  implements java.io.Serializable {
     public Cliente() {
     }
 
+    public Cliente(String dniCliente, String nombreCl, String apellidoCl, String emailCl, String telefonoCl, String direccionCl, String ciudad, String provincia, String codigoPostal, Date fechaAlta, String tipoCliente, String notas, String estado, Date createdAt) {
+        this.dniCliente = dniCliente;
+        this.nombreCl = nombreCl;
+        this.apellidoCl = apellidoCl;
+        this.emailCl = emailCl;
+        this.telefonoCl = telefonoCl;
+        this.direccionCl = direccionCl;
+        this.ciudad = ciudad;
+        this.provincia = provincia;
+        this.codigoPostal = codigoPostal;
+        this.fechaAlta = fechaAlta;
+        this.tipoCliente = tipoCliente;
+        this.notas = notas;
+        this.estado = estado;
+        this.createdAt = createdAt;
+    }
+    
+    
 	
     public Cliente(String dniCliente, String nombreCl, Date fechaAlta, Date createdAt) {
         this.dniCliente = dniCliente;
