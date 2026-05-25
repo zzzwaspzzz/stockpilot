@@ -441,7 +441,7 @@ public class BBDD {
         }
     }
     
-    private List<Provincia> obtener_provincias(){
+    public List<Provincia> listar_provincias(){
         List<Provincia> provincias = null;
         Query query;
         try{
@@ -456,5 +456,7 @@ public class BBDD {
         }
         return provincias;
     }
+
+    
     
 }
