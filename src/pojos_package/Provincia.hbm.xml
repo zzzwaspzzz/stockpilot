@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <!--
 DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 
@@ -39,19 +38,19 @@ made subject to such option by the copyright holder.
 
 Contributor(s):
 -->
-<hibernate-reverse-engineering>
-  <schema-selection match-catalog="stockpilot"/>
-  <table-filter match-name="lineacompra"/>
-  <table-filter match-name="comprapedido"/>
-  <table-filter match-name="garantia"/>
-  <table-filter match-name="articulo_proveedor"/>
-  <table-filter match-name="provincia"/>
-  <table-filter match-name="venta"/>
-  <table-filter match-name="proveedor"/>
-  <table-filter match-name="articulo_proveedor_old"/>
-  <table-filter match-name="ubicacion"/>
-  <table-filter match-name="cliente"/>
-  <table-filter match-name="articulo"/>
-  <table-filter match-name="lineaventa"/>
-  <table-filter match-name="inventario"/>
-</hibernate-reverse-engineering>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="pojos_package.Provincia" table="provincia" catalog="stockpilot">
+        <id name="idProvincia" type="java.lang.Integer">
+            <column name="id_provincia" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreProvincia" type="string">
+            <column name="nombre_provincia" length="30" />
+        </property>
+    </class>
+</hibernate-mapping>

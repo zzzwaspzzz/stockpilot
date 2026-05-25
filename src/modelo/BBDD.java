@@ -24,6 +24,7 @@ import pojos_package.Estado_inventario;
 import pojos_package.Inventario;
 import pojos_package.Lineaventa;
 import pojos_package.Proveedor;
+import pojos_package.Provincia;
 import pojos_package.Ubicacion;
 import pojos_package.Venta;
 
@@ -438,6 +439,22 @@ public class BBDD {
             Lineaventa linea = new Lineaventa(inv, nuevaVenta);
             sesion.save(linea);
         }
+    }
+    
+    private List<Provincia> obtener_provincias(){
+        List<Provincia> provincias = null;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "FROM Provincia p ORDER BY p.nombreProvincia ASC";
+            query = sesion.createQuery(hql);
+            provincias = query.list();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        }finally{
+            sesion.close();
+        }
+        return provincias;
     }
     
 }

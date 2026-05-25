@@ -9,6 +9,7 @@ import data_transfer_object.VentaAlbaranDTO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.BBDD;
 import pojos_package.Cliente;
@@ -408,7 +409,20 @@ public class VentanaVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearAlbaranActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-       
+       int fila_remove = tablaAlbaran.getSelectedRow();
+       if(fila_remove == -1){
+           JOptionPane.showMessageDialog(this, 
+            "Por favor, selecciona una línea del albarán para eliminarla.", 
+            "Aviso", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+           return;
+       }       
+       DefaultTableModel modelo_tabla = (DefaultTableModel) tablaAlbaran.getModel();
+       String serial = modelo_tabla.getValueAt(fila_remove, 0).toString();
+       if(tablaAlbaran.getSelectedRow() != -1){
+           modelo_tabla.removeRow(fila_remove);
+       }
+       cmbEscanerSerie.addItem(serial);        
     }//GEN-LAST:event_btnRemoveActionPerformed
 
 
