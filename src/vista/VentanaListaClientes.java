@@ -7,10 +7,10 @@ package vista;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import modelo.BBDD;
 import pojos_package.Cliente;
 import pojos_package.Provincia;
@@ -69,6 +69,24 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         btnRegCliente = new javax.swing.JButton();
         checkBoxDni = new javax.swing.JCheckBox();
+        dialogDetallesCliente = new javax.swing.JDialog();
+        jLabel15 = new javax.swing.JLabel();
+        txtDetallesNombre = new javax.swing.JTextField();
+        txtDetallesApellidos = new javax.swing.JTextField();
+        txtDetallesEmilio = new javax.swing.JTextField();
+        txtDetallesTfno = new javax.swing.JTextField();
+        txtDetallesDireccion = new javax.swing.JTextField();
+        txtDetallesCiudad = new javax.swing.JTextField();
+        txtDetallesCodPostal = new javax.swing.JTextField();
+        txtDetallesAlta = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
+        txtDetallesTipoCliente = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaDetalles = new javax.swing.JTextArea();
+        btnActualizar = new javax.swing.JButton();
+        checkBoxDetalles = new javax.swing.JCheckBox();
+        cmbDetallesProvincia = new javax.swing.JComboBox<>();
+        cmbDetallesEstado = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -279,6 +297,138 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
+        dialogDetallesCliente.setBackground(new java.awt.Color(255, 102, 0));
+
+        jLabel15.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Detalles");
+
+        txtDetallesNombre.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesNombre.setText("jTextField1");
+
+        txtDetallesApellidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesApellidos.setText("jTextField1");
+
+        txtDetallesEmilio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesEmilio.setText("jTextField1");
+
+        txtDetallesTfno.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesTfno.setText("jTextField1");
+
+        txtDetallesDireccion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesDireccion.setText("jTextField1");
+
+        txtDetallesCiudad.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesCiudad.setText("jTextField1");
+
+        txtDetallesCodPostal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesCodPostal.setText("jTextField1");
+
+        txtDetallesAlta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesAlta.setText("jTextField1");
+
+        jTextField9.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextField9.setText("jTextField1");
+
+        txtDetallesTipoCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesTipoCliente.setText("jTextField1");
+
+        txtAreaDetalles.setColumns(20);
+        txtAreaDetalles.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtAreaDetalles.setRows(5);
+        jScrollPane3.setViewportView(txtAreaDetalles);
+
+        btnActualizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnActualizar.setText("Actualizar");
+
+        checkBoxDetalles.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        checkBoxDetalles.setText("Editar");
+
+        cmbDetallesProvincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbDetallesEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout dialogDetallesClienteLayout = new javax.swing.GroupLayout(dialogDetallesCliente.getContentPane());
+        dialogDetallesCliente.getContentPane().setLayout(dialogDetallesClienteLayout);
+        dialogDetallesClienteLayout.setHorizontalGroup(
+            dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                            .addGap(26, 26, 26)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(checkBoxDetalles))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialogDetallesClienteLayout.createSequentialGroup()
+                            .addGap(34, 34, 34)
+                            .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtDetallesApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDetallesNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDetallesEmilio, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDetallesTfno, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDetallesCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbDetallesProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(62, 62, 62)
+                            .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtDetallesDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                                    .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(cmbDetallesEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                        .addComponent(txtDetallesCodPostal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                        .addComponent(txtDetallesAlta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                        .addComponent(txtDetallesTipoCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        dialogDetallesClienteLayout.setVerticalGroup(
+            dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(checkBoxDetalles)))
+                .addGap(18, 18, 18)
+                .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDetallesNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDetallesDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDetallesApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesCodPostal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDetallesEmilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesAlta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDetallesTfno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDetallesCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane3))
+                .addGap(18, 18, 18)
+                .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addComponent(cmbDetallesProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnActualizar))
+                    .addComponent(cmbDetallesEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
+        );
+
         setBackground(new java.awt.Color(255, 51, 0));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -412,12 +562,17 @@ public class VentanaListaClientes extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnNuevoCliente;
     private javax.swing.JButton btnRegCliente;
+    private javax.swing.JCheckBox checkBoxDetalles;
     private javax.swing.JCheckBox checkBoxDni;
+    private javax.swing.JComboBox<String> cmbDetallesEstado;
+    private javax.swing.JComboBox<String> cmbDetallesProvincia;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbProvincia;
     private javax.swing.JComboBox<String> cmbTipoCliente;
+    private javax.swing.JDialog dialogDetallesCliente;
     private javax.swing.JDialog dialogRegCliente;
     private javax.swing.JButton efeCinco;
     private javax.swing.JButton jButton2;
@@ -427,6 +582,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -437,11 +593,23 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextArea txtAreaDetalles;
     private javax.swing.JTextArea txtAreaNotas;
     private javax.swing.JTextField txtCiudad;
     private javax.swing.JTextField txtDNI;
+    private javax.swing.JTextField txtDetallesAlta;
+    private javax.swing.JTextField txtDetallesApellidos;
+    private javax.swing.JTextField txtDetallesCiudad;
+    private javax.swing.JTextField txtDetallesCodPostal;
+    private javax.swing.JTextField txtDetallesDireccion;
+    private javax.swing.JTextField txtDetallesEmilio;
+    private javax.swing.JTextField txtDetallesNombre;
+    private javax.swing.JTextField txtDetallesTfno;
+    private javax.swing.JTextField txtDetallesTipoCliente;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtMail;
     private javax.swing.JTextField txtNombre;
@@ -456,12 +624,21 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel();
         modelo.addColumn("DNI");
         modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("e-Mail");
+        modelo.addColumn("Alta");
+        modelo.addColumn("Estado");
         
         if (lista_de_clientes != null) {
         for (Cliente c : lista_de_clientes) {
-            Object[] fila = new Object[2];
+            Object[] fila = new Object[6];
             fila[0] = c.getDniCliente();
             fila[1] = c.getNombreCl();
+            fila[2] = c.getApellidoCl();
+            fila[3] = c.getEmailCl();
+            Date alta = c.getFechaAlta();            
+            fila[4] = transform(alta);
+            fila[5] = c.getEstado();
             modelo.addRow(fila);
             }
         }
@@ -476,13 +653,14 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                     if (fila != -1) {
                         String dni = jTable1.getValueAt(fila, 0).toString();
                         String nombre = jTable1.getValueAt(fila, 1).toString();
+                        
                         abrirDetalleCliente(dni, nombre);
                     }
                 }
             }
 
             private void abrirDetalleCliente(String dni, String nombre) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
             }
         });
         
@@ -581,6 +759,14 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             correcto = true;
         }
         return correcto;
+    }
+
+    private String transform(Date alta) {
+        if (alta == null) {
+            return ""; 
+        }       
+        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");       
+        return formateador.format(alta);
     }
     
     
