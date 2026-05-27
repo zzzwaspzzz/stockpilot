@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import modelo.BBDD;
 import pojos_package.Cliente;
 import pojos_package.Provincia;
+import pojos_package.Venta;
 
 /**
  *
@@ -729,6 +730,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                             }
                             txtAreaDetalles.setText(c.getNotas());
                             
+                            cargar_historial_compras(dni);
+                            
                             checkBoxDetalles.setSelected(false);
                             permitir_edicion(false);
                             
@@ -877,13 +880,37 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(estados));
         cmbDetallesEstado.setModel(new javax.swing.DefaultComboBoxModel<>(estados));
     }
+    
+    private void cargar_historial_compras(String dniCliente) {
+        String[] columnas = {"ID Venta", "Fecha", "Total", "Método Pago"};
+
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        try {
+            BBDD bd = new BBDD();            
+            List<Venta> listaCompras = bd.obtener_compras_por_cliente(dniCliente); 
+
+            if (listaCompras != null) {
+                for (Venta venta : listaCompras) {
+                    Object[] fila = {
+                        venta.getIdVenta(), 
+                        transform(venta.getFechaVenta()), // Reutiliza tu método transform
+                        String.format("%.2f €", venta.getTotal()),
+                        venta.getMetodoPago()
+                    };
+                    modelo.addRow(fila);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el historial: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        jTable2.setModel(modelo);
+    }
 }
-
-//tareas
-
-//cargar lista
-//mostrar en tabla
-//boton refrescar
-//boton registro de cliente
-
 

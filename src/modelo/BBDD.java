@@ -490,4 +490,20 @@ public class BBDD {
         }
         return exito;
     }
+
+    public List<Venta> obtener_compras_por_cliente(String dniCliente) {
+        List<Venta> lista_ventas = null;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "FROM Venta v WHERE v.cliente.dniCliente = :dni";
+            query = sesion.createQuery(hql).setParameter("dni", dniCliente);
+            lista_ventas = query.list();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        }finally{
+            sesion.close();
+        }
+        return lista_ventas;
+    }
 }
