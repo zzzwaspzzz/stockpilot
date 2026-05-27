@@ -28,6 +28,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
      */
     public VentanaListaClientes() {
         initComponents();
+        jTable1.setDefaultEditor(Object.class, null);
         agregar_listener();
     }
 
@@ -79,7 +80,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         txtDetallesCiudad = new javax.swing.JTextField();
         txtDetallesCodPostal = new javax.swing.JTextField();
         txtDetallesAlta = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        txtDetallesDNI = new javax.swing.JTextField();
         txtDetallesTipoCliente = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtAreaDetalles = new javax.swing.JTextArea();
@@ -327,8 +328,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         txtDetallesAlta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesAlta.setText("jTextField1");
 
-        jTextField9.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField9.setText("jTextField1");
+        txtDetallesDNI.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesDNI.setText("jTextField1");
 
         txtDetallesTipoCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesTipoCliente.setText("jTextField1");
@@ -343,6 +344,11 @@ public class VentanaListaClientes extends javax.swing.JPanel {
 
         checkBoxDetalles.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         checkBoxDetalles.setText("Editar");
+        checkBoxDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxDetallesActionPerformed(evt);
+            }
+        });
 
         cmbDetallesProvincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -354,37 +360,35 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
                 .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
-                            .addGap(26, 26, 26)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(checkBoxDetalles))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialogDetallesClienteLayout.createSequentialGroup()
-                            .addGap(34, 34, 34)
-                            .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtDetallesApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDetallesNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDetallesEmilio, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDetallesTfno, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDetallesCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cmbDetallesProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(62, 62, 62)
-                            .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtDetallesDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
-                                    .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cmbDetallesEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                        .addComponent(txtDetallesCodPostal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                        .addComponent(txtDetallesAlta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                        .addComponent(txtDetallesTipoCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(386, 386, 386)
+                        .addComponent(checkBoxDetalles))
                     .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
                         .addGap(183, 183, 183)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDetallesApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesEmilio, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesTfno, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbDetallesProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(62, 62, 62)
+                        .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDetallesDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cmbDetallesEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtDetallesDNI, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                .addComponent(txtDetallesCodPostal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                .addComponent(txtDetallesAlta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                .addComponent(txtDetallesTipoCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         dialogDetallesClienteLayout.setVerticalGroup(
             dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,12 +401,12 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                         .addGap(40, 40, 40)
                         .addComponent(checkBoxDetalles)))
                 .addGap(18, 18, 18)
-                .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDetallesNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDetallesDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                        .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDetallesNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDetallesDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDetallesApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDetallesCodPostal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -417,7 +421,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                         .addGap(25, 25, 25)
                         .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDetallesCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtDetallesDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3))
                 .addGap(18, 18, 18)
                 .addGroup(dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,15 +438,23 @@ public class VentanaListaClientes extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "DNI", "Nombre"
+                "DNI", "Nombre", "null", "null", "null"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -560,6 +573,10 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         evaluar_insercion(exito);
     }//GEN-LAST:event_btnRegClienteActionPerformed
 
+    private void checkBoxDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDetallesActionPerformed
+        permitir_edicion(checkBoxDetalles.isSelected());
+    }//GEN-LAST:event_checkBoxDetallesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -595,7 +612,6 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextArea txtAreaDetalles;
     private javax.swing.JTextArea txtAreaNotas;
@@ -605,6 +621,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JTextField txtDetallesApellidos;
     private javax.swing.JTextField txtDetallesCiudad;
     private javax.swing.JTextField txtDetallesCodPostal;
+    private javax.swing.JTextField txtDetallesDNI;
     private javax.swing.JTextField txtDetallesDireccion;
     private javax.swing.JTextField txtDetallesEmilio;
     private javax.swing.JTextField txtDetallesNombre;
@@ -652,16 +669,37 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                     int fila = jTable1.getSelectedRow();
                     if (fila != -1) {
                         String dni = jTable1.getValueAt(fila, 0).toString();
-                        String nombre = jTable1.getValueAt(fila, 1).toString();
                         
-                        abrirDetalleCliente(dni, nombre);
+                        BBDD bd = new BBDD();
+                        Cliente c = bd.obtener_cliente_por_dni(dni);
+                        
+                        if(c != null){
+                            txtDetallesDNI.setText(c.getDniCliente());
+                            txtDetallesNombre.setText(c.getNombreCl());
+                            txtDetallesApellidos.setText(c.getApellidoCl());
+                            txtDetallesEmilio.setText(c.getEmailCl());
+                            txtDetallesDireccion.setText(c.getDireccionCl());
+                            txtDetallesTfno.setText(c.getTelefonoCl());
+                            txtDetallesCodPostal.setText(c.getCodigoPostal());
+                            txtDetallesTipoCliente.setText(c.getTipoCliente());
+                            if(c.getFechaAlta() != null){
+                                txtDetallesAlta.setText(transform(c.getFechaAlta()));
+                            }
+                            txtAreaDetalles.setText(c.getNotas());
+                            
+                            checkBoxDetalles.setSelected(false);
+                            permitir_edicion(false);
+                            
+                            dialogDetallesCliente.pack();
+                            dialogDetallesCliente.setSize(743, 510);
+                            dialogDetallesCliente.setLocationRelativeTo(null);
+                            dialogDetallesCliente.setVisible(true);
+                            
+                        }
                     }
                 }
             }
 
-            private void abrirDetalleCliente(String dni, String nombre) {
-                
-            }
         });
         
     }
@@ -769,10 +807,22 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         return formateador.format(alta);
     }
     
-    
-    
-    
-    
+    private void permitir_edicion(boolean activar){
+        txtDetallesDNI.setEditable(false);
+        txtDetallesAlta.setEditable(false);
+        
+        txtDetallesNombre.setEditable(activar);
+        txtDetallesApellidos.setEditable(activar);
+        txtDetallesEmilio.setEditable(activar);
+        txtDetallesDireccion.setEditable(activar);
+        txtDetallesCodPostal.setEditable(activar);
+        txtDetallesTfno.setEditable(activar);
+        txtDetallesCiudad.setEditable(activar);        
+        txtDetallesTipoCliente.setEditable(activar);
+        cmbDetallesProvincia.setEditable(activar);
+        cmbDetallesEstado.setEditable(activar);
+        btnActualizar.setEnabled(activar);
+    }    
 }
 
 

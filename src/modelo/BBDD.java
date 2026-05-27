@@ -457,6 +457,19 @@ public class BBDD {
         return provincias;
     }
 
-    
-    
+    public Cliente obtener_cliente_por_dni(String dni) {
+        Cliente c = null;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "FROM Cliente c WHERE c.dniCliente = :dni";
+            query = sesion.createQuery(hql).setParameter("dni", dni);
+            c = (Cliente) query.uniqueResult();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        }finally{
+            sesion.close();
+        }
+        return c;
+    }    
 }
