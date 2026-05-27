@@ -472,4 +472,22 @@ public class BBDD {
         }
         return c;
     }    
+
+    public boolean actualizar_cliente(Cliente c) {
+        boolean exito = false;
+        Query query;
+        try{
+            iniciaOperacion();
+            sesion.update(c);
+            tx.commit();
+            exito = true;
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            tx.rollback();
+            exito = false;
+        }finally{
+            sesion.close();
+        }
+        return exito;
+    }
 }
