@@ -29,7 +29,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
      */
     public VentanaListaClientes() {
         initComponents();
-        jTable1.setDefaultEditor(Object.class, null);
+        tablaListaClientes.setDefaultEditor(Object.class, null);
         agregar_listener();
         asignar_estados();
     }
@@ -97,11 +97,11 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         jTable2 = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaListaClientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         efeCinco = new javax.swing.JButton();
         btnNuevoCliente = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         dialogRegCliente.setBackground(new java.awt.Color(255, 51, 0));
 
@@ -430,7 +430,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 51, 0));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaListaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -449,7 +449,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaListaClientes);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -469,7 +469,12 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Eliminar");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -486,7 +491,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNuevoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -502,7 +507,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevoCliente)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addComponent(btnEliminar)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -609,14 +614,38 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             }else{
                 JOptionPane.showMessageDialog(dialogDetallesCliente, "Error al actualizar en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
-        
-        
+        }        
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila_eliminar = tablaListaClientes.getSelectedRow();
+        boolean exito_eliminar = false;
+        BBDD bd = new BBDD();
+        
+        if(fila_eliminar != -1){
+            String dni_eliminar = tablaListaClientes.getValueAt(fila_eliminar, 0).toString();
+            int opcion = JOptionPane.showConfirmDialog(this, "¿Desea eliminar esta entrada?", "Aviso", JOptionPane.YES_NO_CANCEL_OPTION);
+            switch(opcion){
+                case 0:
+                    exito_eliminar = bd.eliminar_cliente(dni_eliminar);
+                    evaluar_exito(exito_eliminar);
+                    break;
+                case 1:
+                    no_elimina_cliente();
+                    break;
+                case 2:
+                    cancelar_eliminar_cliente();
+                    break;
+            }
+        }else{
+            return;
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevoCliente;
     private javax.swing.JButton btnRegCliente;
     private javax.swing.JCheckBox checkBoxDetalles;
@@ -629,7 +658,6 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JDialog dialogDetallesCliente;
     private javax.swing.JDialog dialogRegCliente;
     private javax.swing.JButton efeCinco;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -653,8 +681,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable tablaListaClientes;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextArea txtAreaDetalles;
     private javax.swing.JTextArea txtAreaNotas;
@@ -702,16 +730,16 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             modelo.addRow(fila);
             }
         }
-        jTable1.setModel(modelo);
+        tablaListaClientes.setModel(modelo);
     }
 
     private void agregar_listener() {
-        jTable1.addMouseListener(new MouseAdapter() {
+        tablaListaClientes.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
-                    int fila = jTable1.getSelectedRow();
+                    int fila = tablaListaClientes.getSelectedRow();
                     if (fila != -1) {
-                        String dni = jTable1.getValueAt(fila, 0).toString();
+                        String dni = tablaListaClientes.getValueAt(fila, 0).toString();
                         
                         BBDD bd = new BBDD();
                         Cliente c = bd.obtener_cliente_por_dni(dni);
@@ -738,15 +766,12 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                             dialogDetallesCliente.pack();
                             dialogDetallesCliente.setSize(743, 610);
                             dialogDetallesCliente.setLocationRelativeTo(null);
-                            dialogDetallesCliente.setVisible(true);
-                            
+                            dialogDetallesCliente.setVisible(true);                            
                         }
                     }
                 }
             }
-
-        });
-        
+        });        
     }
     
     private void limpiar_campos_registro(){
@@ -911,6 +936,22 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         }
 
         jTable2.setModel(modelo);
+    }
+
+    private void cancelar_eliminar_cliente() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void no_elimina_cliente() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void evaluar_exito(boolean exito_eliminar) {
+        if(exito_eliminar){
+            JOptionPane.showMessageDialog(this, "Se eliminó correctamente", "Notificacion", JOptionPane.OK_OPTION);
+        }else{
+            JOptionPane.showMessageDialog(this, "Problema al eliminar.\nError", "Notificacion", JOptionPane.WARNING_MESSAGE);
+        }
     }
 }
 

@@ -237,7 +237,7 @@ public class BBDD {
         
         try{
             iniciaOperacion();
-            String hql = "FROM Cliente";
+            String hql = "FROM Cliente c WHERE c.estado = 'activo'";
             query = sesion.createQuery(hql);
             lista_clientes = query.list();
         }catch(HibernateException he){
@@ -505,5 +505,29 @@ public class BBDD {
             sesion.close();
         }
         return lista_ventas;
+    }
+
+    public boolean eliminar_cliente(String dni_eliminar) {
+        boolean exito = false;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "UPDATE Cliente c SET c.estado = :nuevo_estado WHERE c.dniCliente = :dni_eliminar";
+            query = sesion.createQuery(hql).setParameter("nuevo_estado", "inactivo").setParameter("dni_eliminar", dni_eliminar);
+            int filas_afectadas = query.executeUpdate();
+            if(filas_afectadas == 1){
+                exito = true;
+            }else{
+                exito= false;
+            }
+            tx.commit();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            tx.rollback();
+            exito= false;
+        }finally{
+            sesion.close();
+        }
+        return exito;
     }
 }
