@@ -200,7 +200,7 @@ public class VentanaVentas extends javax.swing.JPanel {
                 btnCrearAlbaranActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCrearAlbaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(312, 148, 291, -1));
+        jPanel3.add(btnCrearAlbaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 291, -1));
 
         btnRemove.setBackground(new java.awt.Color(0, 0, 0));
         btnRemove.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N

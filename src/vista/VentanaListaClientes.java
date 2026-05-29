@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.BBDD;
 import pojos_package.Cliente;
 import pojos_package.Provincia;
@@ -30,6 +31,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     public VentanaListaClientes() {
         initComponents();
         tablaListaClientes.setDefaultEditor(Object.class, null);
+        configurar_tabla_historial();
         agregar_listener();
         asignar_estados();
     }
@@ -74,7 +76,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         checkBoxDni = new javax.swing.JCheckBox();
         dialogDetallesCliente = new javax.swing.JDialog();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        panelDetallesCliente = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtDetallesNombre = new javax.swing.JTextField();
         txtDetallesApellidos = new javax.swing.JTextField();
@@ -92,9 +94,9 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         checkBoxDetalles = new javax.swing.JCheckBox();
         cmbDetallesProvincia = new javax.swing.JComboBox<>();
         cmbDetallesEstado = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
+        panelHistorialCompras = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaDetallesHistorialCompras = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaListaClientes = new javax.swing.JTable();
@@ -308,59 +310,59 @@ public class VentanaListaClientes extends javax.swing.JPanel {
 
         dialogDetallesCliente.setBackground(new java.awt.Color(255, 102, 0));
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelDetallesCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Detalles");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, 231, 67));
+        panelDetallesCliente.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, 231, 67));
 
         txtDetallesNombre.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesNombre.setText("jTextField1");
-        jPanel1.add(txtDetallesNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 135, 196, -1));
+        panelDetallesCliente.add(txtDetallesNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 135, 196, -1));
 
         txtDetallesApellidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesApellidos.setText("jTextField1");
-        jPanel1.add(txtDetallesApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 172, 196, -1));
+        panelDetallesCliente.add(txtDetallesApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 172, 196, -1));
 
         txtDetallesEmilio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesEmilio.setText("jTextField1");
-        jPanel1.add(txtDetallesEmilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 209, 196, -1));
+        panelDetallesCliente.add(txtDetallesEmilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 209, 196, -1));
 
         txtDetallesTfno.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesTfno.setText("jTextField1");
-        jPanel1.add(txtDetallesTfno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 246, 196, -1));
+        panelDetallesCliente.add(txtDetallesTfno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 246, 196, -1));
 
         txtDetallesDireccion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesDireccion.setText("jTextField1");
-        jPanel1.add(txtDetallesDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 135, 196, -1));
+        panelDetallesCliente.add(txtDetallesDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 135, 196, -1));
 
         txtDetallesCiudad.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesCiudad.setText("jTextField1");
-        jPanel1.add(txtDetallesCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 196, -1));
+        panelDetallesCliente.add(txtDetallesCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 196, -1));
 
         txtDetallesCodPostal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesCodPostal.setText("jTextField1");
-        jPanel1.add(txtDetallesCodPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 172, 196, -1));
+        panelDetallesCliente.add(txtDetallesCodPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 172, 196, -1));
 
         txtDetallesAlta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesAlta.setText("jTextField1");
-        jPanel1.add(txtDetallesAlta, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 209, 196, -1));
+        panelDetallesCliente.add(txtDetallesAlta, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 209, 196, -1));
 
         txtDetallesDNI.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesDNI.setText("jTextField1");
-        jPanel1.add(txtDetallesDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 290, 196, -1));
+        panelDetallesCliente.add(txtDetallesDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 290, 196, -1));
 
         txtDetallesTipoCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtDetallesTipoCliente.setText("jTextField1");
-        jPanel1.add(txtDetallesTipoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 246, 196, -1));
+        panelDetallesCliente.add(txtDetallesTipoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 246, 196, -1));
 
         txtAreaDetalles.setColumns(20);
         txtAreaDetalles.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtAreaDetalles.setRows(5);
         jScrollPane3.setViewportView(txtAreaDetalles);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 135, 207, 218));
+        panelDetallesCliente.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 135, 207, 218));
 
         btnActualizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
@@ -369,7 +371,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 btnActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 386, 294, -1));
+        panelDetallesCliente.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 386, 294, -1));
 
         checkBoxDetalles.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         checkBoxDetalles.setText("Editar");
@@ -378,19 +380,19 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 checkBoxDetallesActionPerformed(evt);
             }
         });
-        jPanel1.add(checkBoxDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(629, 26, -1, -1));
+        panelDetallesCliente.add(checkBoxDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(629, 26, -1, -1));
 
         cmbDetallesProvincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cmbDetallesProvincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 333, 196, -1));
+        panelDetallesCliente.add(cmbDetallesProvincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 333, 196, -1));
 
         cmbDetallesEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cmbDetallesEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 333, 196, -1));
+        panelDetallesCliente.add(cmbDetallesEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 333, 196, -1));
 
-        jTabbedPane1.addTab("DatosPersonales", jPanel1);
+        jTabbedPane1.addTab("DatosPersonales", panelDetallesCliente);
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelHistorialCompras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaDetallesHistorialCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -401,15 +403,15 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable2);
+        jScrollPane4.setViewportView(tablaDetallesHistorialCompras);
 
-        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 700, 330));
+        panelHistorialCompras.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 700, 330));
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel16.setText("Historial");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 190, 40));
+        panelHistorialCompras.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 190, 40));
 
-        jTabbedPane1.addTab("Historial de compras", jPanel2);
+        jTabbedPane1.addTab("Historial de compras", panelHistorialCompras);
 
         javax.swing.GroupLayout dialogDetallesClienteLayout = new javax.swing.GroupLayout(dialogDetallesCliente.getContentPane());
         dialogDetallesCliente.getContentPane().setLayout(dialogDetallesClienteLayout);
@@ -640,6 +642,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         }else{
             return;
         }
+        efeCincoActionPerformed(evt);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 
@@ -674,14 +677,14 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JPanel panelDetallesCliente;
+    private javax.swing.JPanel panelHistorialCompras;
+    private javax.swing.JTable tablaDetallesHistorialCompras;
     private javax.swing.JTable tablaListaClientes;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextArea txtAreaDetalles;
@@ -907,43 +910,22 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     }
     
     private void cargar_historial_compras(String dniCliente) {
-        String[] columnas = {"ID Venta", "Fecha", "Total", "Método Pago"};
-
-        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
         try {
             BBDD bd = new BBDD();            
-            List<Venta> listaCompras = bd.obtener_compras_por_cliente(dniCliente); 
+            List<Venta> lista_compras = bd.obtener_compras_por_cliente(dniCliente); 
 
-            if (listaCompras != null) {
-                for (Venta venta : listaCompras) {
-                    Object[] fila = {
-                        venta.getIdVenta(), 
-                        transform(venta.getFechaVenta()), // Reutiliza tu método transform
-                        String.format("%.2f €", venta.getTotal()),
-                        venta.getMetodoPago()
-                    };
-                    modelo.addRow(fila);
-                }
-            }
+            llenar_tabla_historial(lista_compras);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar el historial: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        jTable2.setModel(modelo);
+        }        
     }
 
     private void cancelar_eliminar_cliente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JOptionPane.showConfirmDialog(this, "Se canceló la operacion", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
 
     private void no_elimina_cliente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JOptionPane.showConfirmDialog(this, "Se canceló la operacion", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
 
     private void evaluar_exito(boolean exito_eliminar) {
@@ -953,5 +935,35 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Problema al eliminar.\nError", "Notificacion", JOptionPane.WARNING_MESSAGE);
         }
     }
+    
+    private void configurar_tabla_historial(){
+        String[] columnas = {"ID Venta", "Fecha", "Total", "Metodo Pago"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tablaDetallesHistorialCompras.setModel(modelo);
+    }
+
+    private void llenar_tabla_historial(List<Venta> lista_compras) {
+        DefaultTableModel modelo = (DefaultTableModel) tablaDetallesHistorialCompras.getModel();
+        modelo.setRowCount(0);
+        if (lista_compras != null && !lista_compras.isEmpty()) {
+            for (Venta venta : lista_compras) {               
+                Object[] fila = {
+                    venta.getIdVenta() != null ? venta.getIdVenta() : "N/A", 
+                    venta.getFechaVenta() != null ? transform(venta.getFechaVenta()) : "Sin fecha", 
+                    venta.getTotal() != null ? String.format("%.2f €", venta.getTotal().doubleValue()) : "0.00 €",
+                    venta.getMetodoPago() != null ? venta.getMetodoPago() : "No especificado"
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+    
+    
+    
 }
 
