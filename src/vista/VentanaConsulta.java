@@ -280,8 +280,12 @@ public class VentanaConsulta extends javax.swing.JPanel {
     private void btnLimpiarFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarFiltrosActionPerformed
         txtFiltroGlobal.setText("Nº Serie, proveedor, pasillo o estante...");
         txtFiltroGlobal.setForeground(Color.GRAY);
-        cmbArticulosConsulta.setSelectedIndex(0);
-        sorter.setRowFilter(null);
+        if (cmbArticulosConsulta.getItemCount() > 0) {
+            cmbArticulosConsulta.setSelectedIndex(0);
+        }
+        if (sorter != null) {
+            sorter.setRowFilter(null);
+        }
     }//GEN-LAST:event_btnLimpiarFiltrosActionPerformed
 
     public void cargar_tabla(){       
@@ -432,7 +436,6 @@ public class VentanaConsulta extends javax.swing.JPanel {
             cmbArticulosConsulta.addItem(art);
         }
     }
-    
     
     private void configurarPlaceholders() {
         
