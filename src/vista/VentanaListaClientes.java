@@ -726,16 +726,20 @@ public class VentanaListaClientes extends javax.swing.JPanel {
 
     private void btnActivarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarClienteActionPerformed
       int numero_fila = tabla_inactivos.getSelectedRow();
-      String dni = tabla_inactivos.getValueAt(numero_fila, 0).toString();
-      
-      BBDD bd = new BBDD();
-      boolean exito = bd.activar_cliente(dni);
-      if(exito){
-          JOptionPane.showMessageDialog(this, "Activado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+      if(numero_fila != -1){
+        String dni = tabla_inactivos.getValueAt(numero_fila, 0).toString();      
+        BBDD bd = new BBDD();
+        boolean exito = bd.activar_cliente(dni);
+        if(exito){
+            JOptionPane.showMessageDialog(this, "Activado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Error en la avtivacion", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+          efeCincoActionPerformed(evt);
       }else{
-          JOptionPane.showMessageDialog(this, "Error en la avtivacion", "Aviso", JOptionPane.WARNING_MESSAGE);
+          JOptionPane.showMessageDialog(dialogInactivos, "Por favor, seleccione un cliente inactivo para reactivarlo.", "Aviso", JOptionPane.WARNING_MESSAGE);
       }
-        efeCincoActionPerformed(evt);
+      
     }//GEN-LAST:event_btnActivarClienteActionPerformed
 
 
