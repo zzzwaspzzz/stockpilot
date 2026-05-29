@@ -50,8 +50,7 @@ public class BBDD {
         if (tx != null) {
             tx.rollback();
         }
-    } catch (Exception ignored) {
-        // evita segundo error
+    } catch (Exception ignored) {        
     }
 
     System.err.println("=== ERROR BBDD ===");
@@ -525,6 +524,45 @@ public class BBDD {
             manejaExcepcion(he);
             tx.rollback();
             exito= false;
+        }finally{
+            sesion.close();
+        }
+        return exito;
+    }
+    
+    public List<Cliente> listar_clientes_inactivos() {
+        List<Cliente> lista_clientes = null;
+        Query query;
+        
+        try{
+            iniciaOperacion();
+            String hql = "FROM Cliente c WHERE c.estado = 'inactivo'";
+            query = sesion.createQuery(hql);
+            lista_clientes = query.list();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            System.err.println("Problema de carga");
+        }finally{
+            sesion.close();
+        }
+        return lista_clientes;
+    }
+    
+    public boolean activar_cliente(String dni_activar){
+        boolean exito = false;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "UPDATE Cliente c SET c.estado = :nuevo_estado WHERE c.dniCliente = :dni_activar";
+            query = sesion.createQuery(hql).setParameter("nuevo_estado", "activo").setParameter("dni_activar", dni_activar);
+            int filas_afectadas = query.executeUpdate();
+            if(filas_afectadas ==1){
+                exito = true;
+            }
+            tx.commit();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            tx.rollback();
         }finally{
             sesion.close();
         }

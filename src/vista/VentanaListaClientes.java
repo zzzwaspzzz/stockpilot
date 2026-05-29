@@ -32,6 +32,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         initComponents();
         tablaListaClientes.setDefaultEditor(Object.class, null);
         configurar_tabla_historial();
+        configurar_tabla_inactivos();
         agregar_listener();
         asignar_estados();
     }
@@ -98,12 +99,18 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaDetallesHistorialCompras = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
+        dialogInactivos = new javax.swing.JDialog();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tabla_inactivos = new javax.swing.JTable();
+        btnActivarCliente = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaListaClientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         efeCinco = new javax.swing.JButton();
         btnNuevoCliente = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnInactivos = new javax.swing.JButton();
 
         dialogRegCliente.setBackground(new java.awt.Color(255, 51, 0));
 
@@ -430,6 +437,58 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        dialogInactivos.setBackground(new java.awt.Color(255, 51, 0));
+
+        tabla_inactivos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(tabla_inactivos);
+
+        btnActivarCliente.setText("Activar");
+        btnActivarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarClienteActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel17.setText("Inactivos");
+
+        javax.swing.GroupLayout dialogInactivosLayout = new javax.swing.GroupLayout(dialogInactivos.getContentPane());
+        dialogInactivos.getContentPane().setLayout(dialogInactivosLayout);
+        dialogInactivosLayout.setHorizontalGroup(
+            dialogInactivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogInactivosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogInactivosLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                .addComponent(btnActivarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130))
+        );
+        dialogInactivosLayout.setVerticalGroup(
+            dialogInactivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialogInactivosLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(dialogInactivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActivarCliente))
+                .addGap(53, 53, 53)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setBackground(new java.awt.Color(255, 51, 0));
 
         tablaListaClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -478,6 +537,13 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             }
         });
 
+        btnInactivos.setText("Ver inactivos");
+        btnInactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInactivosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -493,7 +559,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNuevoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInactivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -509,7 +576,9 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevoCliente)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)))
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInactivos)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -645,10 +714,36 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         efeCincoActionPerformed(evt);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInactivosActionPerformed
+        dialogInactivos.setSize(815, 630);
+        dialogInactivos.setLocationRelativeTo(this);
+        dialogInactivos.setVisible(true);
+        BBDD bd = new BBDD();
+        List<Cliente> lista_inactivos = bd.listar_clientes_inactivos();
+        llenar_tabla_inactivos(lista_inactivos);
+                
+    }//GEN-LAST:event_btnInactivosActionPerformed
+
+    private void btnActivarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarClienteActionPerformed
+      int numero_fila = tabla_inactivos.getSelectedRow();
+      String dni = tabla_inactivos.getValueAt(numero_fila, 0).toString();
+      
+      BBDD bd = new BBDD();
+      boolean exito = bd.activar_cliente(dni);
+      if(exito){
+          JOptionPane.showMessageDialog(this, "Activado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+      }else{
+          JOptionPane.showMessageDialog(this, "Error en la avtivacion", "Aviso", JOptionPane.WARNING_MESSAGE);
+      }
+        efeCincoActionPerformed(evt);
+    }//GEN-LAST:event_btnActivarClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActivarCliente;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnInactivos;
     private javax.swing.JButton btnNuevoCliente;
     private javax.swing.JButton btnRegCliente;
     private javax.swing.JCheckBox checkBoxDetalles;
@@ -659,6 +754,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cmbProvincia;
     private javax.swing.JComboBox<String> cmbTipoCliente;
     private javax.swing.JDialog dialogDetallesCliente;
+    private javax.swing.JDialog dialogInactivos;
     private javax.swing.JDialog dialogRegCliente;
     private javax.swing.JButton efeCinco;
     private javax.swing.JLabel jLabel1;
@@ -669,6 +765,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -681,11 +778,13 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panelDetallesCliente;
     private javax.swing.JPanel panelHistorialCompras;
     private javax.swing.JTable tablaDetallesHistorialCompras;
     private javax.swing.JTable tablaListaClientes;
+    private javax.swing.JTable tabla_inactivos;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextArea txtAreaDetalles;
     private javax.swing.JTextArea txtAreaNotas;
@@ -962,8 +1061,34 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             }
         }
     }
+
+    private void configurar_tabla_inactivos(){
+        String[] columnas = {"DNI", "Nombre", "Apellidos", "Email", "Teléfono"};
+    DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Evitamos que el usuario edite las celdas directamente
+        }
+    };
+    tabla_inactivos.setModel(modelo);
+    }
     
+    private void llenar_tabla_inactivos(List<Cliente> lista_inactivos) {
+    DefaultTableModel modelo = (DefaultTableModel) tabla_inactivos.getModel();
+    modelo.setRowCount(0);
     
-    
+    if (lista_inactivos != null && !lista_inactivos.isEmpty()) {
+        for (Cliente cliente : lista_inactivos) {
+            Object[] fila = {
+                cliente.getDniCliente(),
+                cliente.getNombreCl(),
+                cliente.getApellidoCl(),
+                cliente.getEmailCl(),
+                cliente.getTelefonoCl()
+            };
+            modelo.addRow(fila);
+        }
+    }
+}
 }
 
