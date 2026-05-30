@@ -7,13 +7,15 @@ package vista;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import javax.swing.table.DefaultTableModel;
 import modelo.BBDD;
 import pojos_package.Cliente;
 import pojos_package.Provincia;
+import pojos_package.Venta;
 
 /**
  *
@@ -28,7 +30,11 @@ public class VentanaListaClientes extends javax.swing.JPanel {
      */
     public VentanaListaClientes() {
         initComponents();
+        tablaListaClientes.setDefaultEditor(Object.class, null);
+        configurar_tabla_historial();
+        configurar_tabla_inactivos();
         agregar_listener();
+        asignar_estados();
     }
 
     /**
@@ -69,12 +75,42 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         btnRegCliente = new javax.swing.JButton();
         checkBoxDni = new javax.swing.JCheckBox();
+        dialogDetallesCliente = new javax.swing.JDialog();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        panelDetallesCliente = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        txtDetallesNombre = new javax.swing.JTextField();
+        txtDetallesApellidos = new javax.swing.JTextField();
+        txtDetallesEmilio = new javax.swing.JTextField();
+        txtDetallesTfno = new javax.swing.JTextField();
+        txtDetallesDireccion = new javax.swing.JTextField();
+        txtDetallesCiudad = new javax.swing.JTextField();
+        txtDetallesCodPostal = new javax.swing.JTextField();
+        txtDetallesAlta = new javax.swing.JTextField();
+        txtDetallesDNI = new javax.swing.JTextField();
+        txtDetallesTipoCliente = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaDetalles = new javax.swing.JTextArea();
+        btnActualizar = new javax.swing.JButton();
+        checkBoxDetalles = new javax.swing.JCheckBox();
+        cmbDetallesProvincia = new javax.swing.JComboBox<>();
+        cmbDetallesEstado = new javax.swing.JComboBox<>();
+        panelHistorialCompras = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaDetallesHistorialCompras = new javax.swing.JTable();
+        jLabel16 = new javax.swing.JLabel();
+        dialogInactivos = new javax.swing.JDialog();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tabla_inactivos = new javax.swing.JTable();
+        btnActivarCliente = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaListaClientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         efeCinco = new javax.swing.JButton();
         btnNuevoCliente = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnInactivos = new javax.swing.JButton();
 
         dialogRegCliente.setBackground(new java.awt.Color(255, 51, 0));
 
@@ -279,20 +315,202 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        setBackground(new java.awt.Color(255, 51, 0));
+        dialogDetallesCliente.setBackground(new java.awt.Color(255, 102, 0));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        panelDetallesCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Detalles");
+        panelDetallesCliente.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, 231, 67));
+
+        txtDetallesNombre.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesNombre.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 135, 196, -1));
+
+        txtDetallesApellidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesApellidos.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 172, 196, -1));
+
+        txtDetallesEmilio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesEmilio.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesEmilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 209, 196, -1));
+
+        txtDetallesTfno.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesTfno.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesTfno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 246, 196, -1));
+
+        txtDetallesDireccion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesDireccion.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 135, 196, -1));
+
+        txtDetallesCiudad.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesCiudad.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 196, -1));
+
+        txtDetallesCodPostal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesCodPostal.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesCodPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 172, 196, -1));
+
+        txtDetallesAlta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesAlta.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesAlta, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 209, 196, -1));
+
+        txtDetallesDNI.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesDNI.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 290, 196, -1));
+
+        txtDetallesTipoCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtDetallesTipoCliente.setText("jTextField1");
+        panelDetallesCliente.add(txtDetallesTipoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 246, 196, -1));
+
+        txtAreaDetalles.setColumns(20);
+        txtAreaDetalles.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtAreaDetalles.setRows(5);
+        jScrollPane3.setViewportView(txtAreaDetalles);
+
+        panelDetallesCliente.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 135, 207, 218));
+
+        btnActualizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        panelDetallesCliente.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 386, 294, -1));
+
+        checkBoxDetalles.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        checkBoxDetalles.setText("Editar");
+        checkBoxDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxDetallesActionPerformed(evt);
+            }
+        });
+        panelDetallesCliente.add(checkBoxDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(629, 26, -1, -1));
+
+        cmbDetallesProvincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        panelDetallesCliente.add(cmbDetallesProvincia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 333, 196, -1));
+
+        cmbDetallesEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        panelDetallesCliente.add(cmbDetallesEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 333, 196, -1));
+
+        jTabbedPane1.addTab("DatosPersonales", panelDetallesCliente);
+
+        panelHistorialCompras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tablaDetallesHistorialCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "DNI", "Nombre"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tablaDetallesHistorialCompras);
+
+        panelHistorialCompras.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 700, 330));
+
+        jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel16.setText("Historial");
+        panelHistorialCompras.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 190, 40));
+
+        jTabbedPane1.addTab("Historial de compras", panelHistorialCompras);
+
+        javax.swing.GroupLayout dialogDetallesClienteLayout = new javax.swing.GroupLayout(dialogDetallesCliente.getContentPane());
+        dialogDetallesCliente.getContentPane().setLayout(dialogDetallesClienteLayout);
+        dialogDetallesClienteLayout.setHorizontalGroup(
+            dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        dialogDetallesClienteLayout.setVerticalGroup(
+            dialogDetallesClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDetallesClienteLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
+        );
+
+        dialogInactivos.setBackground(new java.awt.Color(255, 51, 0));
+
+        tabla_inactivos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(tabla_inactivos);
+
+        btnActivarCliente.setText("Activar");
+        btnActivarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarClienteActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel17.setText("Inactivos");
+
+        javax.swing.GroupLayout dialogInactivosLayout = new javax.swing.GroupLayout(dialogInactivos.getContentPane());
+        dialogInactivos.getContentPane().setLayout(dialogInactivosLayout);
+        dialogInactivosLayout.setHorizontalGroup(
+            dialogInactivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogInactivosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogInactivosLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                .addComponent(btnActivarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130))
+        );
+        dialogInactivosLayout.setVerticalGroup(
+            dialogInactivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialogInactivosLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(dialogInactivosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActivarCliente))
+                .addGap(53, 53, 53)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        setBackground(new java.awt.Color(255, 51, 0));
+
+        tablaListaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "DNI", "Nombre", "null", "null", "null"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaListaClientes);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -312,7 +530,19 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Eliminar");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnInactivos.setText("Ver inactivos");
+        btnInactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInactivosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -329,7 +559,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnNuevoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInactivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -345,7 +576,9 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevoCliente)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInactivos)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -410,23 +643,133 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         evaluar_insercion(exito);
     }//GEN-LAST:event_btnRegClienteActionPerformed
 
+    private void checkBoxDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDetallesActionPerformed
+        permitir_edicion(checkBoxDetalles.isSelected());
+    }//GEN-LAST:event_checkBoxDetallesActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        //Crear objeto cliente y llamar a metodo de guardado
+        Cliente c = new Cliente();
+        String dni = txtDetallesDNI.getText().trim(); //update WHERE DNI == dni;
+        
+        boolean comprobar = comprobar_dni_antes_actualizar();
+        if(!comprobar){
+            return;
+        }else{
+            BBDD bd = new BBDD();
+            c = bd.obtener_cliente_por_dni(dni);
+            
+            //setear nuevas caracteristicas
+            c.setNombreCl(txtDetallesNombre.getText().trim());
+            c.setApellidoCl(txtDetallesApellidos.getText().trim());
+            c.setEmailCl(txtDetallesEmilio.getText().trim());
+            c.setCiudad(txtDetallesCiudad.getText().trim());
+            c.setCodigoPostal(txtDetallesCodPostal.getText().trim());
+            c.setTelefonoCl(txtDetallesTfno.getText().trim());
+            c.setDireccionCl(txtDetallesDireccion.getText().trim());           
+            c.setNotas(txtAreaDetalles.getText());
+            
+            String valorEstado = cmbDetallesEstado.getSelectedItem().toString().trim().toLowerCase();
+            
+            if (valorEstado.contains("item") || valorEstado.isEmpty()) {
+                c.setEstado("activo");
+            } else {
+                c.setEstado(valorEstado);
+            }
+            
+            boolean exito = bd.actualizar_cliente(c);
+            if(exito){
+                JOptionPane.showMessageDialog(dialogDetallesCliente, "¡Cliente actualizado correctamente!");
+                dialogDetallesCliente.dispose();
+                efeCincoActionPerformed(null);
+            }else{
+                JOptionPane.showMessageDialog(dialogDetallesCliente, "Error al actualizar en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }        
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila_eliminar = tablaListaClientes.getSelectedRow();
+        boolean exito_eliminar = false;
+        BBDD bd = new BBDD();
+        
+        if(fila_eliminar != -1){
+            String dni_eliminar = tablaListaClientes.getValueAt(fila_eliminar, 0).toString();
+            int opcion = JOptionPane.showConfirmDialog(this, "¿Desea eliminar esta entrada?", "Aviso", JOptionPane.YES_NO_CANCEL_OPTION);
+            switch(opcion){
+                case 0:
+                    exito_eliminar = bd.eliminar_cliente(dni_eliminar);
+                    evaluar_exito(exito_eliminar);
+                    break;
+                case 1:
+                    no_elimina_cliente();
+                    break;
+                case 2:
+                    cancelar_eliminar_cliente();
+                    break;
+            }
+        }else{
+            return;
+        }
+        efeCincoActionPerformed(evt);
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInactivosActionPerformed
+        dialogInactivos.setSize(815, 630);
+        dialogInactivos.setLocationRelativeTo(this);
+        dialogInactivos.setVisible(true);
+        BBDD bd = new BBDD();
+        List<Cliente> lista_inactivos = bd.listar_clientes_inactivos();
+        llenar_tabla_inactivos(lista_inactivos);
+                
+    }//GEN-LAST:event_btnInactivosActionPerformed
+
+    private void btnActivarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarClienteActionPerformed
+      int numero_fila = tabla_inactivos.getSelectedRow();
+      if(numero_fila != -1){
+        String dni = tabla_inactivos.getValueAt(numero_fila, 0).toString();      
+        BBDD bd = new BBDD();
+        boolean exito = bd.activar_cliente(dni);
+        if(exito){
+            JOptionPane.showMessageDialog(this, "Activado correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Error en la avtivacion", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+          efeCincoActionPerformed(evt);
+      }else{
+          JOptionPane.showMessageDialog(dialogInactivos, "Por favor, seleccione un cliente inactivo para reactivarlo.", "Aviso", JOptionPane.WARNING_MESSAGE);
+      }
+      
+    }//GEN-LAST:event_btnActivarClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActivarCliente;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnInactivos;
     private javax.swing.JButton btnNuevoCliente;
     private javax.swing.JButton btnRegCliente;
+    private javax.swing.JCheckBox checkBoxDetalles;
     private javax.swing.JCheckBox checkBoxDni;
+    private javax.swing.JComboBox<String> cmbDetallesEstado;
+    private javax.swing.JComboBox<String> cmbDetallesProvincia;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbProvincia;
     private javax.swing.JComboBox<String> cmbTipoCliente;
+    private javax.swing.JDialog dialogDetallesCliente;
+    private javax.swing.JDialog dialogInactivos;
     private javax.swing.JDialog dialogRegCliente;
     private javax.swing.JButton efeCinco;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -437,11 +780,30 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel panelDetallesCliente;
+    private javax.swing.JPanel panelHistorialCompras;
+    private javax.swing.JTable tablaDetallesHistorialCompras;
+    private javax.swing.JTable tablaListaClientes;
+    private javax.swing.JTable tabla_inactivos;
     private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextArea txtAreaDetalles;
     private javax.swing.JTextArea txtAreaNotas;
     private javax.swing.JTextField txtCiudad;
     private javax.swing.JTextField txtDNI;
+    private javax.swing.JTextField txtDetallesAlta;
+    private javax.swing.JTextField txtDetallesApellidos;
+    private javax.swing.JTextField txtDetallesCiudad;
+    private javax.swing.JTextField txtDetallesCodPostal;
+    private javax.swing.JTextField txtDetallesDNI;
+    private javax.swing.JTextField txtDetallesDireccion;
+    private javax.swing.JTextField txtDetallesEmilio;
+    private javax.swing.JTextField txtDetallesNombre;
+    private javax.swing.JTextField txtDetallesTfno;
+    private javax.swing.JTextField txtDetallesTipoCliente;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtMail;
     private javax.swing.JTextField txtNombre;
@@ -456,36 +818,66 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel();
         modelo.addColumn("DNI");
         modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("e-Mail");
+        modelo.addColumn("Alta");
+        modelo.addColumn("Estado");
         
         if (lista_de_clientes != null) {
         for (Cliente c : lista_de_clientes) {
-            Object[] fila = new Object[2];
+            Object[] fila = new Object[6];
             fila[0] = c.getDniCliente();
             fila[1] = c.getNombreCl();
+            fila[2] = c.getApellidoCl();
+            fila[3] = c.getEmailCl();
+            Date alta = c.getFechaAlta();            
+            fila[4] = transform(alta);
+            fila[5] = c.getEstado();
             modelo.addRow(fila);
             }
         }
-        jTable1.setModel(modelo);
+        tablaListaClientes.setModel(modelo);
     }
 
     private void agregar_listener() {
-        jTable1.addMouseListener(new MouseAdapter() {
+        tablaListaClientes.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
-                    int fila = jTable1.getSelectedRow();
+                    int fila = tablaListaClientes.getSelectedRow();
                     if (fila != -1) {
-                        String dni = jTable1.getValueAt(fila, 0).toString();
-                        String nombre = jTable1.getValueAt(fila, 1).toString();
-                        abrirDetalleCliente(dni, nombre);
+                        String dni = tablaListaClientes.getValueAt(fila, 0).toString();
+                        
+                        BBDD bd = new BBDD();
+                        Cliente c = bd.obtener_cliente_por_dni(dni);
+                        
+                        if(c != null){
+                            txtDetallesDNI.setText(c.getDniCliente());
+                            txtDetallesNombre.setText(c.getNombreCl());
+                            txtDetallesApellidos.setText(c.getApellidoCl());
+                            txtDetallesEmilio.setText(c.getEmailCl());
+                            txtDetallesDireccion.setText(c.getDireccionCl());
+                            txtDetallesTfno.setText(c.getTelefonoCl());
+                            txtDetallesCodPostal.setText(c.getCodigoPostal());
+                            txtDetallesTipoCliente.setText(c.getTipoCliente());
+                            if(c.getFechaAlta() != null){
+                                txtDetallesAlta.setText(transform(c.getFechaAlta()));
+                            }
+                            txtAreaDetalles.setText(c.getNotas());
+                            
+                            cargar_historial_compras(dni);
+                            
+                            checkBoxDetalles.setSelected(false);
+                            permitir_edicion(false);
+                            
+                            dialogDetallesCliente.pack();
+                            dialogDetallesCliente.setSize(743, 610);
+                            dialogDetallesCliente.setLocationRelativeTo(null);
+                            dialogDetallesCliente.setVisible(true);                            
+                        }
                     }
                 }
             }
-
-            private void abrirDetalleCliente(String dni, String nombre) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
-        
+        });        
     }
     
     private void limpiar_campos_registro(){
@@ -582,19 +974,125 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         }
         return correcto;
     }
+
+    private String transform(Date alta) {
+        if (alta == null) {
+            return ""; 
+        }       
+        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");       
+        return formateador.format(alta);
+    }
     
+    private void permitir_edicion(boolean activar){
+        txtDetallesDNI.setEditable(false);
+        txtDetallesAlta.setEditable(false);
+        
+        txtDetallesNombre.setEditable(activar);
+        txtDetallesApellidos.setEditable(activar);
+        txtDetallesEmilio.setEditable(activar);
+        txtDetallesDireccion.setEditable(activar);
+        txtDetallesCodPostal.setEditable(activar);
+        txtDetallesTfno.setEditable(activar);
+        txtDetallesCiudad.setEditable(activar);        
+        txtDetallesTipoCliente.setEditable(activar);
+        cmbDetallesProvincia.setEditable(activar);
+        cmbDetallesEstado.setEditable(activar);
+        btnActualizar.setEnabled(activar);
+    }    
     
+    private boolean comprobar_dni_antes_actualizar(){
+        if (txtDetallesDNI.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El DNI no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);        
+        }
+        return true;
+    }
     
+    private void asignar_estados(){        
+        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(estados));
+        cmbDetallesEstado.setModel(new javax.swing.DefaultComboBoxModel<>(estados));
+    }
     
+    private void cargar_historial_compras(String dniCliente) {
+        try {
+            BBDD bd = new BBDD();            
+            List<Venta> lista_compras = bd.obtener_compras_por_cliente(dniCliente); 
+
+            llenar_tabla_historial(lista_compras);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el historial: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }        
+    }
+
+    private void cancelar_eliminar_cliente() {
+        JOptionPane.showConfirmDialog(this, "Se canceló la operacion", "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void no_elimina_cliente() {
+        JOptionPane.showConfirmDialog(this, "Se canceló la operacion", "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void evaluar_exito(boolean exito_eliminar) {
+        if(exito_eliminar){
+            JOptionPane.showMessageDialog(this, "Se eliminó correctamente", "Notificacion", JOptionPane.OK_OPTION);
+        }else{
+            JOptionPane.showMessageDialog(this, "Problema al eliminar.\nError", "Notificacion", JOptionPane.WARNING_MESSAGE);
+        }
+    }
     
+    private void configurar_tabla_historial(){
+        String[] columnas = {"ID Venta", "Fecha", "Total", "Metodo Pago"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tablaDetallesHistorialCompras.setModel(modelo);
+    }
+
+    private void llenar_tabla_historial(List<Venta> lista_compras) {
+        DefaultTableModel modelo = (DefaultTableModel) tablaDetallesHistorialCompras.getModel();
+        modelo.setRowCount(0);
+        if (lista_compras != null && !lista_compras.isEmpty()) {
+            for (Venta venta : lista_compras) {               
+                Object[] fila = {
+                    venta.getIdVenta() != null ? venta.getIdVenta() : "N/A", 
+                    venta.getFechaVenta() != null ? transform(venta.getFechaVenta()) : "Sin fecha", 
+                    venta.getTotal() != null ? String.format("%.2f €", venta.getTotal().doubleValue()) : "0.00 €",
+                    venta.getMetodoPago() != null ? venta.getMetodoPago() : "No especificado"
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+
+    private void configurar_tabla_inactivos(){
+        String[] columnas = {"DNI", "Nombre", "Apellidos", "Email", "Teléfono"};
+    DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Evitamos que el usuario edite las celdas directamente
+        }
+    };
+    tabla_inactivos.setModel(modelo);
+    }
+    
+    private void llenar_tabla_inactivos(List<Cliente> lista_inactivos) {
+    DefaultTableModel modelo = (DefaultTableModel) tabla_inactivos.getModel();
+    modelo.setRowCount(0);
+    
+    if (lista_inactivos != null && !lista_inactivos.isEmpty()) {
+        for (Cliente cliente : lista_inactivos) {
+            Object[] fila = {
+                cliente.getDniCliente(),
+                cliente.getNombreCl(),
+                cliente.getApellidoCl(),
+                cliente.getEmailCl(),
+                cliente.getTelefonoCl()
+            };
+            modelo.addRow(fila);
+        }
+    }
 }
-
-
-//tareas
-
-//cargar lista
-//mostrar en tabla
-//boton refrescar
-//boton registro de cliente
-
+}
 

@@ -6,12 +6,19 @@
 package vista;
 
 import data_transfer_object.InventarioDTO;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
 import java.security.acl.Owner;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Pattern;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import modelo.BBDD;
 import modelo.TablaConsulta;
 import pojos_package.Inventario;
@@ -27,12 +34,14 @@ public class VentanaConsulta extends javax.swing.JPanel {
      * Creates new form VentanaConsulta
      */
     private java.awt.Frame parentFrame;
+    private TableRowSorter<DefaultTableModel> sorter;
     
     public VentanaConsulta() {        
         initComponents();
 //        tablaConsulta = new javax.swing.JTable();
 //        scrollable.setViewportView(tablaConsulta);
-        //cargar_tabla();
+        configurarPlaceholders();
+        cargar_tabla();
     }
 
     /**
@@ -62,6 +71,11 @@ public class VentanaConsulta extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         scrollable = new javax.swing.JScrollPane();
         tablaConsulta = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        txtFiltroGlobal = new javax.swing.JTextField();
+        txtFiltroFecha = new javax.swing.JTextField();
+        cmbArticulosConsulta = new javax.swing.JComboBox<>();
+        btnLimpiarFiltros = new javax.swing.JButton();
 
         dialog_detalle.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialog_detalle.setTitle("DETALLE DE ARTICULO");
@@ -165,12 +179,15 @@ public class VentanaConsulta extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 51, 0));
         setPreferredSize(new java.awt.Dimension(850, 577));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Inventario");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 35, 125, 45));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(186, 22, 87, 76));
 
         tablaConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,35 +207,54 @@ public class VentanaConsulta extends javax.swing.JPanel {
         });
         scrollable.setViewportView(tablaConsulta);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+        add(scrollable, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 239, 826, 326));
+
+        jPanel1.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        txtFiltroGlobal.setText("jTextField1");
+
+        txtFiltroFecha.setText("jTextField1");
+
+        cmbArticulosConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnLimpiarFiltros.setText("Limpiar filtros");
+        btnLimpiarFiltros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarFiltrosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollable, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtFiltroGlobal)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtFiltroFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbArticulosConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                        .addComponent(btnLimpiarFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(17, 17, 17)
-                .addComponent(scrollable, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                .addContainerGap())
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtFiltroGlobal, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFiltroFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbArticulosConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiarFiltros))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 830, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_detalle_numserieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_detalle_numserieActionPerformed
@@ -227,39 +263,54 @@ public class VentanaConsulta extends javax.swing.JPanel {
 
     private void tablaConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaConsultaMouseClicked
         if (evt.getClickCount() == 2) {
-        try {
-            int fila = tablaConsulta.getSelectedRow();
-            if (fila == -1) { 
-                return;
-            }            
-            Object valor = tablaConsulta.getValueAt(fila, 0); 
-            String num_serie = valor.toString();            
-            abrir_dialog_detalle(num_serie);            
-        } catch (Exception e) {            
-            e.printStackTrace();
-        }
+            try {
+                int fila = tablaConsulta.getSelectedRow();
+                if (fila == -1) { 
+                    return;
+                }            
+                Object valor = tablaConsulta.getValueAt(fila, 0); 
+                String num_serie = valor.toString();            
+                abrir_dialog_detalle(num_serie);            
+            } catch (Exception e) {            
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_tablaConsultaMouseClicked
+
+    private void btnLimpiarFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarFiltrosActionPerformed
+        txtFiltroGlobal.setText("Nº Serie, proveedor, pasillo o estante...");
+        txtFiltroGlobal.setForeground(Color.GRAY);
+        if (cmbArticulosConsulta.getItemCount() > 0) {
+            cmbArticulosConsulta.setSelectedIndex(0);
+        }
+        if (sorter != null) {
+            sorter.setRowFilter(null);
+        }
+    }//GEN-LAST:event_btnLimpiarFiltrosActionPerformed
 
     public void cargar_tabla(){       
         BBDD bd = new BBDD();
         List<Inventario> datosInventario = bd.llenar_tabla_consulta();
-    if (datosInventario != null && !datosInventario.isEmpty()) {
-        DefaultTableModel modelo = TablaConsulta.crear_modelo_de_tabla(datosInventario);        
-        tablaConsulta.setModel(modelo);
-        tablaConsulta.revalidate();
-        tablaConsulta.repaint();        
-    } else {
-        System.out.println("No hay datos para mostrar, mostrando tabla vacía.");
-        DefaultTableModel modeloVacio = new DefaultTableModel(new Object[]{"Nº Serie", "Artículo", "Proveedor", "Pasillo", "Estante"}, 0);
-        tablaConsulta.setModel(modeloVacio);
-        tablaConsulta.revalidate();
-    }
+        if (datosInventario != null && !datosInventario.isEmpty()) {
+            DefaultTableModel modelo = TablaConsulta.crear_modelo_de_tabla(datosInventario);        
+            tablaConsulta.setModel(modelo);
+            actualizar_comboBox_articulos(datosInventario);
+            activar_filtros();
+            tablaConsulta.revalidate();
+            tablaConsulta.repaint();        
+        } else {
+            System.out.println("No hay datos para mostrar, mostrando tabla vacía.");
+            DefaultTableModel modeloVacio = new DefaultTableModel(new Object[]{"Nº Serie", "Artículo", "Proveedor", "Pasillo", "Estante"}, 0);
+            tablaConsulta.setModel(modeloVacio);
+            tablaConsulta.revalidate();
+        }
     }
     
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLimpiarFiltros;
+    private javax.swing.JComboBox<String> cmbArticulosConsulta;
     private javax.swing.JDialog dialog_detalle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -270,9 +321,12 @@ public class VentanaConsulta extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu menu_detalle_editar;
     private javax.swing.JScrollPane scrollable;
     private javax.swing.JTable tablaConsulta;
+    private javax.swing.JTextField txtFiltroFecha;
+    private javax.swing.JTextField txtFiltroGlobal;
     private javax.swing.JTextField txt_detalle_articulo;
     private javax.swing.JTextField txt_detalle_fechacompra;
     private javax.swing.JTextField txt_detalle_fechaventa;
@@ -289,18 +343,13 @@ public class VentanaConsulta extends javax.swing.JPanel {
             return;
         }
         
-        String nombre_proveedor = bd.proveedor_num_serie(num_serie);
-        
+        String nombre_proveedor = bd.proveedor_num_serie(num_serie);        
         txt_detalle_numserie.setText(inv.getNumeroSerie());
         txt_detalle_articulo.setText(inv.getNombreArticulo());
         //txt_detalle_proveedor.setText(inv.getProveedores());
         txt_detalle_fechacompra.setText(inv.getFechaEntrada());
         System.out.println("Proveedor "+nombre_proveedor);
         txt_detalle_proveedor.setText(nombre_proveedor);
-        
-        
-        
-
         dialog_detalle.pack();
         dialog_detalle.setSize(600, 450);
         dialog_detalle.setModal(true);
@@ -308,7 +357,135 @@ public class VentanaConsulta extends javax.swing.JPanel {
         dialog_detalle.setVisible(true);
     }
 
+    private void activar_filtros(){
+        DefaultTableModel modelo = (DefaultTableModel) tablaConsulta.getModel();
+        sorter = new TableRowSorter<>(modelo);
+        tablaConsulta.setRowSorter(sorter);
+        
+        txtFiltroGlobal.addKeyListener(new java.awt.event.KeyAdapter() {
+        @Override
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            aplicar_filtros_combinados();
+        }
+    });
+        cmbArticulosConsulta.addActionListener(e -> aplicar_filtros_combinados());
+        
+        txtFiltroFecha.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                aplicar_filtros_combinados();
+            }
+        });
+    }
     
+    private void aplicar_filtros_combinados(){
+        if (sorter == null) return;
+
+        List<RowFilter<Object, Object>> filtros = new java.util.ArrayList<>();        
+        String textoGlobal = txtFiltroGlobal.getText().trim();
+        String placeholderGlobal = "Nº Serie, proveedor, pasillo o estante...";        
+        
+        if (!textoGlobal.isEmpty() && !textoGlobal.equals(placeholderGlobal)) {           
+            RowFilter<Object, Object> filtroGlobal = RowFilter.regexFilter("(?i)" + textoGlobal, 0, 2, 3, 4);
+            filtros.add(filtroGlobal);
+        }
+       
+        String articuloSeleccionado = cmbArticulosConsulta.getSelectedItem() != null ? cmbArticulosConsulta.getSelectedItem().toString() : "Todos";
+        if (!articuloSeleccionado.equals("Todos")) {
+            filtros.add(RowFilter.regexFilter("(?i)^" + Pattern.quote(articuloSeleccionado) + "$", 1));
+        }
+        
+        String fecha_texto = txtFiltroFecha.getText().trim();
+        String placeholderFecha = "AAAA-MM-DD";
+        if (fecha_texto.length() == 10 && !fecha_texto.equals(placeholderFecha)) {
+            RowFilter<Object, Object> filtroFecha = new RowFilter<Object, Object>() {
+                @Override
+                public boolean include(Entry<? extends Object, ? extends Object> entry) {
+                    try {
+                        String fechaCelda = entry.getStringValue(4); 
+                        return fechaCelda.compareTo(fecha_texto) >= 0;
+                    } catch (Exception ex) {
+                        return false;
+                    }
+                } 
+            };
+            filtros.add(filtroFecha);
+        }
+        
+        if (filtros.isEmpty()) {
+            sorter.setRowFilter(null);
+        } else {            
+            sorter.setRowFilter(javax.swing.RowFilter.andFilter(filtros));
+        }
+    }
+    
+    public void actualizar_comboBox_articulos(List<Inventario> lista) {
+    cmbArticulosConsulta.removeAllItems();
+    cmbArticulosConsulta.addItem("Todos");    
+    
+    Set<String> articulosUnicos = new TreeSet<>();
+        if (lista != null) {
+            for (Inventario item : lista) {
+                if (item.getArticulo() != null && item.getArticulo().getNombreArt() != null) {
+                    articulosUnicos.add(item.getArticulo().getNombreArt());
+                }
+            }
+        }
+    
+        for (String art : articulosUnicos) {
+            cmbArticulosConsulta.addItem(art);
+        }
+    }
+    
+    private void configurarPlaceholders() {
+        
+        String placeholderGlobal = "Nº Serie, proveedor, pasillo o estante...";
+        txtFiltroGlobal.setText(placeholderGlobal);
+        txtFiltroGlobal.setForeground(java.awt.Color.GRAY);
+
+        txtFiltroGlobal.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                
+                if (txtFiltroGlobal.getText().equals(placeholderGlobal)) {
+                    txtFiltroGlobal.setText("");
+                    txtFiltroGlobal.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                
+                if (txtFiltroGlobal.getText().trim().isEmpty()) {
+                    txtFiltroGlobal.setText(placeholderGlobal);
+                    txtFiltroGlobal.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
+        
+        String placeholderFecha = "AAAA-MM-DD";
+        txtFiltroFecha.setText(placeholderFecha);
+        txtFiltroFecha.setForeground(java.awt.Color.GRAY);
+
+        txtFiltroFecha.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtFiltroFecha.getText().equals(placeholderFecha)) {
+                    txtFiltroFecha.setText("");
+                    txtFiltroFecha.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtFiltroFecha.getText().trim().isEmpty()) {
+                    txtFiltroFecha.setText(placeholderFecha);
+                    txtFiltroFecha.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+    }
 }
 
 

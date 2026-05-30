@@ -50,8 +50,7 @@ public class BBDD {
         if (tx != null) {
             tx.rollback();
         }
-    } catch (Exception ignored) {
-        // evita segundo error
+    } catch (Exception ignored) {        
     }
 
     System.err.println("=== ERROR BBDD ===");
@@ -237,7 +236,7 @@ public class BBDD {
         
         try{
             iniciaOperacion();
-            String hql = "FROM Cliente";
+            String hql = "FROM Cliente c WHERE c.estado = 'activo'";
             query = sesion.createQuery(hql);
             lista_clientes = query.list();
         }catch(HibernateException he){
@@ -457,6 +456,116 @@ public class BBDD {
         return provincias;
     }
 
+    public Cliente obtener_cliente_por_dni(String dni) {
+        Cliente c = null;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "FROM Cliente c WHERE c.dniCliente = :dni";
+            query = sesion.createQuery(hql).setParameter("dni", dni);
+            c = (Cliente) query.uniqueResult();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        }finally{
+            sesion.close();
+        }
+        return c;
+    }    
+
+    public boolean actualizar_cliente(Cliente c) {
+        boolean exito = false;
+        Query query;
+        try{
+            iniciaOperacion();
+            sesion.update(c);
+            tx.commit();
+            exito = true;
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            tx.rollback();
+            exito = false;
+        }finally{
+            sesion.close();
+        }
+        return exito;
+    }
+
+    public List<Venta> obtener_compras_por_cliente(String dniCliente) {
+        List<Venta> lista_ventas = null;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "FROM Venta v WHERE v.cliente.dniCliente = :dni";
+            query = sesion.createQuery(hql).setParameter("dni", dniCliente);
+            lista_ventas = query.list();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+        }finally{
+            sesion.close();
+        }
+        return lista_ventas;
+    }
+
+    public boolean eliminar_cliente(String dni_eliminar) {
+        boolean exito = false;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "UPDATE Cliente c SET c.estado = :nuevo_estado WHERE c.dniCliente = :dni_eliminar";
+            query = sesion.createQuery(hql).setParameter("nuevo_estado", "inactivo").setParameter("dni_eliminar", dni_eliminar);
+            int filas_afectadas = query.executeUpdate();
+            if(filas_afectadas == 1){
+                exito = true;
+            }else{
+                exito= false;
+            }
+            tx.commit();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            tx.rollback();
+            exito= false;
+        }finally{
+            sesion.close();
+        }
+        return exito;
+    }
     
+    public List<Cliente> listar_clientes_inactivos() {
+        List<Cliente> lista_clientes = null;
+        Query query;
+        
+        try{
+            iniciaOperacion();
+            String hql = "FROM Cliente c WHERE c.estado = 'inactivo'";
+            query = sesion.createQuery(hql);
+            lista_clientes = query.list();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            System.err.println("Problema de carga");
+        }finally{
+            sesion.close();
+        }
+        return lista_clientes;
+    }
     
+    public boolean activar_cliente(String dni_activar){
+        boolean exito = false;
+        Query query;
+        try{
+            iniciaOperacion();
+            String hql = "UPDATE Cliente c SET c.estado = :nuevo_estado WHERE c.dniCliente = :dni_activar";
+            query = sesion.createQuery(hql).setParameter("nuevo_estado", "activo").setParameter("dni_activar", dni_activar);
+            int filas_afectadas = query.executeUpdate();
+            if(filas_afectadas ==1){
+                exito = true;
+            }
+            tx.commit();
+        }catch(HibernateException he){
+            manejaExcepcion(he);
+            tx.rollback();
+        }finally{
+            sesion.close();
+        }
+        return exito;
+    }
 }
