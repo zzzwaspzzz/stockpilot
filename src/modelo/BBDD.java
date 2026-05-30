@@ -568,4 +568,23 @@ public class BBDD {
         }
         return exito;
     }
+    
+    public List<Object[]> obtener_stock_por_pasillo() {
+        List<Object[]> resultado = null;
+        try {
+            iniciaOperacion();            
+            String hql = "SELECT u.pasillo, COUNT(i.numeroSerie) " +
+                         "FROM Inventario i " +
+                         "JOIN i.ubicacion u " +
+                         "WHERE i.estado = :estadoFiltro " +
+                         "GROUP BY u.pasillo " +
+                         "ORDER BY u.pasillo ASC";           
+            resultado = sesion.createQuery(hql).setParameter("estadoFiltro", pojos_package.Estado_inventario.disponible).list();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+        } finally {
+            sesion.close();
+        }
+        return resultado;
+    }
 }

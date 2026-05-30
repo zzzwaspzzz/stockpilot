@@ -7,6 +7,8 @@ package vista;
 
 
 import java.awt.Color;
+import java.util.List;
+import modelo.BBDD;
 import vista.componentes.graficas.CurveLineChart;
 import vista.componentes.graficas.ModelChart;
 
@@ -16,13 +18,14 @@ import vista.componentes.graficas.ModelChart;
  */
 public class VentanaGraficas extends javax.swing.JPanel {
     private CurveLineChart chartAnimado;
+    private final BBDD bd = new BBDD();
     /**
      * Creates new form VentanaGraficas
      */
     public VentanaGraficas() {
         initComponents();
         inicializar_y_estilizar_grafica();
-        cargar_datos_simulados();
+        cargar_datos_almacen();
         
     }
 
@@ -70,9 +73,9 @@ public class VentanaGraficas extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -112,4 +115,43 @@ public class VentanaGraficas extends javax.swing.JPanel {
         chartAnimado.start();
     }
 
+    private void cargar_datos_almacen() {
+        chartAnimado.clear();
+        
+        List<Object[]> registros = bd.obtener_stock_por_pasillo();
+        
+        if (registros != null && !registros.isEmpty()) {
+            for (Object[] fila : registros) {
+                String labelPasillo = "Pasillo " + String.valueOf(fila[0]);
+                long cantidad = (Long) fila[1];                 
+                chartAnimado.addData(new ModelChart(labelPasillo, new double[]{cantidad, 4.0}));
+            }
+        } else {
+            chartAnimado.addData(new ModelChart("Sin Datos", new double[]{0, 15.0}));
+        }
+        chartAnimado.start();
+        
+        
+        
+        
+        
+//        chartAnimado.clear();
+//        
+//        List<Object[]> registros = bd.obtener_stock_por_pasillo();
+//        
+//        if(registros != null && !registros.isEmpty()){
+//            for (Object[] fila : registros)
+//            {
+//                String labelPasillo = "Pasillo " + String.valueOf(fila[0]);
+//                long cantidad = (long) fila[1];
+//                
+//                chartAnimado.addData(new ModelChart(labelPasillo, new double[]{cantidad, 80.0}));
+//            }
+//        }else{
+//            chartAnimado.addData(new ModelChart("Sin Datos", new double[]{ 0, 80 }));
+//        }
+//        chartAnimado.start();
+    }
 }
+
+
