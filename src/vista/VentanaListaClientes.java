@@ -111,6 +111,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         btnNuevoCliente = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnInactivos = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
 
         dialogRegCliente.setBackground(new java.awt.Color(255, 51, 0));
 
@@ -490,6 +491,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         );
 
         setBackground(new java.awt.Color(255, 51, 0));
+        setOpaque(false);
 
         tablaListaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -544,6 +546,9 @@ public class VentanaListaClientes extends javax.swing.JPanel {
             }
         });
 
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/person_search_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
+        jLabel18.setText("jLabel18");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -554,6 +559,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(efeCinco, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -569,7 +576,8 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(efeCinco))
+                    .addComponent(efeCinco)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -579,7 +587,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                         .addComponent(btnEliminar)
                         .addGap(18, 18, 18)
                         .addComponent(btnInactivos)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -770,6 +778,7 @@ public class VentanaListaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

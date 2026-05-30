@@ -178,6 +178,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
         );
 
         setBackground(new java.awt.Color(255, 51, 0));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(850, 577));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -211,6 +212,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel1.setOpaque(false);
 
         txtFiltroGlobal.setText("jTextField1");
 

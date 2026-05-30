@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.componentes.graficas;
+package vista_componentes_graficas;
 
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -44,28 +43,28 @@ public class BlankPlotChart extends JPanel{
         
         // Calculamos el espacio real para dibujar restando los bordes
         Insets insets = getInsets();
-        double width = getWidth() - (insets.left + insets.right + leftSpacing);
-        double height = getHeight() - (insets.top + insets.bottom + bottomSpacing);
+        double ancho = getWidth() - (insets.left + insets.right + leftSpacing);
+        double alto = getHeight() - (insets.top + insets.bottom + bottomSpacing);
         
         double x = insets.left + leftSpacing;
         double y = insets.top;
 
         // Dibujamos una cuadrícula base sutil (Gris claro)
         g2.setColor(new Color(230, 230, 230));
-        int totalLineasHorizontal = 5;
-        double espacioFila = height / totalLineasHorizontal;
+        int total_llneas_horizontal = 5;
+        double espacio_fila = alto / total_llneas_horizontal;
         
-        for (int i = 0; i <= totalLineasHorizontal; i++) {
-            double ly = y + height - (espacioFila * i);
-            g2.draw(new Line2D.Double(x, ly, x + width, ly));
+        for (int i = 0; i <= total_llneas_horizontal; i++) {
+            double ly = y + alto - (espacio_fila * i);
+            g2.draw(new Line2D.Double(x, ly, x + ancho, ly));
             
             // Renderizamos los números de escala del eje Y de forma genérica de momento
             g2.setColor(new Color(150, 150, 150));
-            FontMetrics fm = g2.getFontMetrics();
+            FontMetrics metricas = g2.getFontMetrics();
             String scaleText = String.valueOf(i * 20); // Escala básica temporal
-            Rectangle2D r2 = fm.getStringBounds(scaleText, g2);
+            Rectangle2D r2 = metricas.getStringBounds(scaleText, g2);
             double tx = x - r2.getWidth() - 5;
-            double ty = ly + r2.getHeight() / 2 - fm.getDescent();
+            double ty = ly + r2.getHeight() / 2 - metricas.getDescent();
             g2.drawString(scaleText, (float) tx, (float) ty);
             g2.setColor(new Color(230, 230, 230));
         }

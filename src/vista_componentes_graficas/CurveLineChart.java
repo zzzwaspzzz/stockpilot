@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.componentes.graficas;
+package vista_componentes_graficas;
 
 import javax.swing.JPanel;
 import java.awt.AlphaComposite;
@@ -12,7 +12,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.CubicCurve2D;
 import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +24,13 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
  */
 public class CurveLineChart extends JPanel{
     private final List<ModelChart> data = new ArrayList<>();
-    private final List<String> legends = new ArrayList<>();
-    private final List<Color> colors = new ArrayList<>();
+    private final List<String> leyenda = new ArrayList<>();
+    private final List<Color> colores = new ArrayList<>();
     
     private final BlankPlotChart blankPlotChart;
     private final Animator animator;
-    private float animacionProgreso = 0f;
-    private String title = "Gráfica de Rendimiento";
+    private float progreso_de_animacion = 0f;
+    private String titulo = "Gráfica de Rendimiento";
 
     public CurveLineChart() {
         setLayout(new java.awt.BorderLayout());
@@ -42,7 +41,7 @@ public class CurveLineChart extends JPanel{
         animator = new Animator(800, new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
-                animacionProgreso = fraction;
+                progreso_de_animacion = fraction;
                 repaint();
             }
         });
@@ -51,13 +50,13 @@ public class CurveLineChart extends JPanel{
         animator.setDeceleration(0.5f);
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String titulo) {
+        this.titulo = titulo;
     }
 
     public void addLegend(String name, Color color) {
-        legends.add(name);
-        colors.add(color);
+        leyenda.add(name);
+        colores.add(color);
     }
 
     public void addData(ModelChart model) {
@@ -66,7 +65,7 @@ public class CurveLineChart extends JPanel{
 
     public void clear() {
         data.clear();
-        animacionProgreso = 0f;
+        progreso_de_animacion = 0f;
         repaint();
     }
 
@@ -84,11 +83,11 @@ public class CurveLineChart extends JPanel{
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);           
             
-            renderLineasYDegradados(g2);
+            renderizar_lineas_y_degradados(g2);
         }
     }
 
-    private void renderLineasYDegradados(Graphics2D g2) {
+    private void renderizar_lineas_y_degradados(Graphics2D g2) {
         int width = blankPlotChart.getWidth() - 30;
         int height = blankPlotChart.getHeight() - 30;
         int xStart = blankPlotChart.getX() + 30;
@@ -98,7 +97,7 @@ public class CurveLineChart extends JPanel{
         double maxValor = getValorMaximoDatos();
 
         
-        int totalSeries = colors.size();
+        int totalSeries = colores.size();
         for (int serie = 0; serie < totalSeries; serie++) {
             GeneralPath path = new GeneralPath();
             boolean primerPunto = true;
@@ -108,7 +107,7 @@ public class CurveLineChart extends JPanel{
             for (int i = 0; i < data.size(); i++) {
                 double vx = xStart + (i * espacioX);
                 
-                double valorAnimado = data.get(i).getValues()[serie] * animacionProgreso;
+                double valorAnimado = data.get(i).getValues()[serie] * progreso_de_animacion;
                 double vy = yStart + height - (valorAnimado / maxValor * height);
 
                 if (primerPunto) {
@@ -132,13 +131,13 @@ public class CurveLineChart extends JPanel{
             degeterPath.lineTo(xStart, yStart + height);
             degeterPath.closePath();
             
-            g2.setPaint(new GradientPaint(xStart, yStart, colors.get(serie), xStart, yStart + height, new Color(0,0,0,0)));
+            g2.setPaint(new GradientPaint(xStart, yStart, colores.get(serie), xStart, yStart + height, new Color(0,0,0,0)));
             g2.fill(degeterPath);
 
             
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f)); // Opacidad completa
             g2.setStroke(new java.awt.BasicStroke(3f, java.awt.BasicStroke.CAP_ROUND, java.awt.BasicStroke.JOIN_ROUND));
-            g2.setColor(colors.get(serie));
+            g2.setColor(colores.get(serie));
             g2.draw(path);
         }
     }

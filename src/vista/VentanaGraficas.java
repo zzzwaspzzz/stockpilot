@@ -9,8 +9,8 @@ package vista;
 import java.awt.Color;
 import java.util.List;
 import modelo.BBDD;
-import vista.componentes.graficas.CurveLineChart;
-import vista.componentes.graficas.ModelChart;
+import vista_componentes_graficas.CurveLineChart;
+import vista_componentes_graficas.ModelChart;
 
 /**
  *
@@ -40,16 +40,35 @@ public class VentanaGraficas extends javax.swing.JPanel {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        panelContenedor = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        panelGraficas_1 = new javax.swing.JPanel();
+        panelGraficas_2 = new javax.swing.JPanel();
+
+        setOpaque(false);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Graficas");
 
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/analytics_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
 
-        panelContenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelGraficas_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.addTab("tab1", panelGraficas_1);
+
+        javax.swing.GroupLayout panelGraficas_2Layout = new javax.swing.GroupLayout(panelGraficas_2);
+        panelGraficas_2.setLayout(panelGraficas_2Layout);
+        panelGraficas_2Layout.setHorizontalGroup(
+            panelGraficas_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1002, Short.MAX_VALUE)
+        );
+        panelGraficas_2Layout.setVerticalGroup(
+            panelGraficas_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 326, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab1", panelGraficas_2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -57,14 +76,13 @@ public class VentanaGraficas extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(847, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1007, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,9 +91,9 @@ public class VentanaGraficas extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -83,12 +101,14 @@ public class VentanaGraficas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel panelContenedor;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel panelGraficas_1;
+    private javax.swing.JPanel panelGraficas_2;
     // End of variables declaration//GEN-END:variables
     
     private void inicializar_y_estilizar_grafica() {    
     chartAnimado = new CurveLineChart();    
-    chartAnimado.setBackground(new Color(24, 24, 27));
+    chartAnimado.setBackground(new java.awt.Color(10, 17, 31));
     
     
     chartAnimado.setTitle("Ocupación de Stock por Pasillos");
@@ -96,9 +116,9 @@ public class VentanaGraficas extends javax.swing.JPanel {
     chartAnimado.addLegend("Límite de Alerta", new Color(238, 7, 137));
     
     
-    panelContenedor.setLayout(new java.awt.BorderLayout());
-    panelContenedor.add(chartAnimado, java.awt.BorderLayout.CENTER);
-    panelContenedor.validate();
+    panelGraficas_1.setLayout(new java.awt.BorderLayout());
+    panelGraficas_1.add(chartAnimado, java.awt.BorderLayout.CENTER);
+    panelGraficas_1.validate();
     }
     
     private void cargar_datos_simulados() {
@@ -129,28 +149,7 @@ public class VentanaGraficas extends javax.swing.JPanel {
         } else {
             chartAnimado.addData(new ModelChart("Sin Datos", new double[]{0, 15.0}));
         }
-        chartAnimado.start();
-        
-        
-        
-        
-        
-//        chartAnimado.clear();
-//        
-//        List<Object[]> registros = bd.obtener_stock_por_pasillo();
-//        
-//        if(registros != null && !registros.isEmpty()){
-//            for (Object[] fila : registros)
-//            {
-//                String labelPasillo = "Pasillo " + String.valueOf(fila[0]);
-//                long cantidad = (long) fila[1];
-//                
-//                chartAnimado.addData(new ModelChart(labelPasillo, new double[]{cantidad, 80.0}));
-//            }
-//        }else{
-//            chartAnimado.addData(new ModelChart("Sin Datos", new double[]{ 0, 80 }));
-//        }
-//        chartAnimado.start();
+        chartAnimado.start(); 
     }
 }
 

@@ -30,6 +30,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        hacerPanelesTransparentes(this.getContentPane());
         tarjeta = (CardLayout) pnl_invisible.getLayout();
         cliente = new VentanaClientes(tarjeta, pnl_invisible, lista_clientes);
         pnl_invisible.add(registro, "registro");
@@ -199,6 +200,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
 
         pnl_invisible.setBackground(new java.awt.Color(255, 102, 51));
+        pnl_invisible.setOpaque(false);
         pnl_invisible.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -314,4 +316,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton5;
     private javax.swing.JPanel pnl_invisible;
     // End of variables declaration//GEN-END:variables
+
+    private void hacerPanelesTransparentes(java.awt.Component componente) {
+    if (componente instanceof javax.swing.JPanel) {
+        // Le quitamos la opacidad para que sea transparente y use el fondo de FlatLaf
+        ((javax.swing.JPanel) componente).setOpaque(false);
+    }
+    if (componente instanceof java.awt.Container) {
+        for (java.awt.Component hijo : ((java.awt.Container) componente).getComponents()) {
+            hacerPanelesTransparentes(hijo);
+        }
+    }
+}
 }
