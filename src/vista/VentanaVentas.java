@@ -119,6 +119,7 @@ public class VentanaVentas extends javax.swing.JPanel {
                 .addGap(36, 36, 36))
         );
 
+        setOpaque(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
         jPanel2.setBackground(new java.awt.Color(255, 51, 0));
@@ -129,6 +130,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         cmbEscanerSerie.setBackground(new java.awt.Color(0, 0, 0));
         cmbEscanerSerie.setEditable(true);
         cmbEscanerSerie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEscanerSerie.setOpaque(false);
         cmbEscanerSerie.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cmbEscanerSerieKeyPressed(evt);
@@ -146,9 +148,9 @@ public class VentanaVentas extends javax.swing.JPanel {
         txtDNICliente.setText("textField1");
         jPanel1.add(txtDNICliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(158, 39, 246, -1));
 
-        label1.setBackground(new java.awt.Color(0, 0, 0));
+        label1.setBackground(new java.awt.Color(204, 204, 204));
         label1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        label1.setForeground(new java.awt.Color(255, 255, 255));
+        label1.setForeground(new java.awt.Color(0, 0, 0));
         label1.setText("Pedido / Factura:");
         jPanel1.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 112, -1, -1));
 
@@ -162,9 +164,9 @@ public class VentanaVentas extends javax.swing.JPanel {
         });
         jPanel1.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 133, -1));
 
-        label2.setBackground(new java.awt.Color(0, 0, 0));
+        label2.setBackground(new java.awt.Color(204, 204, 204));
         label2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        label2.setForeground(new java.awt.Color(255, 255, 255));
+        label2.setForeground(new java.awt.Color(0, 0, 0));
         label2.setText("DNI / CIF: ");
         jPanel1.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 38, -1, -1));
 
@@ -184,6 +186,8 @@ public class VentanaVentas extends javax.swing.JPanel {
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jScrollPane1.setOpaque(false);
+
         tablaAlbaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -199,8 +203,9 @@ public class VentanaVentas extends javax.swing.JPanel {
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 940, 128));
 
-        btnCrearAlbaran.setBackground(new java.awt.Color(0, 0, 0));
+        btnCrearAlbaran.setBackground(new java.awt.Color(204, 204, 204));
         btnCrearAlbaran.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnCrearAlbaran.setForeground(new java.awt.Color(0, 0, 0));
         btnCrearAlbaran.setText("Crear Albarán");
         btnCrearAlbaran.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,8 +214,9 @@ public class VentanaVentas extends javax.swing.JPanel {
         });
         jPanel3.add(btnCrearAlbaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 291, -1));
 
-        btnRemove.setBackground(new java.awt.Color(0, 0, 0));
+        btnRemove.setBackground(new java.awt.Color(204, 204, 204));
         btnRemove.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnRemove.setForeground(new java.awt.Color(0, 0, 0));
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

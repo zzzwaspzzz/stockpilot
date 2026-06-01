@@ -190,6 +190,8 @@ public class VentanaConsulta extends javax.swing.JPanel {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(186, 22, 87, 76));
 
+        scrollable.setOpaque(false);
+
         tablaConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -208,7 +210,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
         });
         scrollable.setViewportView(tablaConsulta);
 
-        add(scrollable, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 239, 826, 326));
+        add(scrollable, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 239, 990, 350));
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -239,7 +241,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
                         .addComponent(txtFiltroFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cmbArticulosConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
                         .addComponent(btnLimpiarFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -256,7 +258,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 830, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 990, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_detalle_numserieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_detalle_numserieActionPerformed

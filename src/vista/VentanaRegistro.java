@@ -138,17 +138,20 @@ public class VentanaRegistro extends javax.swing.JPanel {
                 .addGap(42, 42, 42))
         );
 
+        setOpaque(false);
+
         jPanel1.setBackground(new java.awt.Color(255, 102, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
         jPanel1.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Articulo: ");
 
         cmbox_tipo_articulo.setBackground(new java.awt.Color(255, 255, 255));
         cmbox_tipo_articulo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cmbox_tipo_articulo.setForeground(new java.awt.Color(0, 0, 0));
+        cmbox_tipo_articulo.setOpaque(false);
         cmbox_tipo_articulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbox_tipo_articuloActionPerformed(evt);
@@ -166,7 +169,7 @@ public class VentanaRegistro extends javax.swing.JPanel {
         });
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Proveedor: ");
 
         reg_numserie.setBackground(new java.awt.Color(255, 255, 255));
@@ -183,15 +186,15 @@ public class VentanaRegistro extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Pasillo :");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Estado: ");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Registrar Stock");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/database_upload_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
@@ -216,7 +219,7 @@ public class VentanaRegistro extends javax.swing.JPanel {
         cmbox_reg_estante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione estante..." }));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Estante: ");
 
         cmbox_estado.setBackground(new java.awt.Color(255, 255, 255));
@@ -228,7 +231,7 @@ public class VentanaRegistro extends javax.swing.JPanel {
         dateChooserPanel1.setShowOneMonth(true);
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Numero Serie: ");
 
         cmbProveedor.setBackground(new java.awt.Color(255, 255, 255));
