@@ -62,6 +62,8 @@ public class VentanaVentas extends javax.swing.JPanel {
         tablaAlbaran = new javax.swing.JTable();
         btnCrearAlbaran = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         dialogBuscarCliente.setBackground(new java.awt.Color(255, 102, 0));
         dialogBuscarCliente.setModal(true);
@@ -134,10 +136,10 @@ public class VentanaVentas extends javax.swing.JPanel {
                 cmbEscanerSerieKeyPressed(evt);
             }
         });
-        jPanel2.add(cmbEscanerSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 750, 39));
+        jPanel2.add(cmbEscanerSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 750, 39));
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Datos del cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -177,10 +179,10 @@ public class VentanaVentas extends javax.swing.JPanel {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 110, 133, -1));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 2, 960, 199));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 960, 199));
 
         jPanel3.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Albarán", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -199,7 +201,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaAlbaran);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 940, 128));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 14, 960, 128));
 
         btnCrearAlbaran.setBackground(new java.awt.Color(204, 204, 204));
         btnCrearAlbaran.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -223,7 +225,15 @@ public class VentanaVentas extends javax.swing.JPanel {
         });
         jPanel3.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 149, 114, -1));
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 383, 970, 187));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 970, 187));
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Ventas");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 50));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/attach_money_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 60, 50));
 
         add(jPanel2);
     }// </editor-fold>//GEN-END:initComponents
@@ -377,6 +387,8 @@ public class VentanaVentas extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cmbEscanerSerie;
     private javax.swing.JDialog dialogBuscarCliente;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

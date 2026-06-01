@@ -188,10 +188,10 @@ public class VentanaConsulta extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Inventario");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 35, 125, 45));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 125, 45));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(186, 22, 87, 76));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 87, 76));
 
         scrollable.setOpaque(false);
 
@@ -215,9 +215,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
 
         add(scrollable, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 239, 990, 350));
 
-        jPanel1.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel1.setOpaque(false);
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
         txtFiltroGlobal.setText("jTextField1");
 

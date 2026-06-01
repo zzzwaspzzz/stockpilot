@@ -17,7 +17,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     VentanaRegistro registro = new VentanaRegistro();
     VentanaConsulta consulta = new VentanaConsulta();
     VentanaListaClientes lista_clientes = new VentanaListaClientes();
-    VentanaClientes cliente;
     VentanaVentas ventas = new VentanaVentas();
     VentanaGraficas graficas = new VentanaGraficas();
 
@@ -31,11 +30,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public VentanaPrincipal() {
         initComponents();
         hacerPanelesTransparentes(this.getContentPane());
-        tarjeta = (CardLayout) pnl_invisible.getLayout();
-        cliente = new VentanaClientes(tarjeta, pnl_invisible, lista_clientes);
+        tarjeta = (CardLayout) pnl_invisible.getLayout();        
         pnl_invisible.add(registro, "registro");
-        pnl_invisible.add(consulta, "consulta");
-        pnl_invisible.add(cliente, "cliente");
+        pnl_invisible.add(consulta, "consulta");        
         pnl_invisible.add(lista_clientes, "listaClientes");
         pnl_invisible.add(ventas, "ventas");
         pnl_invisible.add(graficas, "graficas");
