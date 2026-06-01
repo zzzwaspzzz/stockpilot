@@ -7,7 +7,12 @@ package vista;
 
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import modelo.BBDD;
 import vista_componentes_graficas.CurveLineChart;
 import vista_componentes_graficas.ModelChart;
@@ -18,14 +23,26 @@ import vista_componentes_graficas.ModelChart;
  */
 public class VentanaGraficas extends javax.swing.JPanel {
     private CurveLineChart chartAnimado;
-    private final BBDD bd = new BBDD();
+    private CurveLineChart chartPasillos;
+    private CurveLineChart chartIngresos;
+    private CurveLineChart chartInventario;
+    private CurveLineChart chartTopVentas;
+    private final BBDD bd = new BBDD();    
+    private JLabel lblPasilloCriticoKpi;
+    private JLabel lblTotalStockKpi;    
+    private JLabel lblMesRecordKpi;
+    private JLabel lblMediaIngresosKpi;    
+    private JLabel lblDisponiblesKpi;
+    private JLabel lblVendidosKpi;    
+    private JLabel lblTotalIngresosKpi;
+    private JLabel lblMejorProductoKpi;
     /**
      * Creates new form VentanaGraficas
      */
     public VentanaGraficas() {
         initComponents();
-        inicializar_y_estilizar_grafica();
-        cargar_datos_almacen();
+        inicializar_y_estilizar_grafica();        
+        cargar_datos_de_graficas();
         
     }
 
@@ -43,6 +60,8 @@ public class VentanaGraficas extends javax.swing.JPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panelGraficas_1 = new javax.swing.JPanel();
         panelGraficas_2 = new javax.swing.JPanel();
+        panelGraficas_3 = new javax.swing.JPanel();
+        panelGraficas_4 = new javax.swing.JPanel();
 
         setOpaque(false);
 
@@ -57,18 +76,14 @@ public class VentanaGraficas extends javax.swing.JPanel {
         panelGraficas_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jTabbedPane1.addTab("tab1", panelGraficas_1);
 
-        javax.swing.GroupLayout panelGraficas_2Layout = new javax.swing.GroupLayout(panelGraficas_2);
-        panelGraficas_2.setLayout(panelGraficas_2Layout);
-        panelGraficas_2Layout.setHorizontalGroup(
-            panelGraficas_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1002, Short.MAX_VALUE)
-        );
-        panelGraficas_2Layout.setVerticalGroup(
-            panelGraficas_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 326, Short.MAX_VALUE)
-        );
-
+        panelGraficas_2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jTabbedPane1.addTab("tab1", panelGraficas_2);
+
+        panelGraficas_3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.addTab("tab3", panelGraficas_3);
+
+        panelGraficas_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.addTab("tab4", panelGraficas_4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -104,53 +119,234 @@ public class VentanaGraficas extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panelGraficas_1;
     private javax.swing.JPanel panelGraficas_2;
+    private javax.swing.JPanel panelGraficas_3;
+    private javax.swing.JPanel panelGraficas_4;
     // End of variables declaration//GEN-END:variables
     
-    private void inicializar_y_estilizar_grafica() {    
-    chartAnimado = new CurveLineChart();    
-    chartAnimado.setBackground(new java.awt.Color(10, 17, 31));
-    
-    
-    chartAnimado.setTitle("Ocupación de Stock por Pasillos");
-    chartAnimado.addLegend("Capacidad Actual", new Color(12, 194, 240));
-    chartAnimado.addLegend("Límite de Alerta", new Color(238, 7, 137));
-    
-    
-    panelGraficas_1.setLayout(new java.awt.BorderLayout());
-    panelGraficas_1.add(chartAnimado, java.awt.BorderLayout.CENTER);
-    panelGraficas_1.validate();
+    private void inicializar_y_estilizar_grafica() {        
+        configurar_grafica_pasillos();
+        configurar_grafica_ingresos();
+        configurar_grafica_inventario();
+        configurar_grafica_top_ventas();
+        
+        configurar_titulos_pestañas();
     }
     
     private void cargar_datos_simulados() {
-        chartAnimado.clear();
-        
+        chartAnimado.clear();        
         
         chartAnimado.addData(new ModelChart("Pasillo A", new double[]{45, 80}));
         chartAnimado.addData(new ModelChart("Pasillo B", new double[]{75, 80}));
         chartAnimado.addData(new ModelChart("Pasillo C", new double[]{20, 80}));
         chartAnimado.addData(new ModelChart("Pasillo D", new double[]{95, 80})); 
-        chartAnimado.addData(new ModelChart("Pasillo E", new double[]{60, 80}));
-        
+        chartAnimado.addData(new ModelChart("Pasillo E", new double[]{60, 80}));        
         
         chartAnimado.start();
     }
+    
+    private void cargar_datos_de_graficas() {
+        cargar_datos_almacen();
+        cargar_datos_de_ingresos();
+        cargar_datos_estado_inventario();
+        cargar_datos_top_productos();
+    }
+    
+    private void configurar_grafica_pasillos() {
+        chartPasillos = new CurveLineChart();
+        chartPasillos.setTitle("Ocupación de Stock por Pasillos");
+        chartPasillos.addLegend("Unidades Disponibles", new Color(12, 123, 220));
+        chartPasillos.addLegend("Capacidad Óptima", new Color(240, 70, 70));
+        
+        JPanel panelKpis1 = new JPanel(new GridLayout(2, 1, 10, 10));
+        panelKpis1.setBackground(Color.WHITE);
+        panelKpis1.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        lblPasilloCriticoKpi = new JLabel("", SwingConstants.CENTER);
+        lblTotalStockKpi = new JLabel("", SwingConstants.CENTER);
+        
+        panelKpis1.add(lblPasilloCriticoKpi);
+        panelKpis1.add(lblTotalStockKpi);
+
+        panelGraficas_1.setLayout(new java.awt.BorderLayout());
+        panelGraficas_1.add(chartPasillos, java.awt.BorderLayout.CENTER);
+        panelGraficas_1.add(panelKpis1, java.awt.BorderLayout.EAST);
+        panelGraficas_1.validate();
+    }
 
     private void cargar_datos_almacen() {
-        chartAnimado.clear();
-        
+        chartPasillos.clear();
         List<Object[]> registros = bd.obtener_stock_por_pasillo();
         
+        long totalStockGlobal = 0;
+        long maxUnidadesPasillo = -1;
+        String pasilloMasLleno = "Ninguno";
+
         if (registros != null && !registros.isEmpty()) {
             for (Object[] fila : registros) {
                 String labelPasillo = "Pasillo " + String.valueOf(fila[0]);
-                long cantidad = (Long) fila[1];                 
-                chartAnimado.addData(new ModelChart(labelPasillo, new double[]{cantidad, 4.0}));
+                long cantidad = (Long) fila[1];
+                
+                totalStockGlobal += cantidad;
+                if (cantidad > maxUnidadesPasillo) {
+                    maxUnidadesPasillo = cantidad;
+                    pasilloMasLleno = labelPasillo;
+                }
+                chartPasillos.addData(new ModelChart(labelPasillo, new double[]{cantidad, 80.0}));
             }
-        } else {
-            chartAnimado.addData(new ModelChart("Sin Datos", new double[]{0, 15.0}));
+            chartPasillos.start();
+        }        
+        lblPasilloCriticoKpi.setText("<html><body style='text-align: center;'><font size='4' color='#f04646'>⚠️ PASILLO CRÍTICO</font><br><font size='5' color='black'><b>" + pasilloMasLleno + " (" + maxUnidadesPasillo + " u.)</b></font></body></html>");
+        lblTotalStockKpi.setText("<html><body style='text-align: center;'><font size='4' color='#0c7bdc'>📦 STOCK TOTAL GLOBAL</font><br><font size='6' color='black'><b>" + totalStockGlobal + " uds.</b></font></body></html>");
+    }
+
+    private void configurar_grafica_ingresos() {
+        chartIngresos = new CurveLineChart();
+        chartIngresos.setTitle("Evolución de Ingresos Mensuales (2026)");        
+        chartIngresos.addLegend("Ingresos por Ventas (€)", new Color(40, 180, 99));
+        chartIngresos.addLegend("Umbral de Rentabilidad (€)", new Color(241, 196, 15));
+
+        JPanel panelKpis2 = new JPanel(new GridLayout(2, 1, 10, 10));
+        panelKpis2.setBackground(Color.WHITE);
+        panelKpis2.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        lblMesRecordKpi = new JLabel("", SwingConstants.CENTER);
+        lblMediaIngresosKpi = new JLabel("", SwingConstants.CENTER);
+        
+        panelKpis2.add(lblMesRecordKpi);
+        panelKpis2.add(lblMediaIngresosKpi);
+
+        panelGraficas_2.setLayout(new java.awt.BorderLayout());
+        panelGraficas_2.add(chartIngresos, java.awt.BorderLayout.CENTER);
+        panelGraficas_2.add(panelKpis2, java.awt.BorderLayout.EAST);
+        panelGraficas_2.validate();
+    }
+
+    private void cargar_datos_de_ingresos() {
+        chartIngresos.clear();
+        List<Object[]> registros = bd.obtener_ingresos_mensuales_2026();
+        
+        double maxIngreso = -1;
+        String mesRecord = "Ninguno";
+        double sumaTotal = 0;
+        int contadorMeses = 0;
+
+        if (registros != null && !registros.isEmpty()) {
+            for (Object[] fila : registros) {
+                String mes = String.valueOf(fila[0]);                
+                double ingresos = ((Number) fila[1]).doubleValue();
+                
+                sumaTotal += ingresos;
+                contadorMeses++;
+                if (ingresos > maxIngreso) {
+                    maxIngreso = ingresos;
+                    mesRecord = mes;
+                }
+
+                chartIngresos.addData(new ModelChart(mes, new double[]{ingresos, 1200.00}));
+            }
+            chartIngresos.start();
         }
-        chartAnimado.start(); 
+        double mediaMensual = contadorMeses > 0 ? (sumaTotal / contadorMeses) : 0.0;
+
+        lblMesRecordKpi.setText("<html><body style='text-align: center;'><font size='4' color='#f1c40f'>⭐ MES RÉCORD</font><br><font size='5' color='black'><b>" + mesRecord + " (" + String.format("%.2f", maxIngreso) + " €)</b></font></body></html>");
+        lblMediaIngresosKpi.setText("<html><body style='text-align: center;'><font size='4' color='#28b463'>📈 MEDIA MENSUAL</font><br><font size='6' color='black'><b>" + String.format("%.2f", mediaMensual) + " €</b></font></body></html>");
+    }
+    
+    private void configurar_grafica_inventario() {
+        chartInventario = new CurveLineChart();
+        chartInventario.setTitle("Distribución de Artículos");        
+        chartInventario.addLegend("Volumen de Artículos", new Color(155, 89, 182));
+        JPanel panelKpis = new JPanel(new GridLayout(2, 1, 10, 10));
+        panelKpis.setBackground(Color.WHITE);
+        panelKpis.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        lblDisponiblesKpi = new JLabel("", SwingConstants.CENTER);
+        lblVendidosKpi = new JLabel("", SwingConstants.CENTER);
+        
+        panelKpis.add(lblDisponiblesKpi);
+        panelKpis.add(lblVendidosKpi);
+
+        panelGraficas_3.setLayout(new java.awt.BorderLayout());
+        panelGraficas_3.add(chartInventario, java.awt.BorderLayout.CENTER);
+        panelGraficas_3.add(panelKpis, java.awt.BorderLayout.EAST);
+        panelGraficas_3.validate();
+    }
+
+    private void cargar_datos_estado_inventario() {
+        chartInventario.clear(); 
+        List<Object[]> registros = bd.obtener_estado_global_inventario();
+        
+        long disponibles = 0;
+        long vendidos = 0;
+
+        if (registros != null) {
+            for (Object[] fila : registros) {
+                String estado = String.valueOf(fila[0]);
+                long conteo = ((Number) fila[1]).longValue();
+
+                if (estado.equalsIgnoreCase("disponible")) disponibles = conteo;
+                if (estado.equalsIgnoreCase("vendido")) vendidos = conteo;
+            }
+        }
+        chartInventario.addData(new ModelChart("Disponibles", new double[]{disponibles}));
+        chartInventario.addData(new ModelChart("Vendidos", new double[]{vendidos}));
+        chartInventario.start();
+        lblDisponiblesKpi.setText("<html><body style='text-align: center;'><font size='4' color='#9b59b6'>📦 STOCK DISPONIBLE</font><br><font size='6' color='black'><b>" + disponibles + " uds.</b></font></body></html>");
+        lblVendidosKpi.setText("<html><body style='text-align: center;'><font size='4' color='#2ecc71'>🛒 TOTAL VENDIDOS</font><br><font size='6' color='black'><b>" + vendidos + " uds.</b></font></body></html>");
+    }
+
+    private void configurar_grafica_top_ventas() {
+        chartTopVentas = new CurveLineChart();
+        chartTopVentas.setTitle("Top 5 Articulos (Unidades)");
+        chartTopVentas.addLegend("Unidades Vendidas", new Color(230, 126, 34));
+        
+        JPanel panelKpisTop = new JPanel(new GridLayout(2, 1, 10, 10));
+        panelKpisTop.setBackground(Color.WHITE);
+        panelKpisTop.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        lblMejorProductoKpi = new JLabel("", SwingConstants.CENTER);
+        lblTotalIngresosKpi = new JLabel("", SwingConstants.CENTER);
+
+        panelKpisTop.add(lblMejorProductoKpi);
+        panelKpisTop.add(lblTotalIngresosKpi);
+
+        panelGraficas_4.setLayout(new java.awt.BorderLayout());
+        panelGraficas_4.add(chartTopVentas, java.awt.BorderLayout.CENTER);
+        panelGraficas_4.add(panelKpisTop, java.awt.BorderLayout.EAST);
+        panelGraficas_4.validate();
+    }
+
+    private void cargar_datos_top_productos() {
+        chartTopVentas.clear();
+        List<Object[]> registros = bd.obtener_top_productos_mas_vendidos();
+        
+        double maxPrecioSuma = 0;
+        String productoEstrella = "Ninguno";
+
+        if (registros != null && !registros.isEmpty()) {
+            productoEstrella = String.valueOf(registros.get(0)[0]);
+            
+            for (Object[] fila : registros) {
+                String nombreArticulo = String.valueOf(fila[0]);
+                double totalVendidos = ((Number) fila[1]).doubleValue();
+                chartTopVentas.addData(new ModelChart(nombreArticulo, new double[]{totalVendidos}));
+            }
+            chartTopVentas.start();
+        }
+        List<Object[]> ingresosMeses = bd.obtener_ingresos_mensuales_2026();
+        if (ingresosMeses != null) {
+            for (Object[] fila : ingresosMeses) {
+                maxPrecioSuma += ((Number) fila[1]).doubleValue();
+            }
+        }
+        lblMejorProductoKpi.setText("<html><body style='text-align: center;'><font size='4' color='#e67e22'>🏆 PRODUCTO ESTRELLA</font><br><font size='5' color='black'><b>" + productoEstrella + "</b></font></body></html>");
+        lblTotalIngresosKpi.setText("<html><body style='text-align: center;'><font size='4' color='#2ecc71'>💰 RECAUDACIÓN TOTAL (2026)</font><br><font size='6' color='black'><b>" + String.format("%.2f", maxPrecioSuma) + " €</b></font></body></html>");
+    }
+
+    private void configurar_titulos_pestañas() {
+        jTabbedPane1.setTitleAt(0, "📦 Stock por Pasillos");
+        jTabbedPane1.setTitleAt(1, "💰 Evolución de Ingresos");
+        jTabbedPane1.setTitleAt(2, "📊 Estado del Inventario");
+        jTabbedPane1.setTitleAt(3, "🏆 Top Ventas");
     }
 }
-
-

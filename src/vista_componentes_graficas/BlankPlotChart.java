@@ -50,7 +50,7 @@ public class BlankPlotChart extends JPanel{
         double y = insets.top;
 
         // Dibujamos una cuadrícula base sutil (Gris claro)
-        g2.setColor(new Color(230, 230, 230));
+        g2.setColor(new Color(240, 242, 245));
         int total_llneas_horizontal = 5;
         double espacio_fila = alto / total_llneas_horizontal;
         

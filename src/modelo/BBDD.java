@@ -587,4 +587,55 @@ public class BBDD {
         }
         return resultado;
     }
+    
+    public List<Object[]> obtener_ingresos_mensuales_2026() {
+    List<Object[]> lista_ingresos = null;
+        try {
+            iniciaOperacion();            
+            String sql = "SELECT MONTHNAME(fecha_venta), SUM(total) FROM venta " +
+                         "WHERE estado = 'pagada' AND YEAR(fecha_venta) = 2026 " +
+                         "GROUP BY MONTH(fecha_venta) " +
+                         "ORDER BY MONTH(fecha_venta) ASC";            
+            lista_ingresos = sesion.createSQLQuery(sql).list();
+
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+        } finally {
+            sesion.close();
+        }
+    return lista_ingresos;
+}
+    
+    public List<Object[]> obtener_estado_global_inventario() {
+        List<Object[]> estado = null;
+            try {
+                iniciaOperacion();               
+                String hql = "SELECT cast(i.estado as string), COUNT(i.numeroSerie) " +
+                             "FROM Inventario i " +
+                             "GROUP BY i.estado";
+                estado = sesion.createQuery(hql).list();
+            } catch (HibernateException he) {
+                manejaExcepcion(he);
+            } finally {
+                sesion.close();
+            }
+            return estado;
+    }
+    
+    public List<Object[]> obtener_top_productos_mas_vendidos() {
+        List<Object[]> resultado = null;
+        try {
+            iniciaOperacion();            
+            String hql = "SELECT lv.inventario.articulo.nombreArt, COUNT(lv.idLineaVenta), SUM(lv.venta.total) " +
+                         "FROM Lineaventa lv " +
+                         "GROUP BY lv.inventario.articulo.idArticulo, lv.inventario.articulo.nombreArt " +
+                         "ORDER BY COUNT(lv.idLineaVenta) DESC";
+            resultado = sesion.createQuery(hql).setMaxResults(5).list();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+        } finally {
+            sesion.close();
+        }
+        return resultado;
+    }
 }
