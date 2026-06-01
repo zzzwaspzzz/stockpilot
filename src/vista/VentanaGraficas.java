@@ -62,6 +62,9 @@ public class VentanaGraficas extends javax.swing.JPanel {
         panelGraficas_2 = new javax.swing.JPanel();
         panelGraficas_3 = new javax.swing.JPanel();
         panelGraficas_4 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla_alertas = new javax.swing.JTable();
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -82,6 +85,38 @@ public class VentanaGraficas extends javax.swing.JPanel {
 
         panelGraficas_4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jTabbedPane1.addTab("tab4", panelGraficas_4);
+
+        tabla_alertas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tabla_alertas);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 978, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("tab5", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -116,11 +151,14 @@ public class VentanaGraficas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panelGraficas_1;
     private javax.swing.JPanel panelGraficas_2;
     private javax.swing.JPanel panelGraficas_3;
     private javax.swing.JPanel panelGraficas_4;
+    private javax.swing.JTable tabla_alertas;
     // End of variables declaration//GEN-END:variables
     
     private void inicializar_y_estilizar_grafica() {        
@@ -149,6 +187,7 @@ public class VentanaGraficas extends javax.swing.JPanel {
         cargar_datos_de_ingresos();
         cargar_datos_estado_inventario();
         cargar_datos_top_productos();
+        cargar_datos_de_alertas();
     }
     
     private void configurar_grafica_pasillos() {
@@ -348,5 +387,52 @@ public class VentanaGraficas extends javax.swing.JPanel {
         jTabbedPane1.setTitleAt(1, "💰 Evolución de Ingresos");
         jTabbedPane1.setTitleAt(2, "📊 Estado del Inventario");
         jTabbedPane1.setTitleAt(3, "🏆 Top Ventas");
+        jTabbedPane1.setTitleAt(4, "⚠ Alertas");
+    }
+    
+    private void cargar_tabla_alertas(List<Object[]> alertas) {
+    
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
+            new Object[][] {},
+            new String[] {"Producto", "Stock Mínimo Exigido", "Unidades Disponibles", "Estado de Alerta"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        if (alertas != null) {
+            for (Object[] fila : alertas) {
+                String nombre = (String) fila[0];
+                Integer minimo = (Integer) fila[1];
+                Long disponibles = (Long) fila[2];
+                String estadoGravedad = (disponibles == 0) ? "SIN STOCK (URGENTE)" : "STOCK BAJO";            
+                modelo.addRow(new Object[]{nombre, minimo, disponibles, estadoGravedad});
+            }
+        }       
+        tabla_alertas.setModel(modelo);
+    }
+    
+    private void cargar_datos_de_alertas(){
+        List<Object[]> alertasStock = bd.obtener_articulos_bajo_minimos();    
+        cargar_tabla_alertas(alertasStock);    
+        if (alertasStock != null && !alertasStock.isEmpty()) {
+            int totalProductosAfectados = alertasStock.size();
+
+            String mensajeEmergente = "<html><body>"
+                    + "<h2 style='color:#e74c3c;'>⚠️ Alerta de Desabastecimiento</h2>"
+                    + "Se han detectado <b>" + totalProductosAfectados + "</b> producto(s) por debajo "
+                    + "del stock mínimo configurado.<br>"
+                    + "Por favor, revise la nueva pestaña <b>'Alertas Críticas'</b> para ver los detalles."
+                    + "</body></html>";
+
+            javax.swing.JOptionPane.showMessageDialog(
+                this, 
+                mensajeEmergente, 
+                "Stockpilot - Alerta de Almacén", 
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+        }
     }
 }

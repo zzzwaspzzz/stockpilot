@@ -638,4 +638,24 @@ public class BBDD {
         }
         return resultado;
     }
+
+    public List<Object[]> obtener_articulos_bajo_minimos() {
+        List<Object[]> alertas = null;
+        try {
+            iniciaOperacion();
+            String hql = "SELECT a.nombreArt, a.stockMinimo, COUNT(i.numeroSerie) " +
+                         "FROM Inventario i " +
+                         "JOIN i.articulo a " +
+                         "WHERE cast(i.estado as string) = 'disponible' " +
+                         "GROUP BY a.idArticulo, a.nombreArt, a.stockMinimo " +
+                         "HAVING COUNT(i.numeroSerie) <= a.stockMinimo";
+
+            alertas = sesion.createQuery(hql).list();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+        } finally {
+            sesion.close();
+        }
+        return alertas;
+    }
 }
