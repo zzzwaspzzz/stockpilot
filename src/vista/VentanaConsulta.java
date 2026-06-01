@@ -79,21 +79,26 @@ public class VentanaConsulta extends javax.swing.JPanel {
 
         dialog_detalle.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialog_detalle.setTitle("DETALLE DE ARTICULO");
-        dialog_detalle.setBackground(new java.awt.Color(255, 51, 0));
+        dialog_detalle.setBackground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Numero de serie");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Fecha de compra");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Articulo");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Proveedor");
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Fecha de venta");
 
         txt_detalle_numserie.setText("jTextField1");
@@ -177,17 +182,18 @@ public class VentanaConsulta extends javax.swing.JPanel {
                 .addContainerGap(115, Short.MAX_VALUE))
         );
 
-        setBackground(new java.awt.Color(255, 51, 0));
         setPreferredSize(new java.awt.Dimension(850, 577));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Inventario");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 35, 125, 45));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 125, 45));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(186, 22, 87, 76));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/search_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 87, 76));
+
+        scrollable.setOpaque(false);
 
         tablaConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -207,10 +213,9 @@ public class VentanaConsulta extends javax.swing.JPanel {
         });
         scrollable.setViewportView(tablaConsulta);
 
-        add(scrollable, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 239, 826, 326));
+        add(scrollable, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 239, 990, 350));
 
-        jPanel1.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
         txtFiltroGlobal.setText("jTextField1");
 
@@ -237,7 +242,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
                         .addComponent(txtFiltroFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cmbArticulosConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
                         .addComponent(btnLimpiarFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -254,7 +259,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 830, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 990, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_detalle_numserieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_detalle_numserieActionPerformed

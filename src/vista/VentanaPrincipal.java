@@ -17,8 +17,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     VentanaRegistro registro = new VentanaRegistro();
     VentanaConsulta consulta = new VentanaConsulta();
     VentanaListaClientes lista_clientes = new VentanaListaClientes();
-    VentanaClientes cliente;
     VentanaVentas ventas = new VentanaVentas();
+    VentanaGraficas graficas = new VentanaGraficas();
 
 
     
@@ -29,13 +29,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-        tarjeta = (CardLayout) pnl_invisible.getLayout();
-        cliente = new VentanaClientes(tarjeta, pnl_invisible, lista_clientes);
+        hacerPanelesTransparentes(this.getContentPane());
+        tarjeta = (CardLayout) pnl_invisible.getLayout();        
         pnl_invisible.add(registro, "registro");
-        pnl_invisible.add(consulta, "consulta");
-        pnl_invisible.add(cliente, "cliente");
+        pnl_invisible.add(consulta, "consulta");        
         pnl_invisible.add(lista_clientes, "listaClientes");
         pnl_invisible.add(ventas, "ventas");
+        pnl_invisible.add(graficas, "graficas");
 
         pnl_invisible.setPreferredSize(new java.awt.Dimension(800, 600));
         this.pack();
@@ -142,6 +142,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jToggleButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jToggleButton5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jToggleButton5.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jToggleButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,6 +197,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
 
         pnl_invisible.setBackground(new java.awt.Color(255, 102, 51));
+        pnl_invisible.setOpaque(false);
         pnl_invisible.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -249,6 +255,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lista_clientes.repaint();
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
+    private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+       tarjeta.show(pnl_invisible, "graficas");
+       graficas.revalidate();
+       graficas.repaint();
+    }//GEN-LAST:event_jToggleButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -301,4 +313,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton5;
     private javax.swing.JPanel pnl_invisible;
     // End of variables declaration//GEN-END:variables
+
+    private void hacerPanelesTransparentes(java.awt.Component componente) {
+    if (componente instanceof javax.swing.JPanel) {
+        // Le quitamos la opacidad para que sea transparente y use el fondo de FlatLaf
+        ((javax.swing.JPanel) componente).setOpaque(false);
+    }
+    if (componente instanceof java.awt.Container) {
+        for (java.awt.Component hijo : ((java.awt.Container) componente).getComponents()) {
+            hacerPanelesTransparentes(hijo);
+        }
+    }
+}
 }
