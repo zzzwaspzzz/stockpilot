@@ -491,9 +491,6 @@ public class VentanaListaClientes extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        setBackground(new java.awt.Color(255, 51, 0));
-        setOpaque(false);
-
         jScrollPane1.setOpaque(false);
 
         tablaListaClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -518,13 +515,14 @@ public class VentanaListaClientes extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tablaListaClientes);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Lista de Clientes");
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/person_search_50dp_000000_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
         jLabel18.setText("jLabel18");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Acciones disponibles"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Acciones disponibles", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

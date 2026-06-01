@@ -76,6 +76,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         });
 
         label3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        label3.setForeground(new java.awt.Color(255, 255, 255));
         label3.setText("Seleccione el cliente de la lista...");
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,15 +123,12 @@ public class VentanaVentas extends javax.swing.JPanel {
         setOpaque(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cmbEscanerSerie.setBackground(new java.awt.Color(0, 0, 0));
         cmbEscanerSerie.setEditable(true);
         cmbEscanerSerie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbEscanerSerie.setOpaque(false);
         cmbEscanerSerie.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cmbEscanerSerieKeyPressed(evt);
@@ -139,7 +137,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         jPanel2.add(cmbEscanerSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 750, 39));
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -148,9 +146,9 @@ public class VentanaVentas extends javax.swing.JPanel {
         txtDNICliente.setText("textField1");
         jPanel1.add(txtDNICliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(158, 39, 246, -1));
 
-        label1.setBackground(new java.awt.Color(204, 204, 204));
+        label1.setBackground(new java.awt.Color(51, 51, 55));
         label1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        label1.setForeground(new java.awt.Color(0, 0, 0));
+        label1.setForeground(new java.awt.Color(255, 255, 255));
         label1.setText("Pedido / Factura:");
         jPanel1.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 112, -1, -1));
 
@@ -164,9 +162,9 @@ public class VentanaVentas extends javax.swing.JPanel {
         });
         jPanel1.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 133, -1));
 
-        label2.setBackground(new java.awt.Color(204, 204, 204));
+        label2.setBackground(new java.awt.Color(51, 51, 55));
         label2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        label2.setForeground(new java.awt.Color(0, 0, 0));
+        label2.setForeground(new java.awt.Color(255, 255, 255));
         label2.setText("DNI / CIF: ");
         jPanel1.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 38, -1, -1));
 
@@ -182,7 +180,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 2, 960, 199));
 
         jPanel3.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

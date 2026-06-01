@@ -79,21 +79,26 @@ public class VentanaConsulta extends javax.swing.JPanel {
 
         dialog_detalle.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialog_detalle.setTitle("DETALLE DE ARTICULO");
-        dialog_detalle.setBackground(new java.awt.Color(255, 51, 0));
+        dialog_detalle.setBackground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Numero de serie");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Fecha de compra");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Articulo");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Proveedor");
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Fecha de venta");
 
         txt_detalle_numserie.setText("jTextField1");
@@ -177,13 +182,11 @@ public class VentanaConsulta extends javax.swing.JPanel {
                 .addContainerGap(115, Short.MAX_VALUE))
         );
 
-        setBackground(new java.awt.Color(255, 51, 0));
-        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(850, 577));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Inventario");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 35, 125, 45));
 
@@ -213,7 +216,7 @@ public class VentanaConsulta extends javax.swing.JPanel {
         add(scrollable, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 239, 990, 350));
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtros Avanzados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setOpaque(false);
 
         txtFiltroGlobal.setText("jTextField1");
