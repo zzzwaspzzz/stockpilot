@@ -828,6 +828,22 @@ public class BBDD {
         } finally {       
             sesion.close();      
         }
+    }
+    
+    public boolean esta_disponible(String numeroSerie) {
+    boolean disponible = false;
+    try {
+        iniciaOperacion();
+        Inventario inv = (Inventario) sesion.get(Inventario.class, numeroSerie);
+        if (inv != null && "disponible".equalsIgnoreCase(inv.getEstado().toString())) {
+            disponible = true;
+        }
+    } catch (HibernateException he) {
+        manejaExcepcion(he);
+    } finally {
+        sesion.close();
+    }
+    return disponible;
 }
     
 }
