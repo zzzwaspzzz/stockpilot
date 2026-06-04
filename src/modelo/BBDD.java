@@ -26,6 +26,7 @@ import pojos_package.Lineaventa;
 import pojos_package.Proveedor;
 import pojos_package.Provincia;
 import pojos_package.Ubicacion;
+import pojos_package.Usuario;
 import pojos_package.Venta;
 
 /**
@@ -637,5 +638,130 @@ public class BBDD {
             sesion.close();
         }
         return resultado;
+    }
+
+    public List<Object[]> obtener_articulos_bajo_minimos() {
+        List<Object[]> alertas = null;
+        try {
+            iniciaOperacion();
+            String hql = "SELECT a.nombreArt, a.stockMinimo, COUNT(i.numeroSerie) " +
+                         "FROM Inventario i " +
+                         "JOIN i.articulo a " +
+                         "WHERE cast(i.estado as string) = 'disponible' " +
+                         "GROUP BY a.idArticulo, a.nombreArt, a.stockMinimo " +
+                         "HAVING COUNT(i.numeroSerie) <= a.stockMinimo";
+
+            alertas = sesion.createQuery(hql).list();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+        } finally {
+            sesion.close();
+        }
+        return alertas;
+    }
+    
+    public boolean comprobar_credenciales_local(String userOrEmail, String pass) {
+    boolean valido = false;
+    Query query;
+        try {
+            iniciaOperacion();
+            String hql = "FROM Usuario u WHERE u.username = :login OR u.email = :login";
+            query = sesion.createQuery(hql);
+            query.setParameter("login", userOrEmail);        
+            Usuario u = (Usuario) query.uniqueResult();
+            if (u != null) {
+                if (u.getPasswordHash() != null && u.getPasswordHash().equals(pass)) {
+                    valido = true;
+                }
+            }
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+        } finally {
+            if (sesion != null && sesion.isOpen()) {
+                sesion.close();
+            }
+        }
+    return valido;
+    }
+    
+    public boolean verificar_o_registrar_google(String googleId, String email) {
+        boolean verificacion = false;
+        Query query;
+            try {
+                iniciaOperacion();
+                String hql = "FROM Usuario u WHERE u.googleId = :googleId";
+               query = sesion.createQuery(hql);
+                query.setParameter("googleId", googleId);
+                Usuario u = (Usuario) query.uniqueResult();
+
+                if (u != null) {
+                    verificacion = true; 
+                } else {
+                    Usuario nuevoUsuario = new Usuario();
+                    nuevoUsuario.setEmail(email);
+                    nuevoUsuario.setGoogleId(googleId);
+                    nuevoUsuario.setUsername(email.split("@")[0]);
+                    sesion.save(nuevoUsuario);
+                    tx.commit(); 
+                    verificacion = true;
+                }
+            } catch (HibernateException he) {
+                if (tx != null){
+                    tx.rollback();
+                }
+                manejaExcepcion(he);
+                verificacion = false;
+            } finally {            
+                sesion.close();            
+            }
+        return verificacion;
+    }
+    
+    public void insertar_venta(Venta venta) {
+        try {
+            iniciaOperacion();
+            sesion.save(venta);
+            tx.commit();
+        } catch (HibernateException he) {
+            if (tx != null){
+                tx.rollback();
+            }
+            manejaExcepcion(he);            
+        } finally {
+            sesion.close();            
+        }
+    }
+    
+    public Inventario obtener_articulo_por_serie(String numeroSerie) {
+        Inventario articulo = null;
+        try {
+            iniciaOperacion();
+            articulo = (Inventario) sesion.get(Inventario.class, numeroSerie);
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+            throw he;
+        } finally {
+            if (sesion != null && sesion.isOpen()) {
+                sesion.close();
+            }
+        }
+        return articulo;
+    }
+    
+    public void registrar_linea_y_actualizar_inventario(Inventario articulo, Lineaventa linea) {
+        try {
+            iniciaOperacion();
+            sesion.update(articulo);
+            sesion.save(linea);        
+            tx.commit();
+        } catch (HibernateException he) {
+            if (tx != null) tx.rollback();
+            manejaExcepcion(he);
+            throw he;
+        } finally {
+            if (sesion != null && sesion.isOpen()) {
+                sesion.close();
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import vista.VentanaLogin;
 import vista.VentanaPrincipal;
 
 
@@ -18,28 +19,21 @@ public class ControladorPrincipal {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {                    
-                    javax.swing.UIManager.put("defaultFont", new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 13));
+                    EstiloStockpilot.aplicarTemaEspacial();
                     
-                    java.awt.Color fondoEspacial = new java.awt.Color(10, 17, 31);
-                    java.awt.Color fondoContraste = new java.awt.Color(7, 11, 22);
-                    
-                    javax.swing.UIManager.put("Component.background", fondoEspacial);
-                    javax.swing.UIManager.put("Panel.background", fondoEspacial);
-                    javax.swing.UIManager.put("TitlePane.background", fondoContraste);
-                    javax.swing.UIManager.put("TabbedPane.background", fondoContraste);                    
-                   
-                    javax.swing.UIManager.put("Component.foreground", new java.awt.Color(226, 232, 240));
-                    javax.swing.UIManager.put("Label.foreground", new java.awt.Color(226, 232, 240));                    
-                    
-                    javax.swing.UIManager.put("Component.focusColor", new java.awt.Color(12, 194, 240, 100));
-                    javax.swing.UIManager.put("Component.borderColor", new java.awt.Color(30, 41, 59));
-                    
-                    com.formdev.flatlaf.FlatDarkLaf.setup();
-                    
+                    VentanaLogin login = new VentanaLogin((java.awt.Frame) null, true);
+                    login.setVisible(true); 
+
+                    if (login.esta_verificado()) {
+                        VentanaPrincipal ventana_principal = new VentanaPrincipal();
+                        ventana_principal.setVisible(true);
+                    } else {                        
+                        System.exit(0); 
+                    }
                 } catch (Exception ex) {
                     System.err.println("Error cargando FlatLaf: " + ex.getMessage());
                 }                
-                VentanaPrincipal.main(args);
+                
             }
         });
     }
