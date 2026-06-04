@@ -48,22 +48,18 @@ Contributor(s):
         <id name="idUsuario" type="java.lang.Integer">
             <column name="id_usuario" />
             <generator class="identity" />
-        </id>
-        
+        </id>        
         <property name="username" type="string">
             <column name="username" length="50" unique="true" />
-        </property>
-        
+        </property>        
         <property name="passwordHash" type="string">
             <column name="password_hash" length="255" />
-        </property>
-        
+        </property>        
         <property name="email" type="string">
             <column name="email" length="150" not-null="true" unique="true" />
-        </property>
-        
+        </property>        
         <property name="googleId" type="string">
-            <column name="google_id" length="255" unique="true" />
+            <column name="google_id" length="255" />
         </property>
     </class>
 </hibernate-mapping>

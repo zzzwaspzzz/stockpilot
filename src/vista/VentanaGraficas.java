@@ -415,24 +415,27 @@ public class VentanaGraficas extends javax.swing.JPanel {
     }
     
     private void cargar_datos_de_alertas(){
-        List<Object[]> alertasStock = bd.obtener_articulos_bajo_minimos();    
-        cargar_tabla_alertas(alertasStock);    
-        if (alertasStock != null && !alertasStock.isEmpty()) {
-            int totalProductosAfectados = alertasStock.size();
+    List<Object[]> alertasStock = bd.obtener_articulos_bajo_minimos();    
+    cargar_tabla_alertas(alertasStock);    
+    if (alertasStock != null && !alertasStock.isEmpty()) {
+        int totalProductosAfectados = alertasStock.size();
 
-            String mensajeEmergente = "<html><body>"
-                    + "<h2 style='color:#e74c3c;'>⚠️ Alerta de Desabastecimiento</h2>"
-                    + "Se han detectado <b>" + totalProductosAfectados + "</b> producto(s) por debajo "
-                    + "del stock mínimo configurado.<br>"
-                    + "Por favor, revise la nueva pestaña <b>'Alertas Críticas'</b> para ver los detalles."
-                    + "</body></html>";
+        String mensajeEmergente = "<html><body>"
+                + "<h2 style='color:#e74c3c;'>⚠️ Alerta de Desabastecimiento</h2>"
+                + "Se han detectado <b>" + totalProductosAfectados + "</b> producto(s) por debajo "
+                + "del stock mínimo configurado.<br>"
+                + "Por favor, revise la nueva pestaña <b>'Alertas Críticas'</b> para ver los detalles."
+                + "</body></html>";
 
+        
+        java.awt.EventQueue.invokeLater(() -> {
             javax.swing.JOptionPane.showMessageDialog(
-                this, 
+                null, 
                 mensajeEmergente, 
                 "Stockpilot - Alerta de Almacén", 
                 javax.swing.JOptionPane.WARNING_MESSAGE
             );
-        }
+        });
     }
+}
 }

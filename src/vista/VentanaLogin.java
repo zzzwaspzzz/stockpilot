@@ -5,17 +5,36 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+import modelo.BBDD;
+import controlador.GoogleOAuth;
+
 /**
  *
  * @author Usuario
  */
-public class VentanaLogin extends javax.swing.JPanel {
-
+public class VentanaLogin extends javax.swing.JDialog {
+    
+    
+    private boolean verificado = false; 
+    private final BBDD bd = new BBDD();
+    private final GoogleOAuth oAuth = new GoogleOAuth();
+    
     /**
      * Creates new form VentanaLogin
      */
-    public VentanaLogin() {
+    public VentanaLogin(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        this.setResizable(false);
+        this.setSize(new java.awt.Dimension(950, 550));
+        this.setPreferredSize(new java.awt.Dimension(450, 350));
+        this.setLocationRelativeTo(null);
+        
+    }
+    
+    public boolean esta_verificado() {
+        return verificado;
     }
 
     /**
@@ -29,50 +48,211 @@ public class VentanaLogin extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
+        txt_usuario = new javax.swing.JTextField();
+        txt_password = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        btnAceptarLogin = new javax.swing.JButton();
-        btnCancelarLogin = new javax.swing.JButton();
+        btn_google = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        btnLoginCancelar = new javax.swing.JButton();
+        btnLoginAceptar = new javax.swing.JButton();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pantalla de Inicio");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel1.setText("Usuario");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 247, 96, 44));
+        jLabel1.setText("Password");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 110, 40));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setText("Password");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(293, 326, 96, 44));
+        jLabel2.setText("Usuario");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 100, 40));
 
-        txtUsuario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtUsuario.setText("jTextField1");
-        add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(401, 256, 231, 27));
+        txt_usuario.setText("jTextField1");
+        getContentPane().add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 250, -1));
 
-        txtPassword.setText("jPasswordField1");
-        add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(401, 339, 231, 20));
+        txt_password.setText("jPasswordField1");
+        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 250, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel3.setText("LOGIN");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(411, 78, 145, 74));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 140, 80));
 
-        btnAceptarLogin.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        btnAceptarLogin.setText("Aceptar");
-        add(btnAceptarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 465, 117, 34));
+        btn_google.setText("Acceder con Google");
+        btn_google.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_googleActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_google, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 430, 170, 30));
 
-        btnCancelarLogin.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        btnCancelarLogin.setText("Cancelar");
-        add(btnCancelarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(489, 465, 117, 34));
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel4.setText("¿Prefiere acceder con su cuenta de Google?");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, -1, -1));
+
+        btnLoginCancelar.setText("Cancelar");
+        btnLoginCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLoginCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 130, -1));
+
+        btnLoginAceptar.setText("Aceptar");
+        btnLoginAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginAceptarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLoginAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 130, -1));
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLoginAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginAceptarActionPerformed
+        procesar_acceso_local();
+    }//GEN-LAST:event_btnLoginAceptarActionPerformed
+
+    private void btn_googleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_googleActionPerformed
+        procesar_acceso_con_google();
+    }//GEN-LAST:event_btn_googleActionPerformed
+
+    private void btnLoginCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginCancelarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnLoginCancelarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex)
+        {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex)
+        {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex)
+        {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                VentanaLogin dialog = new VentanaLogin(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptarLogin;
-    private javax.swing.JButton btnCancelarLogin;
+    private javax.swing.JButton btnLoginAceptar;
+    private javax.swing.JButton btnLoginCancelar;
+    private javax.swing.JButton btn_google;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPasswordField txt_password;
+    private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
+
+    private void procesar_acceso_local() {
+        String usuario = txt_usuario.getText().trim();
+        String password = new String(txt_password.getPassword()).trim();
+
+        if (usuario.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (bd.comprobar_credenciales_local(usuario, password)) {
+            verificado = true;
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de Acceso", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void procesar_acceso_con_google() {
+    btn_google.setEnabled(false);
+    System.out.println("[OAUTH-DEBUG] Botón pulsado. Iniciando hilo de red...");
+
+    new Thread(() -> {
+        try {                
+            System.out.println("[OAUTH-DEBUG] Esperando respuesta del servidor local (puerto 8080)...");
+            String token_acceso = oAuth.obtener_token_de_acceso();
+            System.out.println("[OAUTH-DEBUG] Servidor local liberado. Token/Código recibido: " + token_acceso);
+
+            if (token_acceso != null) {                    
+                String google_id_simulado = "google_user_601423";
+                String email_simulado = "usuario.stockpilot@gmail.com";
+                
+                System.out.println("[OAUTH-DEBUG] Conectando con Hibernate para verificar usuario...");
+                boolean resultado_bdd = bd.verificar_o_registrar_google(google_id_simulado, email_simulado);
+                System.out.println("[OAUTH-DEBUG] Resultado de Hibernate verificar_o_registrar_google: " + resultado_bdd);
+                
+                if (resultado_bdd) {
+                    java.awt.EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("[OAUTH-DEBUG] ¡Éxito! Aplicando verificado = true y destruyendo Login de inmediato.");
+                            verificado = true; // Seteamos bandera
+                            VentanaLogin.this.dispose(); // Destruimos de golpe el login
+                        }
+                    });
+                } else {
+                    java.awt.EventQueue.invokeLater(() -> {
+                        System.err.println("[OAUTH-DEBUG] ERROR: El método de base de datos devolvió FALSE.");
+                        JOptionPane.showMessageDialog(VentanaLogin.this, "El usuario de Google no pudo ser validado en la base de datos.", "Error de Datos", JOptionPane.ERROR_MESSAGE);
+                        // Forzamos el dispose para que el main no se quede congelado si falla la BBDD
+                        verificado = false;
+                        VentanaLogin.this.dispose();
+                    });
+                }
+            } else {
+                java.awt.EventQueue.invokeLater(() -> {
+                    System.err.println("[OAUTH-DEBUG] ERROR: El token_acceso recibido es NULL.");
+                    JOptionPane.showMessageDialog(VentanaLogin.this, "No se recibió respuesta de los servidores de Google.", "OAuth Fallido", JOptionPane.WARNING_MESSAGE);
+                });
+            }
+        } catch (Exception e) {
+            java.awt.EventQueue.invokeLater(() -> {
+                System.err.println("[OAUTH-DEBUG] EXCEPCIÓN CRÍTICA: " + e.getMessage());
+                JOptionPane.showMessageDialog(VentanaLogin.this, "Error durante la autenticación: " + e.getMessage(), "Error Crítico", JOptionPane.ERROR_MESSAGE);
+            });
+        } finally {
+            java.awt.EventQueue.invokeLater(() -> {
+                btn_google.setEnabled(true);
+                System.out.println("[OAUTH-DEBUG] Hilo de red finalizado. Botón reactivado.");
+            });
+        }
+    }).start();
+}
+
 }
