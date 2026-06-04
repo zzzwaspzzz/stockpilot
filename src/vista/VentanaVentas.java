@@ -13,6 +13,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.BBDD;
 import pojos_package.Cliente;
+import pojos_package.Inventario;
+import pojos_package.Lineaventa;
+import pojos_package.Venta;
 
 /**
  *
@@ -334,6 +337,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         if(opcion != JOptionPane.YES_OPTION){
             return;
         }
+        btnCrearAlbaran.setEnabled(false);
         
         ArrayList<String> lista_series = listaNumsSerie();
         int idCliente = obtenerIDCliente();
@@ -354,6 +358,51 @@ public class VentanaVentas extends javax.swing.JPanel {
             JOptionPane.INFORMATION_MESSAGE);
             limpiarAlbaranCompleto();
         }
+        
+        new Thread(() -> {
+        BBDD dao = new BBDD();
+        boolean todoOk = true;
+        String errorMensaje = "";
+        
+        try {            
+            Venta nuevaVenta = new Venta();
+            nuevaVenta.setCliente(clienteSeleccionado);
+            nuevaVenta.setFechaVenta(new java.util.Date());
+            nuevaVenta.setEstado("Finalizado");
+            nuevaVenta.setMetodoPago("Efectivo");
+            
+            String pedidoText = txtPedido.getText().trim();
+            nuevaVenta.setPedidoExterno(pedidoText.isEmpty() ? null : pedidoText);
+            nuevaVenta.setTotal(java.math.BigDecimal.ZERO);
+            dao.insertar_venta(nuevaVenta);            
+           
+            for (String serie : lista_series) {
+                Inventario articulo = dao.obtener_articulo_por_serie(serie);
+                
+                if (articulo == null) {
+                    throw new Exception("El número de serie '" + serie + "' no existe en el sistema.");
+                }               
+                articulo.setEstado(pojos_package.Estado_inventario.vendido);
+                Lineaventa lineaDetalle = new Lineaventa(articulo, nuevaVenta);
+                dao.registrar_linea_y_actualizar_inventario(articulo, lineaDetalle);
+            }            
+        } catch (Exception ex) {
+            todoOk = false;
+            errorMensaje = ex.getMessage();
+        }
+        final boolean exitoTransaccion = todoOk;
+        final String msgException = errorMensaje;
+        
+        java.awt.EventQueue.invokeLater(() -> {
+            btnCrearAlbaran.setEnabled(true);            
+            if (exitoTransaccion) {
+                JOptionPane.showMessageDialog(this, "¡Albarán creado y registrado correctamente en el sistema!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                limpiarAlbaranCompleto();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error procesando la transacción:\n" + msgException, "Error de Operación", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }).start();
         
         
 //        String dni = txtDNICliente.getText().trim();
