@@ -717,17 +717,22 @@ public class BBDD {
         return verificacion;
     }
     
-    public void insertar_venta(Venta venta) {
+    public void insertar_venta(Venta v, List<String> numerosSerie) {
         try {
             iniciaOperacion();
-            sesion.save(venta);
+            sesion.save(v);
+            for (String num : numerosSerie) {
+                String hql = "UPDATE Inventario i SET i.estado = :estadoParam WHERE i.numeroSerie = :num";
+                sesion.createQuery(hql)
+                      .setParameter("estadoParam", pojos_package.Estado_inventario.vendido) 
+                      .setParameter("num", num)
+                      .executeUpdate();
+            }
             tx.commit();
         } catch (HibernateException he) {
-            if (tx != null){
-                tx.rollback();
-            }
-            manejaExcepcion(he);            
-        } finally {
+            manejaExcepcion(he);
+            throw he;
+        } finally {        
             sesion.close();            
         }
     }
@@ -764,4 +769,65 @@ public class BBDD {
             }
         }
     }
+    
+    public List<Venta> obtener_todos_los_albaranes() {
+        List<Venta> lista = null;
+        Query query;
+        try {
+            iniciaOperacion();
+            String hql = "FROM Venta v JOIN FETCH v.cliente ORDER BY v.fechaVenta DESC";
+            query = sesion.createQuery(hql);
+            lista = query.list();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+            throw he;
+        } finally {          
+            sesion.close();           
+        }
+        return lista;
+    }
+    
+    public List<Lineaventa> obtener_detalles_albaran(int idVenta) {
+        List<Lineaventa> lista = null;
+        Query query;
+        try {
+            iniciaOperacion(); 
+            sesion.clear();
+            String hql = "FROM Lineaventa lv "
+                   + "JOIN FETCH lv.venta v "
+                   + "LEFT JOIN FETCH v.cliente "
+                   + "JOIN FETCH lv.inventario i "
+                   + "JOIN FETCH i.articulo "
+                   + "WHERE v.idVenta = :idVenta";
+           query = sesion.createQuery(hql).setParameter("idVenta", idVenta);
+           lista = query.list();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+            throw he;
+        } finally {           
+            if (sesion != null && sesion.isOpen()) {
+                sesion.close();
+            }
+        }    
+        return lista;
+    }
+    
+    public void actualizarEstadoInventario(String numeroSerie, pojos_package.Estado_inventario nuevoEstado) {
+    Query query;
+        try {
+            iniciaOperacion();
+            String hql = "UPDATE Inventario i SET i.estado = :estadoParam WHERE i.numeroSerie = :numSerie";        
+            query = sesion.createQuery(hql);
+            query.setParameter("estadoParam", nuevoEstado);
+            query.setParameter("numSerie", numeroSerie);        
+            query.executeUpdate();
+            tx.commit();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+            throw he;
+        } finally {       
+            sesion.close();      
+        }
+}
+    
 }

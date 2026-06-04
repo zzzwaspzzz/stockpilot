@@ -35,6 +35,18 @@ public class VentanaVentas extends javax.swing.JPanel {
         configurarBuscador();        
         cargarNumerosSerie();
         limpiarCampos();
+        configurarEventosHistorico();
+        
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
+            public void stateChanged(javax.swing.event.ChangeEvent e) {                
+                if (jTabbedPane1.getSelectedIndex() == 1) {
+                    cargarHistorialAlbaranesAsincrono();
+                }
+            }
+        });
+        
+        
     }
 
     /**
@@ -51,8 +63,18 @@ public class VentanaVentas extends javax.swing.JPanel {
         label3 = new java.awt.Label();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        cmbEscanerSerie = new javax.swing.JComboBox<>();
+        dialog_detalle_historico_albaranes = new javax.swing.JDialog();
+        lbl_id_albaran = new javax.swing.JLabel();
+        lbl_fecha_venta = new javax.swing.JLabel();
+        lbl_datos_cliente = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tabla_detalle = new javax.swing.JTable();
+        btn_cerrar_detalle = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pnl_emitir_albaran = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         txtDNICliente = new java.awt.TextField();
         label1 = new java.awt.Label();
@@ -62,11 +84,14 @@ public class VentanaVentas extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaAlbaran = new javax.swing.JTable();
+        tabla_albaran = new javax.swing.JTable();
         btnCrearAlbaran = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        cmbEscanerSerie = new javax.swing.JComboBox<>();
+        pnl_historico_albaranes = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabla_historico_albaranes = new javax.swing.JTable();
 
         dialogBuscarCliente.setBackground(new java.awt.Color(255, 102, 0));
         dialogBuscarCliente.setModal(true);
@@ -125,21 +150,87 @@ public class VentanaVentas extends javax.swing.JPanel {
                 .addGap(36, 36, 36))
         );
 
-        setOpaque(false);
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+        lbl_id_albaran.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lbl_id_albaran.setText("jLabel3");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lbl_fecha_venta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbl_fecha_venta.setText("jLabel3");
 
-        cmbEscanerSerie.setBackground(new java.awt.Color(0, 0, 0));
-        cmbEscanerSerie.setEditable(true);
-        cmbEscanerSerie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbEscanerSerie.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmbEscanerSerieKeyPressed(evt);
+        lbl_datos_cliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbl_datos_cliente.setText("jLabel3");
+
+        tabla_detalle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tabla_detalle);
+
+        btn_cerrar_detalle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btn_cerrar_detalle.setText("Cerrar");
+        btn_cerrar_detalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrar_detalleActionPerformed(evt);
             }
         });
-        jPanel2.add(cmbEscanerSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 750, 39));
+
+        javax.swing.GroupLayout dialog_detalle_historico_albaranesLayout = new javax.swing.GroupLayout(dialog_detalle_historico_albaranes.getContentPane());
+        dialog_detalle_historico_albaranes.getContentPane().setLayout(dialog_detalle_historico_albaranesLayout);
+        dialog_detalle_historico_albaranesLayout.setHorizontalGroup(
+            dialog_detalle_historico_albaranesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialog_detalle_historico_albaranesLayout.createSequentialGroup()
+                .addGroup(dialog_detalle_historico_albaranesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialog_detalle_historico_albaranesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane4))
+                    .addGroup(dialog_detalle_historico_albaranesLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(dialog_detalle_historico_albaranesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_id_albaran, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(dialog_detalle_historico_albaranesLayout.createSequentialGroup()
+                                .addComponent(lbl_datos_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135)
+                                .addComponent(lbl_fecha_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 39, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(dialog_detalle_historico_albaranesLayout.createSequentialGroup()
+                .addGap(297, 297, 297)
+                .addComponent(btn_cerrar_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        dialog_detalle_historico_albaranesLayout.setVerticalGroup(
+            dialog_detalle_historico_albaranesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialog_detalle_historico_albaranesLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lbl_id_albaran, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(dialog_detalle_historico_albaranesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_datos_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_fecha_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_cerrar_detalle, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        setOpaque(false);
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Ventas");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/attach_money_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
+
+        pnl_emitir_albaran.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        pnl_emitir_albaran.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Datos del cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -182,7 +273,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 110, 133, -1));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 960, 199));
+        pnl_emitir_albaran.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 960, 199));
 
         jPanel3.setBackground(new java.awt.Color(255, 51, 0));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Albarán", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -191,7 +282,7 @@ public class VentanaVentas extends javax.swing.JPanel {
 
         jScrollPane1.setOpaque(false);
 
-        tablaAlbaran.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_albaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -202,7 +293,7 @@ public class VentanaVentas extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tablaAlbaran);
+        jScrollPane1.setViewportView(tabla_albaran);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 14, 960, 128));
 
@@ -228,17 +319,93 @@ public class VentanaVentas extends javax.swing.JPanel {
         });
         jPanel3.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 149, 114, -1));
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 970, 187));
+        pnl_emitir_albaran.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 970, 187));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Ventas");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 50));
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 950, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/attach_money_50dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.png"))); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 60, 50));
+        pnl_emitir_albaran.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 950, -1));
 
-        add(jPanel2);
+        cmbEscanerSerie.setBackground(new java.awt.Color(0, 0, 0));
+        cmbEscanerSerie.setEditable(true);
+        cmbEscanerSerie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEscanerSerie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbEscanerSerieKeyPressed(evt);
+            }
+        });
+        pnl_emitir_albaran.add(cmbEscanerSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 750, 39));
+
+        jTabbedPane1.addTab("tab1", pnl_emitir_albaran);
+
+        tabla_historico_albaranes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tabla_historico_albaranes);
+
+        javax.swing.GroupLayout pnl_historico_albaranesLayout = new javax.swing.GroupLayout(pnl_historico_albaranes);
+        pnl_historico_albaranes.setLayout(pnl_historico_albaranesLayout);
+        pnl_historico_albaranesLayout.setHorizontalGroup(
+            pnl_historico_albaranesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_historico_albaranesLayout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnl_historico_albaranesLayout.setVerticalGroup(
+            pnl_historico_albaranesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_historico_albaranesLayout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab2", pnl_historico_albaranes);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(806, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 990, 660));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbEscanerSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbEscanerSerieKeyPressed
@@ -248,7 +415,7 @@ public class VentanaVentas extends javax.swing.JPanel {
             String numserie = cmbEscanerSerie.getEditor().getItem().toString().trim();
             if (numserie.isEmpty()) return;
             
-            modelo = (DefaultTableModel) tablaAlbaran.getModel();
+            modelo = (DefaultTableModel) tabla_albaran.getModel();
             int numeroFilas = modelo.getRowCount();
             
             for (int i = 0; i < numeroFilas; i++) {            
@@ -267,7 +434,7 @@ public class VentanaVentas extends javax.swing.JPanel {
             VentaAlbaranDTO ventaDTO = bd.buscar_articulo_por_numserie(numserie);
 
             if (ventaDTO != null) {
-                modelo = (DefaultTableModel) tablaAlbaran.getModel();
+                modelo = (DefaultTableModel) tabla_albaran.getModel();
 
                 modelo.addRow(new Object[]{
                     ventaDTO.getNumeroSerie(),
@@ -318,100 +485,90 @@ public class VentanaVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnCrearAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAlbaranActionPerformed
-        if(clienteSeleccionado == null){
-            JOptionPane.showMessageDialog(this, "Debe buscar y seleccionar un cliente válido antes de crear el albarán.", 
-            "Cliente no seleccionado", JOptionPane.ERROR_MESSAGE);
+        // 1. Validamos que haya un cliente asociado al albarán actual
+        if (clienteSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente antes de generar el albarán.", "Cliente Requerido", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
-        DefaultTableModel albaran = (DefaultTableModel) tablaAlbaran.getModel();
-        int filas_seleccionadas = albaran.getRowCount();
-        if(filas_seleccionadas == 0){
-            JOptionPane.showMessageDialog(this, "La tabla de albarán está vacía. Escanee o seleccione algún número de serie.", 
-            "Albarán vacío", 
-            JOptionPane.WARNING_MESSAGE);
+
+        // 2. Validamos que el albarán tenga al menos un producto en la tabla
+        if (tabla_albaran.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "El albarán no contiene ningún artículo.", "Tabla Vacía", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
-        int opcion = confirmacion();
-        if(opcion != JOptionPane.YES_OPTION){
-            return;
-        }
-        btnCrearAlbaran.setEnabled(false);
-        
-        ArrayList<String> lista_series = listaNumsSerie();
-        int idCliente = obtenerIDCliente();
-        double totalVenta = 0.0;
-        
-        BBDD bd = new BBDD();
-        boolean guardado = bd.registrar_transaccion(idCliente, totalVenta, lista_series);
-        
-        if(!guardado){
-            JOptionPane.showMessageDialog(this, 
-            "Error crítico: No se pudo registrar la venta.\nLa base de datos ha hecho un rollback preventivo.", 
-            "Error en Servidor", 
-            JOptionPane.ERROR_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, 
-            "¡Albarán guardado correctamente!\nEl inventario se ha actualizado de forma segura.", 
-            "Operación Exitosa", 
-            JOptionPane.INFORMATION_MESSAGE);
-            limpiarAlbaranCompleto();
-        }
-        
-        new Thread(() -> {
-        BBDD dao = new BBDD();
-        boolean todoOk = true;
-        String errorMensaje = "";
-        
-        try {            
-            Venta nuevaVenta = new Venta();
-            nuevaVenta.setCliente(clienteSeleccionado);
-            nuevaVenta.setFechaVenta(new java.util.Date());
-            nuevaVenta.setEstado("Finalizado");
-            nuevaVenta.setMetodoPago("Efectivo");
-            
-            String pedidoText = txtPedido.getText().trim();
-            nuevaVenta.setPedidoExterno(pedidoText.isEmpty() ? null : pedidoText);
-            nuevaVenta.setTotal(java.math.BigDecimal.ZERO);
-            dao.insertar_venta(nuevaVenta);            
-           
-            for (String serie : lista_series) {
-                Inventario articulo = dao.obtener_articulo_por_serie(serie);
-                
-                if (articulo == null) {
-                    throw new Exception("El número de serie '" + serie + "' no existe en el sistema.");
-                }               
-                articulo.setEstado(pojos_package.Estado_inventario.vendido);
-                Lineaventa lineaDetalle = new Lineaventa(articulo, nuevaVenta);
-                dao.registrar_linea_y_actualizar_inventario(articulo, lineaDetalle);
-            }            
-        } catch (Exception ex) {
-            todoOk = false;
-            errorMensaje = ex.getMessage();
-        }
-        final boolean exitoTransaccion = todoOk;
-        final String msgException = errorMensaje;
-        
-        java.awt.EventQueue.invokeLater(() -> {
-            btnCrearAlbaran.setEnabled(true);            
-            if (exitoTransaccion) {
-                JOptionPane.showMessageDialog(this, "¡Albarán creado y registrado correctamente en el sistema!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                limpiarAlbaranCompleto();
-            } else {
-                JOptionPane.showMessageDialog(this, "Error procesando la transacción:\n" + msgException, "Error de Operación", JOptionPane.ERROR_MESSAGE);
+
+        // 3. Rescatamos los números de serie seleccionados por el usuario desde la tabla
+        List<String> numerosSerie = new ArrayList<>();
+        for (int i = 0; i < tabla_albaran.getRowCount(); i++) {
+            Object valorCelda = tabla_albaran.getValueAt(i, 0);
+            if (valorCelda != null) {
+                numerosSerie.add(valorCelda.toString());
             }
-        });
-    }).start();
-        
-        
-//        String dni = txtDNICliente.getText().trim();
-//        String pedido = txtPedido.getText().trim();
-        
+        }
+
+        // 4. Calculamos de forma segura el importe total acumulado recorriendo la columna de precios (Columna Índice 2)
+        double totalAcumulado = 0.0;
+        try {
+            for (int i = 0; i < tabla_albaran.getRowCount(); i++) {
+                Object precioCelda = tabla_albaran.getValueAt(i, 2); 
+                if (precioCelda != null) {
+                    // Eliminamos posibles espacios o símbolos si los hubiera para evitar NumberFormatException
+                    String precioStr = precioCelda.toString().trim().replace("€", "").replace(",", ".");
+                    totalAcumulado += Double.parseDouble(precioStr);
+                }
+            }
+        } catch (Exception e) {
+            // En caso de un formato inesperado, evitamos que la aplicación colapse asignando un valor neutro
+            totalAcumulado = 0.0; 
+        }
+        java.math.BigDecimal totalVenta = new java.math.BigDecimal(totalAcumulado);
+
+//        // 5. Capturamos el método de pago seleccionado en el ComboBox
+//        String metodoPago = "Efectivo"; 
+//        if (combo_metodo_pago != null && combo_metodo_pago.getSelectedItem() != null) {
+//            metodoPago = combo_metodo_pago.getSelectedItem().toString();
+//        }
+
+        // 6. Construimos el objeto Venta base usando estrictamente el string "pendiente" en minúsculas (conforme al ENUM de MySQL)
+        Venta nuevaVenta = new Venta();
+        nuevaVenta.setCliente(clienteSeleccionado);
+        nuevaVenta.setFechaVenta(new java.util.Date());
+        nuevaVenta.setTotal(totalVenta);
+        nuevaVenta.setEstado("pendiente"); 
+        //nuevaVenta.setMetodoPago(metodoPago);
+        nuevaVenta.setPedidoExterno(null); 
+
+        // 7. Desplazamos la transacción pesada a un hilo de ejecución independiente para mantener la interfaz fluida
+        new Thread(() -> {
+            try {
+                BBDD bd = new BBDD();
+
+                // Invocamos el método atómico del DAO que registrará la venta y actualizará el inventario
+                bd.insertar_venta(nuevaVenta, numerosSerie);
+
+                // 8. Si la base de datos completa la operación sin errores, refrescamos la GUI en el EDT
+                java.awt.EventQueue.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(this, "¡Albarán registrado correctamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Vaciamos la pestaña actual de venta para prepararla para el siguiente albarán
+                    limpiarCampos(); 
+
+                    // Forzamos el refresco del histórico por si el usuario cambia de pestaña, los datos ya estén listos
+                    cargarHistorialAlbaranesAsincrono();
+                });
+
+            } catch (Exception ex) {
+                // Capturamos cualquier excepción de restricción de base de datos o Hibernate y la mostramos de forma clara
+                java.awt.EventQueue.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(this, "Error al guardar el albarán en la BBDD:\n" + ex.getMessage(), "Error de Transacción", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                });
+            }
+        }).start();
     }//GEN-LAST:event_btnCrearAlbaranActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-       int fila_remove = tablaAlbaran.getSelectedRow();
+       int fila_remove = tabla_albaran.getSelectedRow();
        if(fila_remove == -1){
            JOptionPane.showMessageDialog(this, 
             "Por favor, selecciona una línea del albarán para eliminarla.", 
@@ -419,13 +576,17 @@ public class VentanaVentas extends javax.swing.JPanel {
             javax.swing.JOptionPane.WARNING_MESSAGE);
            return;
        }       
-       DefaultTableModel modelo_tabla = (DefaultTableModel) tablaAlbaran.getModel();
+       DefaultTableModel modelo_tabla = (DefaultTableModel) tabla_albaran.getModel();
        String serial = modelo_tabla.getValueAt(fila_remove, 0).toString();
-       if(tablaAlbaran.getSelectedRow() != -1){
+       if(tabla_albaran.getSelectedRow() != -1){
            modelo_tabla.removeRow(fila_remove);
        }
        cmbEscanerSerie.addItem(serial);        
     }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btn_cerrar_detalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrar_detalleActionPerformed
+       dialog_detalle_historico_albaranes.dispose();
+    }//GEN-LAST:event_btn_cerrar_detalleActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -433,21 +594,34 @@ public class VentanaVentas extends javax.swing.JPanel {
     private java.awt.Button btnBuscarCliente;
     private javax.swing.JButton btnCrearAlbaran;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btn_cerrar_detalle;
     private javax.swing.JComboBox<String> cmbEscanerSerie;
     private javax.swing.JDialog dialogBuscarCliente;
+    private javax.swing.JDialog dialog_detalle_historico_albaranes;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.Label label3;
-    private javax.swing.JTable tablaAlbaran;
+    private javax.swing.JLabel lbl_datos_cliente;
+    private javax.swing.JLabel lbl_fecha_venta;
+    private javax.swing.JLabel lbl_id_albaran;
+    private javax.swing.JPanel pnl_emitir_albaran;
+    private javax.swing.JPanel pnl_historico_albaranes;
     private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tabla_albaran;
+    private javax.swing.JTable tabla_detalle;
+    private javax.swing.JTable tabla_historico_albaranes;
     private java.awt.TextField txtDNICliente;
     private java.awt.TextField txtPedido;
     // End of variables declaration//GEN-END:variables
@@ -471,7 +645,7 @@ public class VentanaVentas extends javax.swing.JPanel {
     }
 
     private void configurarTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) tablaAlbaran.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tabla_albaran.getModel();
         modelo.setRowCount(0); 
         modelo.setColumnIdentifiers(new Object[]{"Nº Serie", "Artículo", "Pasillo", "Estante"});
         
@@ -525,7 +699,7 @@ public class VentanaVentas extends javax.swing.JPanel {
     
     private ArrayList<String> listaNumsSerie(){
         ArrayList<String> listaSeries = new java.util.ArrayList<>();
-        DefaultTableModel modeloAlbaran = (DefaultTableModel) tablaAlbaran.getModel();
+        DefaultTableModel modeloAlbaran = (DefaultTableModel) tabla_albaran.getModel();
         for (int i = 0; i < modeloAlbaran.getRowCount(); i++)
         {
             String numserie = modeloAlbaran.getValueAt(i, 0).toString();
@@ -542,7 +716,7 @@ public class VentanaVentas extends javax.swing.JPanel {
         clienteSeleccionado = null; 
         limpiarCampos(); 
        
-        DefaultTableModel modeloAlbaran = (DefaultTableModel) tablaAlbaran.getModel();
+        DefaultTableModel modeloAlbaran = (DefaultTableModel) tabla_albaran.getModel();
         modeloAlbaran.setRowCount(0);
         
         javax.swing.SwingUtilities.invokeLater(() -> {
@@ -550,4 +724,208 @@ public class VentanaVentas extends javax.swing.JPanel {
         cmbEscanerSerie.getEditor().setItem("");
         });
     }
+    
+    public void cargarHistorialAlbaranesAsincrono() {        
+       new Thread(() -> {
+        try {
+            // 1. Consultamos los datos en la Base de Datos (en segundo plano)
+            BBDD bd = new BBDD();
+            List<Venta> albaranes = bd.obtener_todos_los_albaranes();
+
+            // 2. Pasamos a modificar la tabla en el hilo de Swing de forma segura
+            java.awt.EventQueue.invokeLater(() -> {
+                // Obtenemos el modelo actual de la tabla del histórico
+                DefaultTableModel modelo = (DefaultTableModel) tabla_historico_albaranes.getModel();
+                
+                // Limpiamos las filas antiguas de forma segura para evitar duplicados, 
+                // sin destruir las columnas ni propiedades visuales que ya configuraste
+                modelo.setRowCount(0);
+
+                if (albaranes != null && !albaranes.isEmpty()) {
+                    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    
+                    for (Venta v : albaranes) {
+                        // Rescatamos los datos de la venta
+                        String id = String.valueOf(v.getIdVenta());
+                        String fecha = (v.getFechaVenta() != null) ? sdf.format(v.getFechaVenta()) : "N/D";
+                        String total = (v.getTotal() != null) ? v.getTotal().toString() + " €" : "0.00 €";
+                        String estado = (v.getEstado() != null) ? v.getEstado().toUpperCase() : "PENDIENTE";
+                        
+                        // Rescatamos los datos del cliente que cargamos gracias al JOIN FETCH del DAO
+                        String clienteInfo = "No asociado";
+                        if (v.getCliente() != null) {
+                            clienteInfo = v.getCliente().getDniCliente() + " - " + v.getCliente().getNombreCl();
+                            if (v.getCliente().getApellidoCl() != null) {
+                                clienteInfo += " " + v.getCliente().getApellidoCl();
+                            }
+                        }
+
+                        // Añadimos la fila al modelo de la tabla
+                        modelo.addRow(new Object[]{
+                            id,
+                            clienteInfo,
+                            fecha,
+                            total,
+                            estado
+                        });
+                    }
+                } else {
+                    System.out.println("[DEBUG] No se encontraron albaranes en la base de datos.");
+                }
+            });
+
+        } catch (Exception ex) {
+            java.awt.EventQueue.invokeLater(() -> {
+                JOptionPane.showMessageDialog(this, "Error al cargar el histórico de albaranes: " + ex.getMessage(), "Error de Carga", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            });
+        }
+    }).start();
+    }
+
+    private void configurarEventosHistorico() {
+        tabla_historico_albaranes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "Nº Albarán", "Fecha", "Cliente", "Pedido Externo"
+            }
+        ) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false; 
+            }
+        });
+
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
+            public void stateChanged(javax.swing.event.ChangeEvent e) {                
+                if (jTabbedPane1.getSelectedIndex() == 1) {
+                    cargarHistorialAlbaranesAsincrono();
+                }
+            }
+        });
+        
+        tabla_historico_albaranes.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int row = tabla_historico_albaranes.getSelectedRow();
+            
+            // FILTRO 1: Validamos que la fila sea correcta y que el clic sea el principal
+            if (row < 0 || row >= tabla_historico_albaranes.getRowCount()) {
+                return; 
+            }
+            
+            Object valorId = tabla_historico_albaranes.getValueAt(row, 0);
+            
+            // FILTRO 2: Validamos que la celda de la columna ID no esté vacía
+            if (valorId == null || valorId.toString().trim().isEmpty()) {
+                return;
+            }
+            
+            try {
+                // Convertimos de forma segura limpiando espacios en blanco
+                int idVenta = Integer.parseInt(valorId.toString().trim());
+                
+                // Pasamos la ventana actual para poder usar sus componentes en el método
+                abrirDetalleAlbaranAsincrono(idVenta, VentanaVentas.this);
+                
+            } catch (NumberFormatException nfe) {
+                // Ya no saltará por error de clics vacíos, solo si realmente hay basura en la celda
+                System.err.println("[DEBUG] Clic en celda no numérica: " + valorId);
+            }
+        }
+    });
+    }
+
+    private void abrirDetalleAlbaranAsincrono(int idVenta, VentanaVentas ventanaPrincipal) {
+            new Thread(() -> {
+            try {
+                // 1. Consultamos las líneas de la venta en la Base de Datos
+                BBDD bd = new BBDD();
+                List<Lineaventa> lineasDetalle = bd.obtener_detalles_albaran(idVenta);
+
+                // 2. Pasamos al hilo de la interfaz gráfica (EDT)
+                java.awt.EventQueue.invokeLater(() -> {
+                    DefaultTableModel modeloDetalle = (DefaultTableModel) tabla_detalle.getModel();
+                    modeloDetalle.setRowCount(0); 
+
+                    String clienteTexto = "No asociado";
+                    String fechaTexto = "N/D";
+                    String totalTexto = "0.00 €";
+                    String idAlbaranTexto = String.valueOf(idVenta);
+
+                    if (lineasDetalle != null && !lineasDetalle.isEmpty()) {
+                        // Extraemos la información de la cabecera (Venta)
+                        Venta ventaCabecera = lineasDetalle.get(0).getVenta();
+                        if (ventaCabecera != null) {
+                            if (ventaCabecera.getCliente() != null) {
+                                clienteTexto = ventaCabecera.getCliente().getDniCliente() + " - " + ventaCabecera.getCliente().getNombreCl();
+                                if (ventaCabecera.getCliente().getApellidoCl() != null) {
+                                    clienteTexto += " " + ventaCabecera.getCliente().getApellidoCl();
+                                }
+                            }
+                            if (ventaCabecera.getFechaVenta() != null) {
+                                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                fechaTexto = sdf.format(ventaCabecera.getFechaVenta());
+                            }
+                            if (ventaCabecera.getTotal() != null) {
+                                totalTexto = ventaCabecera.getTotal().toString() + " €";
+                            }
+                        }
+
+                        // Rellenamos las filas de artículos en la tabla del diálogo
+                        for (Lineaventa lv : lineasDetalle) {
+                            Inventario inv = lv.getInventario();
+                            if (inv != null && inv.getArticulo() != null) {
+                                modeloDetalle.addRow(new Object[]{
+                                    inv.getNumeroSerie(),
+                                    inv.getArticulo().getNombreArt(),
+                                    inv.getArticulo().getDescripcion() != null ? inv.getArticulo().getDescripcion() : "Sin descripción"
+                                });
+                            }
+                        }
+                    }
+
+                    // 3. INYECTAR TEXTOS EN LOS JLABELS AUTOMÁTICOS DE NETBEANS
+                    // Como no sabemos los nombres exactos de tus etiquetas, este bucle busca 
+                    // los JLabels dentro de tu diálogo y les asigna los valores en orden de aparición:
+                    int contadorLabels = 0;
+                    for (java.awt.Component comp : dialog_detalle_historico_albaranes.getContentPane().getComponents()) {
+                        if (comp instanceof javax.swing.JLabel) {
+                            javax.swing.JLabel label = (javax.swing.JLabel) comp;
+                            String textoActual = label.getText();
+
+                            // Si el label conserva el nombre por defecto de NetBeans, lo sobreescribimos en orden
+                            if (textoActual != null && textoActual.startsWith("jLabel")) {
+                                if (contadorLabels == 0) {
+                                    label.setText("Albarán ID: " + idAlbaranTexto);
+                                } else if (contadorLabels == 1) {
+                                    label.setText("Cliente: " + clienteTexto);
+                                } else if (contadorLabels == 2) {
+                                    label.setText("Fecha: " + fechaTexto);
+                                } else if (contadorLabels == 3) {
+                                    label.setText("Total: " + totalTexto);
+                                }
+                                contadorLabels++;
+                            }
+                        }
+                    }
+
+                    // 4. Desplegamos el JDialog completamente actualizado
+                    dialog_detalle_historico_albaranes.pack();
+                    dialog_detalle_historico_albaranes.setLocationRelativeTo(ventanaPrincipal); 
+                    dialog_detalle_historico_albaranes.setModal(true); 
+                    dialog_detalle_historico_albaranes.setVisible(true); 
+                });
+
+            } catch (Exception ex) {
+                java.awt.EventQueue.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(ventanaPrincipal, "Error al procesar el desglose del albarán: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                });
+            }
+        }).start();
+    }
+    
+    
+    
 }
