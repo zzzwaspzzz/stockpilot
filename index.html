@@ -1,1 +1,217 @@
-index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stockpilot — Descarga</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: #1a1d27;
+      border: 1px solid #2a2d3e;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .icon-placeholder {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: #1e3a5f;
+      border: 1px solid #2a5080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .btn-download {
+      display: inline-block;
+      background: #1d6fa3;
+      color: #f0f8ff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      transition: background 0.2s;
+      margin-bottom: 2rem;
+    }
+
+    .btn-download:hover { background: #1a5f8a; }
+
+    .version {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-bottom: 2rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #2a2d3e;
+      margin-bottom: 1.75rem;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .req-list {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 1.75rem;
+    }
+
+    .req-list li {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      padding: 0.4rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .req-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #1d6fa3;
+      flex-shrink: 0;
+    }
+
+    .req-list a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .req-list a:hover { text-decoration: underline; }
+
+    .steps {
+      list-style: none;
+      text-align: left;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      padding: 0.5rem 0 0.5rem 2.2rem;
+      position: relative;
+      border-bottom: 1px solid #1e2130;
+      line-height: 1.5;
+    }
+
+    .steps li:last-child { border-bottom: none; }
+
+    .steps li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 20px;
+      height: 20px;
+      background: #1e3a5f;
+      border: 1px solid #2a5080;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 20px;
+    }
+
+    .steps li code {
+      font-family: monospace;
+      font-size: 0.85rem;
+      background: #0f1117;
+      border: 1px solid #2a2d3e;
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: #93c5fd;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.78rem;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="icon-placeholder">📦</div>
+
+    <h1>Stockpilot</h1>
+    <p class="tagline">Aplicación de escritorio para la gestión de almacenes.<br>Desarrollada en Java con Hibernate y MariaDB.</p>
+
+    <a class="btn-download" href="URL_DE_MEGA_AQUI" target="_blank">⬇ Descargar Stockpilot</a>
+    <p class="version">Versión 1.0 · Windows · Requiere Java 8+</p>
+
+    <hr />
+
+    <p class="section-title">Requisitos previos</p>
+    <ul class="req-list">
+      <li>Java Runtime Environment 8 o superior — <a href="https://www.java.com/download" target="_blank">descargar en java.com</a></li>
+      <li>MariaDB instalado y en ejecución — <a href="https://mariadb.org/download" target="_blank">descargar en mariadb.org</a></li>
+    </ul>
+
+    <p class="section-title">Instalación</p>
+    <ol class="steps">
+      <li>Descarga el instalador y ejecútalo. Sigue el asistente de instalación.</li>
+      <li>Importa el archivo <code>stockpilot.sql</code> incluido en tu servidor MariaDB.</li>
+      <li>Abre el archivo <code>hibernate.cfg.xml</code> y configura tu usuario y contraseña de MariaDB.</li>
+      <li>Ejecuta Stockpilot desde el acceso directo del escritorio.</li>
+    </ol>
+
+  </div>
+
+  <footer>Stockpilot · Trabajo de Fin de Grado · 2026</footer>
+
+</body>
+</html>
+
